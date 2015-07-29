@@ -1,0 +1,1 @@
+The libraries installed here for building gcc and python could stand to have items not uses removed.  So that the final size of the docker image is smaller.
