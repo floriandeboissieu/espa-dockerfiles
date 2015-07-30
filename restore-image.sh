@@ -1,2 +1,2 @@
 
-gzip -dc $1.gz | docker import - $1
+gzip -dc $1.tar.gz | docker import - $1

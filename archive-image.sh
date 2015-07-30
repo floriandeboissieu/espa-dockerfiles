@@ -1,3 +1,2 @@
 
-ID=$(docker run -d $1 /bin/bash)
-(docker export $ID | gzip -c > $1.gz)
+docker save $1 | gzip -c > $1.tar.gz
