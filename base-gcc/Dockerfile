@@ -4,7 +4,7 @@ FROM base-buildpack
 ##############################################################################
 ##############################################################################
 # From docker-library/gcc/5.1/Dockerfile
-# Modified to use -j4 for (&& make -j"$(nproc)" \)
+# Modified to use -j3 for (&& make -j"$(nproc)" \)
 
 # https://gcc.gnu.org/mirrors.html
 ENV GPG_KEYS \
@@ -41,10 +41,11 @@ RUN buildDeps='flex' \
     && dir="$(mktemp -d)" \
     && cd "$dir" \
     && /usr/src/gcc/configure --disable-multilib --enable-languages=c,c++ \
-    && make -j4 \
+    && make -j3 \
     && make install-strip \
     && cd .. \
     && rm -rf "$dir" \
+    && rm -rf /usr/src/gcc \
     && apt-get purge -y --auto-remove $buildDeps
 
 # gcc installs .so files in /usr/local/lib64...
