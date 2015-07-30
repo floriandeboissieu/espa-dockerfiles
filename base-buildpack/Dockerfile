@@ -1,4 +1,4 @@
-FROM base-image
+FROM ubuntu:15.04
 
 
 ##############################################################################
@@ -12,10 +12,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 ##############################################################################
 # From docker-library/buildpack-deps/vivid/scm/Dockerfile
+# RDD - Removed - bzr
+# RDD - Removed - mercurial
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        bzr \
         git \
-        mercurial \
         openssh-client \
         subversion \
     && rm -rf /var/lib/apt/lists/*
@@ -23,37 +23,38 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 ##############################################################################
 # From docker-library/buildpack-deps/vivid/Dockerfile
-RUN apt-get update && apt-get update && apt-get install -y --no-install-recommends \
+# RDD - Removed - imagemagick
+# RDD - Removed - libyaml-dev
+# RDD - Removed - libbz2-dev
+# RDD - Removed - libcurl4-openssl-dev
+# RDD - Removed - libc6-dev
+# RDD - Removed - libevent-dev
+# RDD - Removed - libffi-dev
+# RDD - Removed - libglib2.0-dev
+# RDD - Removed - libjpeg-dev
+# RDD - Removed - liblzma-dev
+# RDD - Removed - libmagickcore-dev
+# RDD - Removed - libmagickwand-dev
+# RDD - Removed - libmysqlclient-dev
+# RDD - Removed - libncurses-dev
+# RDD - Removed - libpq-dev
+# RDD - Removed - libreadline-dev
+# RDD - Removed - libsqlite3-dev
+# RDD - Removed - libssl-dev
+# RDD - Removed - libtool
+# RDD - Removed - libwebp-dev
+# RDD - Removed - libxml2-dev
+# RDD - Removed - libxslt-dev
+# RDD - Removed - zlib1g-dev
+RUN apt-get update && apt-get install -y --no-install-recommends \
         autoconf \
         automake \
         bzip2 \
+        gzip \
+        xz-utils \
         file \
         g++ \
         gcc \
-        imagemagick \
-        libbz2-dev \
-        libc6-dev \
-        libcurl4-openssl-dev \
-        libevent-dev \
-        libffi-dev \
-        libglib2.0-dev \
-        libjpeg-dev \
-        liblzma-dev \
-        libmagickcore-dev \
-        libmagickwand-dev \
-        libmysqlclient-dev \
-        libncurses-dev \
-        libpq-dev \
-        libreadline-dev \
-        libsqlite3-dev \
-        libssl-dev \
-        libtool \
-        libwebp-dev \
-        libxml2-dev \
-        libxslt-dev \
-        libyaml-dev \
         make \
         patch \
-        xz-utils \
-        zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
