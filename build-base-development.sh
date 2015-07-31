@@ -5,6 +5,8 @@ NEW_VERSION=0.0.1
 LATEST_ID=$(docker inspect -f '{{ .Id }}' $REPO_NAME:latest)
 OLD_ID=$(docker inspect -f '{{ .Id }}' $REPO_NAME:$OLD_VERSION)
 
+./remove-containers-using-image.sh $REPO_NAME:$OLD_VERSION
+
 cd $REPO_NAME
 docker build -t $REPO_NAME:latest .
 
