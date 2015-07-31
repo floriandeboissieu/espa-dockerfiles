@@ -1,4 +1,7 @@
 
 ID=$(docker run -d $1 /bin/bash)
-docker export $ID | docker import - flat-$1
+echo "ID = "$ID
+docker export $ID | docker import - $2
+# Remove the container we used
+docker rm $ID
 

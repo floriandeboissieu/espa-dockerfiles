@@ -1,1 +1,0 @@
-This does not do any cleanup, so a huge docker image is created.
