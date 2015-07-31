@@ -1,17 +1,16 @@
 
-1: build-base-buildpack.sh
+1: build-base-development.sh
     Builds on top of ubuntu:15.04.
 
-    It installs a bunch of stuff that is required to build gcc and or python.
+    The folloing default ubuntu packages are installed:
+        gcc
+        python
+        python-pip
+        python-virtualenv
+
+    The following version for these development apps are manually compiled and
+    installed:
+
+        git-v2.5.0
 
 
-2: build-base-gcc.sh
-    Builds on top of base-buildpack.
-
-    It installs gcc 5.1.0.  It takes forever to build.
-
-
-3: build-base-python.sh
-    Builds on top of base-gcc.
-
-    It installs the base python 2.7.10, pip 7.1.0, and virtualenv.

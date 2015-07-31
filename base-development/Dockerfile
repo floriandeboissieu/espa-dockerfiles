@@ -62,6 +62,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         make \
         patch \
         python \
+        python-setuptools \
+        python-pip \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        python-virtualenv \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Compression
