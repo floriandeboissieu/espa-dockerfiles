@@ -1,22 +1,24 @@
 REPO_NAME=base-development
-OLD_VERSION=0.0.1
-NEW_VERSION=0.0.1
+#OLD_VERSION=0.0.1
+#NEW_VERSION=0.0.1
 
-LATEST_ID=$(docker inspect -f '{{ .Id }}' $REPO_NAME:latest)
-OLD_ID=$(docker inspect -f '{{ .Id }}' $REPO_NAME:$OLD_VERSION)
+OLD_LATEST_ID=$(docker inspect -f '{{ .Id }}' $REPO_NAME:latest)
+#OLD_ID=$(docker inspect -f '{{ .Id }}' $REPO_NAME:$OLD_VERSION)
 
-./remove-containers-using-image.sh $REPO_NAME:$OLD_VERSION
+#./remove-containers-using-image.sh $REPO_NAME:$OLD_VERSION
 
 cd $REPO_NAME
 docker build -t $REPO_NAME:latest .
+NEW_LATEST_ID=$(docker inspect -f '{{ .Id }}' $REPO_NAME:latest)
 
 cd ..
-./flatten-image.sh $REPO_NAME:latest $REPO_NAME:$NEW_VERSION
+#./flatten-image.sh $REPO_NAME:latest $REPO_NAME:$NEW_VERSION
 
-NEW_ID=$(docker inspect -f '{{ .Id }}' $REPO_NAME:$NEW_VERSION)
+#NEW_ID=$(docker inspect -f '{{ .Id }}' $REPO_NAME:$NEW_VERSION)
 
-echo "Latest ID = "$LATEST_ID
-echo "Old ID = "$OLD_ID
-echo "New ID = "$NEW_ID
+echo "Old Latest ID = "$OLD_LATEST_ID
+echo "New Latest ID = "$NEW_LATEST_ID
+#echo "Old ID = "$OLD_ID
+#echo "New ID = "$NEW_ID
 
-docker rmi $OLD_ID
+#docker rmi $OLD_ID $OLD_LATEST_ID

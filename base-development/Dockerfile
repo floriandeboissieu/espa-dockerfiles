@@ -2,57 +2,23 @@ FROM ubuntu:15.04
 
 
 ##############################################################################
-# From docker-library/buildpack-deps/vivid/curl/Dockerfile
+# Common tool and applications provided by the base system
 RUN apt-get update && apt-get install -y --no-install-recommends \
+        openssh-client \
         ca-certificates \
+        file \
         curl \
         wget \
-    && rm -rf /var/lib/apt/lists/*
-
-
-##############################################################################
-# From docker-library/buildpack-deps/vivid/scm/Dockerfile
-# RDD - Removed - bzr
-# RDD - Removed - mercurial
-
-# Install SCM Tools
-RUN apt-get update && apt-get install -y --no-install-recommends \
         git \
-        openssh-client \
         subversion \
+        unzip \
+        bzip2 \
+        gzip \
+        xz-utils \
+        vim \
     && rm -rf /var/lib/apt/lists/*
 
-
-##############################################################################
-# From docker-library/buildpack-deps/vivid/Dockerfile
-# RDD - Removed - imagemagick \
-# RDD - Removed - libyaml-dev \
-# RDD - Removed - libbz2-dev \
-# RDD - Removed - libc6-dev \
-# RDD - Removed - libevent-dev \
-# RDD - Removed - libffi-dev \
-# RDD - Removed - libglib2.0-dev \
-# RDD - Removed - libjpeg-dev \
-# RDD - Removed - liblzma-dev \
-# RDD - Removed - libmagickcore-dev \
-# RDD - Removed - libmagickwand-dev \
-# RDD - Removed - libmysqlclient-dev \
-# RDD - Removed - libncurses-dev \
-# RDD - Removed - libpq-dev \
-# RDD - Removed - libreadline-dev \
-# RDD - Removed - libsqlite3-dev \
-# RDD - Removed - libtool \
-# RDD - Removed - libwebp-dev \
-# RDD - Removed - libxml2-dev \
-# RDD - Removed - libxslt-dev \
-#
-
-# Install System Tools
-RUN apt-get update && apt-get install -y --no-install-recommends \
-        file \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install Compiling and Tools
+# C, C++, and Python, along with more standard development tools
 RUN apt-get update && apt-get install -y --no-install-recommends \
         autoconf \
         automake \
@@ -66,18 +32,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         python-pip \
     && rm -rf /var/lib/apt/lists/*
 
+# Had to split these out for USGS/DOI blockpage crap
 RUN apt-get update && apt-get install -y --no-install-recommends \
         python-virtualenv \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Compression
-RUN apt-get update && apt-get install -y --no-install-recommends \
-        bzip2 \
-        gzip \
-        xz-utils \
-    && rm -rf /var/lib/apt/lists/*
 
-# Install Dev Libraries
+##############################################################################
+# Update git to the version we want to use
 RUN apt-get update && apt-get install -y --no-install-recommends \
         expat \
         gettext \
@@ -89,9 +51,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
-
-##############################################################################
-# Update git to the version we want to use
 ENV GIT_VERSION v2.5.0
 RUN set -xe \
     && cd /usr/src \
@@ -101,8 +60,11 @@ RUN set -xe \
     && ./configure CFLAGS="${CFLAGS} -static-libgcc" \
     && make \
     && make install \
+    && cd .. \
     && rm -rf git.git
 
+
+##############################################################################
 # Remove things we don't need anymore
 RUN apt-get update && apt-get remove -y \
         expat \
@@ -115,3 +77,104 @@ RUN apt-get update && apt-get remove -y \
         zlib1g-dev \
     && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/*
+
+
+##############################################################################
+# install our COTS packages
+
+# ----------------------------------------------
+# Install zlib
+ENV ZLIB_VERSION 1.2.8
+ENV ZLIB_SOURCE /usr/src/zlib
+ENV ZLIB_PREFIX /usr/cots/zlib
+ENV ZLIBINC $ZLIB_PREFIX/include
+ENV ZLIBLIB $ZLIB_PREFIX/lib
+
+COPY ./zlib-$ZLIB_VERSION $ZLIB_SOURCE
+WORKDIR $ZLIB_SOURCE
+RUN ./configure --prefix=$ZLIB_PREFIX \
+    && make \
+    && make install \
+    && cd .. \
+    && rm -rf $ZLIB_SOURCE
+
+# ----------------------------------------------
+# Install xz
+ENV XZ_VERSION 5.2.1
+ENV XZ_SOURCE /usr/src/xz
+ENV XZ_PREFIX /usr/cots/xz
+ENV XZINC $XZ_PREFIX/include
+ENV XZLIB $XZ_PREFIX/lib
+ENV LZMAINC $XZ_PREFIX/include
+ENV LZMALIB $XZ_PREFIX/lib
+
+COPY ./xz-$XZ_VERSION $XZ_SOURCE
+WORKDIR $XZ_SOURCE
+RUN ./configure --prefix=$XZ_PREFIX \
+    && make \
+    && make install \
+    && cd .. \
+    && rm -rf $XZ_SOURCE
+
+# ----------------------------------------------
+# Install szip
+ENV SZIP_VERSION 2.1
+ENV SZIP_SOURCE /usr/src/szip
+ENV SZIP_PREFIX /usr/cots/szip
+ENV SZIPINC $SZIP_PREFIX/include
+ENV SZIPLIB $SZIP_PREFIX/lib
+
+COPY ./szip-$SZIP_VERSION $SZIP_SOURCE
+WORKDIR $SZIP_SOURCE
+RUN ./configure --prefix=$SZIP_PREFIX \
+    && make \
+    && make install \
+    && cd .. \
+    && rm -rf $SZIP_SOURCE
+
+# ----------------------------------------------
+# Install jbigkit
+ENV JBIG_VERSION 2.1
+ENV JBIG_SOURCE /usr/src/jbigkit
+ENV JBIG_PREFIX /usr/cots/jbigkit
+ENV JBIGINC $JBIG_PREFIX/include
+ENV JBIGLIB $JBIG_PREFIX/lib
+
+COPY ./jbigkit-$JBIG_VERSION $JBIG_SOURCE
+WORKDIR $JBIG_SOURCE
+RUN make \
+    && mkdir -p $JBIGINC \
+    && mkdir -p $JBIGLIB \
+    && /usr/bin/install libjbig/libjbig.a $JBIGLIB/libjpeg.a \
+    && /usr/bin/install libjbig/libjbig85.a $JBIGLIB/libjpeg85.a \
+    && /usr/bin/install libjbig/*.h $JBIGINC \
+    && cd .. \
+    && rm -rf $JBIG_SOURCE
+
+# ----------------------------------------------
+# Install jpeg
+ENV JPEG_VERSION 9a
+ENV JPEG_SOURCE /usr/src/jpeg
+ENV JPEG_PREFIX /usr/cots/jpeg
+ENV JPEGINC $JPEG_PREFIX/include
+ENV JPEGLIB $JPEG_PREFIX/lib
+
+# These are needed with jpeg-6b
+#    && make install-lib \
+#    && make install-headers \
+#
+COPY ./jpeg-$JPEG_VERSION $JPEG_SOURCE
+WORKDIR $JPEG_SOURCE
+RUN mkdir -p $JPEG_PREFIX/bin/cjpeg \
+    && mkdir -p $JPEG_PREFIX/man/man1 \
+    && mkdir -p $JPEGINC \
+    && mkdir -p $JPEGLIB \
+    && ./configure --prefix=$JPEG_PREFIX \
+    && make \
+    && make install \
+    && cd .. \
+    && rm -rf $JPEG_SOURCE
+
+# ----------------------------------------------
+ENV USER_WORK_DIR /home/user
+WORKDIR $USER_WORK_DIR
