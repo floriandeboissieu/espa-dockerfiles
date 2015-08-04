@@ -1,0 +1,10 @@
+
+curl: http://curl.haxx.se/download.html
+idn: http://alpha.gnu.org/gnu/libidn/
+jbigkit: http://www.cl.cam.ac.uk/~mgk25/jbigkit/
+jpeg: http://www.ijg.org/files/
+libxml2: ftp://xmlsoft.org/libxml2/
+szip: https://www.hdfgroup.org/doc_resource/SZIP/
+xz/lzma: http://tukaani.org/xz/
+zlib: http://www.zlib.net/
+
