@@ -29,6 +29,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         patch \
         python \
         python-setuptools \
+        python-dev \
         python-pip \
     && rm -rf /var/lib/apt/lists/*
 
@@ -174,6 +175,66 @@ RUN mkdir -p $JPEG_PREFIX/bin/cjpeg \
     && make install \
     && cd .. \
     && rm -rf $JPEG_SOURCE
+
+# ----------------------------------------------
+# Install libxml2
+ENV XML2_VERSION 2.9.1
+ENV XML2_SOURCE /usr/src/xml2
+ENV XML2_PREFIX /usr/cots/xml2
+ENV XML2INC $XML2_PREFIX/include
+ENV XML2LIB $XML2_PREFIX/lib
+
+COPY ./libxml2-$XML2_VERSION $XML2_SOURCE
+WORKDIR $XML2_SOURCE
+RUN ./configure --prefix=$XML2_PREFIX \
+    --with-zlib=$ZLIB_PREFIX \
+    --with-lzma=$XZ_PREFIX \
+    --without-python \
+    --enable-shared \
+    --enable-static \
+    && make \
+    && make install \
+    && cd .. \
+    && rm -rf $XML2_SOURCE
+
+# ----------------------------------------------
+# Install libidn
+ENV IDN_VERSION 1.17
+ENV IDN_SOURCE /usr/src/idn
+ENV IDN_PREFIX /usr/cots/idn
+ENV IDNINC $IDN_PREFIX/include
+ENV IDNLIB $IDN_PREFIX/lib
+
+COPY ./libidn-$IDN_VERSION $IDN_SOURCE
+WORKDIR $IDN_SOURCE
+RUN ./configure --prefix=$IDN_PREFIX \
+    --enable-shared \
+    --enable-static \
+    && make \
+    && make install \
+    && cd .. \
+    && rm -rf $IDN_SOURCE
+
+# ----------------------------------------------
+# Install curl
+ENV CURL_VERSION 7.43.0
+ENV CURL_SOURCE /usr/src/curl
+ENV CURL_PREFIX /usr/cots/curl
+ENV CURLINC $CURL_PREFIX/include
+ENV CURLLIB $CURL_PREFIX/lib
+
+COPY ./curl-$CURL_VERSION $CURL_SOURCE
+WORKDIR $CURL_SOURCE
+RUN ./configure --prefix=$CURL_PREFIX \
+    --with-zlib=$ZLIB_PREFIX \
+    --without-ssl \
+    --without-gssapi \
+    --enable-shared \
+    --enable-static \
+    && make \
+    && make install \
+    && cd .. \
+    && rm -rf $CURL_SOURCE
 
 # ----------------------------------------------
 ENV USER_WORK_DIR /home/user
