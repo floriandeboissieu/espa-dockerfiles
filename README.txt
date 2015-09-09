@@ -14,3 +14,9 @@
         git-v2.5.0
 
 
+xx: Python Virtual Env and GDAL
+    pip install --no-install GDAL==1.10.0
+    cd <pyenv>/build/GDAL/
+    python setup.py build_ext --include-dirs=/usr/include/gdal/
+    pip install --no-download GDAL
+
