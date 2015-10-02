@@ -38,10 +38,9 @@ RUN apt-get update \
 
 # ----------------------------------------------
 # Update git to a version that isn't broken
-ENV GIT_VERSION v2.6.0
-ENV GIT_SOURCE /usr/src/git.git
+ENV GIT_VERSION=v2.6.0 \
+    GIT_SOURCE=/usr/src/git.git
 
-WORKDIR $GIT_SOURCE
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         expat \
@@ -51,7 +50,9 @@ RUN apt-get update \
         libssl-dev \
     && apt-get install -y --no-install-recommends \
         zlib1g-dev \
-    && git clone --depth 1 \
+    && cd $GIT_SOURCE \
+    && git clone \
+       --depth 1 \
        --branch $GIT_VERSION \
        https://github.com/git/git.git . \
     && make configure \
