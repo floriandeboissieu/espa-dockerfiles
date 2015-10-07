@@ -23,7 +23,7 @@ clean:
 	@-docker rm $(shell docker ps -a -q)
 	@-docker rmi $(shell docker images -q --filter 'dangling=true')
 
-.PHONY: all build-all espa-node espa-ubuntu base clean base-build base-python base-cots ubuntu-base ubuntu-python ubuntu-cots
+.PHONY: all build-all espa-node espa-ubuntu base clean base-build base-python base-cots base-development base production ubuntu-base ubuntu-python ubuntu-cots ubuntu-development ubuntu-production
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Common
@@ -38,6 +38,12 @@ base-python:
 base-cots:
 	@docker build -t $(TAG_PREFIX)/$(SYSTEM)-cots $(SYSTEM)/cots
 
+base-development:
+	@docker build -t $(TAG_PREFIX)/$(SYSTEM)-development $(SYSTEM)/development
+
+base-production:
+	@docker build -t $(TAG_PREFIX)/$(SYSTEM)-production $(SYSTEM)/production
+
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Ubuntu
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -50,4 +56,10 @@ ubuntu-python: ubuntu-base
 
 ubuntu-cots: ubuntu-python
 	@SYSTEM=ubuntu make base-cots
+
+ubuntu-development: ubuntu-cots
+	@SYSTEM=ubuntu make base-development
+
+ubuntu-production: ubuntu-cots
+	@SYSTEM=ubuntu make base-production
 
