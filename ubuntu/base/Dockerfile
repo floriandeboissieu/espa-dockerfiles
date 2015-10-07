@@ -50,6 +50,7 @@ RUN apt-get update \
         libssl-dev \
     && apt-get install -y --no-install-recommends \
         zlib1g-dev \
+    && mkdir $GIT_SOURCE \
     && cd $GIT_SOURCE \
     && git clone \
        --depth 1 \
