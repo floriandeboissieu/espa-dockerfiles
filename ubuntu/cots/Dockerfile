@@ -52,7 +52,7 @@ ENV ZLIBINC=$ZLIB_PREFIX/include \
     LZMALIB=$XZ_PREFIX/lib \
     SZIPINC=$SZIP_PREFIX/include \
     SZIPLIB=$SZIP_PREFIX/lib \
-    XML2INC=$XML2_PREFIX/include \
+    XML2INC=$XML2_PREFIX/include/libxml2 \
     XML2LIB=$XML2_PREFIX/lib \
     IDNINC=$IDN_PREFIX/include \
     IDNLIB=$IDN_PREFIX/lib \
@@ -293,6 +293,7 @@ RUN cd $HDFEOS_SOURCE \
         --prefix=$HDFEOS_PREFIX \
         --with-jpeg=$JPEGINC,$JPEGLIB \
         --with-zlib=$ZLIBINC,$ZLIBLIB \
+        --enable-install-include \
         --enable-static \
    && make \
    && make install \
