@@ -19,11 +19,15 @@ espa-ubuntu: ubuntu-cots
 #base: debian-base ubuntu-base centos-base
 base: ubuntu-base
 
-clean:
-	@-docker rm $(shell docker ps -a -q)
-	@-docker rmi $(shell docker images -q --filter 'dangling=true')
+clean: clean-containers clean-images
 
-.PHONY: all build-all espa-node espa-ubuntu base clean base-build base-python base-cots base-development base production ubuntu-base ubuntu-python ubuntu-cots ubuntu-development ubuntu-production
+clean-containers:
+	@-./remove-all-stopped-containers.sh
+
+clean-images:
+	@-./remove-dangling-images.sh
+
+.PHONY: all build-all espa-node espa-ubuntu base clean clean-containers clean-images base-build base-python base-cots base-development base production ubuntu-base ubuntu-python ubuntu-cots ubuntu-development ubuntu-production
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Common

@@ -1,5 +1,9 @@
 # The image/container to run against
-image=$1
+if [ $1 ]; then
+    image=$1
+else
+    image="usgs-espa/ubuntu-development"
+fi
 
 # These solve file creation problems for developers
 # The group ID of the person kicking off the container
