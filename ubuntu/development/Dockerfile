@@ -32,38 +32,78 @@ ENV PREFIX=/espa/runtime \
 # Define the software tags that make up the current release
 ENV ESPA_PRODUCT_FORMATTER_TAG=docker-development \
     ESPA_SPECTRAL_INDICES_TAG=docker-development \
-    ESPA_CLOUD_MASKING_TAG=docker-development
+    ESPA_CLOUD_MASKING_TAG=docker-development \
+    ESPA_SURFACE_WATER_EXTENT_TAG=docker-development
 
 
 # ---------------------------------------------------------------------------
 # Clone the software and then build and install it
 # ---------------------------------------------------------------------------
 
-RUN mkdir -p /espa/src/espa-product-formatter \
-    && cd /espa/src/espa-product-formatter \
-    && git clone https://github.com/USGS-EROS/espa-product-formatter.git . \
+RUN mkdir -p /espa/src
+
+RUN REPO_NAME=espa-product-formatter \
+    && cd /espa/src \
+    && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
+    && cd ${REPO_NAME} \
     && git checkout $ESPA_PRODUCT_FORMATTER_TAG \
     && make -f Makefile.static \
     && make -f Makefile.static install \
-    && rm -rf /espa/src/espa-product-formatter
+    && cd .. \
+    && rm -rf ${REPO_NAME}
 
-RUN mkdir -p /espa/src/espa-spectral-indices \
-    && cd /espa/src/espa-spectral-indices \
-    && git clone https://github.com/USGS-EROS/espa-spectral-indices.git . \
+RUN REPO_NAME=espa-spectral-indices \
+    && cd /espa/src \
+    && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
+    && cd ${REPO_NAME} \
     && git checkout $ESPA_SPECTRAL_INDICES_TAG \
     && make BUILD_TYPE=-static \
     && make PREFIX=${PREFIX} install \
-    && rm -rf /espa/src/espa-spectral-indices
+    && cd .. \
+    && rm -rf ${REPO_NAME}
 
-RUN mkdir -p /espa/src/espa-cloud-masking \
-    && cd /espa/src/espa-cloud-masking \
-    && git clone https://github.com/USGS-EROS/espa-cloud-masking.git . \
+RUN REPO_NAME=espa-cloud-masking \
+    && cd /espa/src \
+    && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
+    && cd ${REPO_NAME} \
     && git checkout $ESPA_CLOUD_MASKING_TAG \
     && make BUILD_TYPE=-static \
     && make PREFIX=${PREFIX} install \
-    && rm -rf /espa/src/espa-cloud-masking
+    && cd .. \
+    && rm -rf ${REPO_NAME}
 
-ENV ESPA_DSWE_TAG=docker-development
+RUN REPO_NAME=espa-surface-water-extent \
+    && cd /espa/src \
+    && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
+    && cd ${REPO_NAME} \
+    && git checkout $ESPA_SURFACE_WATER_EXTENT_TAG \
+    && cd not-validated-prototype-dswe \
+    && make -f Makefile.static \
+    && make -f Makefile.static install \
+    && cd ../.. \
+    && rm -rf ${REPO_NAME}
+
+ENV ESPA_SURFACE_REFLECTANCE_TAG=docker-development
+RUN REPO_NAME=espa-surface-reflectance \
+    && cd /espa/src \
+    && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
+    && cd ${REPO_NAME} \
+    && git checkout $ESPA_SURFACE_REFLECTANCE_TAG \
+    && cd ledaps/ledapsSrc/src/ \
+    && make -f Makefile.static \
+    && make -f Makefile.static install \
+    && cd ../../../not-validated-prototype-l8_sr/c_version/src \
+    && make -f Makefile.static \
+    && make -f Makefile.static install \
+    && cd ../../.. \
+    && rm -rf ${REPO_NAME}
+
+ENV ESPA_LAND_SURFACE_TEMPERATURE_TAG=docker-development
+
+ENV ESPA_BURNED_AREA_TAG=docker-development
+
+ENV ESPA_SNOW_COVERED_AREA_TAG=docker-development
+
 
 # ---------------------------------------------------------------------------
 # Add an entrypoint so that we execute as a specific user
