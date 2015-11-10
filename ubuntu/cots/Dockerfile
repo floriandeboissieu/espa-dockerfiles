@@ -12,35 +12,35 @@ installed into the image."
 # ----------------------------------------------
 # Source and installation locations
 ENV ZLIB_SOURCE=/usr/src/zlib \
-    ZLIB_PREFIX=/usr/cots/zlib \
+    ZLIB_PREFIX=/usr/local \
     XZ_SOURCE=/usr/src/xz \
-    XZ_PREFIX=/usr/cots/xz \
+    XZ_PREFIX=/usr/local \
     SZIP_SOURCE=/usr/src/szip \
-    SZIP_PREFIX=/usr/cots/szip \
+    SZIP_PREFIX=/usr/local \
     XML2_SOURCE=/usr/src/xml2 \
-    XML2_PREFIX=/usr/cots/xml2 \
+    XML2_PREFIX=/usr/local \
     IDN_SOURCE=/usr/src/idn \
-    IDN_PREFIX=/usr/cots/idn \
+    IDN_PREFIX=/usr/local \
     CURL_SOURCE=/usr/src/curl \
-    CURL_PREFIX=/usr/cots/curl \
+    CURL_PREFIX=/usr/local \
     WGRIB_SOURCE=/usr/src/wgrib \
-    WGRIB_PREFIX=/usr/cots/wgrib \
+    WGRIB_PREFIX=/usr/local \
     JPEG_SOURCE=/usr/src/jpeg \
-    JPEG_PREFIX=/usr/cots/jpeg \
+    JPEG_PREFIX=/usr/local \
     JBIG_SOURCE=/usr/src/libjbigkit \
-    JBIG_PREFIX=/usr/cots/libjbigkit \
+    JBIG_PREFIX=/usr/local \
     TIFF_SOURCE=/usr/src/tiff \
-    TIFF_PREFIX=/usr/cots/tiff \
+    TIFF_PREFIX=/usr/local \
     GEOTIFF_SOURCE=/usr/src/libgeotiff \
-    GEOTIFF_PREFIX=/usr/cots/libgeotiff \
+    GEOTIFF_PREFIX=/usr/local \
     HDF4_SOURCE=/usr/src/hdf4 \
-    HDF4_PREFIX=/usr/cots/hdf4 \
+    HDF4_PREFIX=/usr/local \
     HDF5_SOURCE=/usr/src/hdf5 \
-    HDF5_PREFIX=/usr/cots/hdf5 \
+    HDF5_PREFIX=/usr/local \
     NETCDF4_SOURCE=/usr/src/netcdf4 \
-    NETCDF4_PREFIX=/usr/cots/netcdf4 \
+    NETCDF4_PREFIX=/usr/local \
     HDFEOS_SOURCE=/usr/src/hdfeos \
-    HDFEOS_PREFIX=/usr/cots/hdfeos
+    HDFEOS_PREFIX=/usr/local
 
 # ----------------------------------------------
 # Include and library paths
@@ -248,7 +248,9 @@ RUN cd $HDF4_SOURCE \
         --with-jpeg=$JPEGINC,$JPEGLIB \
         --with-zlib=$ZLIBINC,$ZLIBLIB \
         -disable-netcdf \
+        --disable-shared \
         --enable-static \
+        --enable-static-exec \
     && make \
     && make install \
     && cd ..
@@ -277,7 +279,6 @@ RUN cd $NETCDF4_SOURCE \
     && CPPFLAGS="-I$CURLINC -I$ZLIBINC -I$SZIPINC -I$HDF5INC" \
        LDFLAGS="-L$CURLLIB -L$ZLIBLIB -L$SZIPLIB -L$HDF5LIB" \
        ./configure --prefix=$NETCDF4_PREFIX \
-           --enable-shared \
            --enable-static \
            --enable-netcdf-4 \
     && make \
@@ -294,6 +295,7 @@ RUN cd $HDFEOS_SOURCE \
         --with-jpeg=$JPEGINC,$JPEGLIB \
         --with-zlib=$ZLIBINC,$ZLIBLIB \
         --enable-install-include \
+        --disable-shared \
         --enable-static \
    && make \
    && make install \
