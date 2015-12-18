@@ -24,6 +24,7 @@ libgeotiff:    (1.2.5)      (1.4.1)  http://download.osgeo.org/geotiff/libgeotif
 
 
 #### TODO TODO TODO
+libxslt:   (1.1.26)    (1.1.28)  ftp://xmlsoft.org/libxslt/
 boost (1.54.0)
 gctp (TODO)
 TBB (4.3)

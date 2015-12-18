@@ -19,6 +19,8 @@ ENV ZLIB_SOURCE=/usr/src/zlib \
     SZIP_PREFIX=/usr/local \
     XML2_SOURCE=/usr/src/xml2 \
     XML2_PREFIX=/usr/local \
+    XSLT_SOURCE=/usr/src/xslt \
+    XSLT_PREFIX=/usr/local \
     IDN_SOURCE=/usr/src/idn \
     IDN_PREFIX=/usr/local \
     CURL_SOURCE=/usr/src/curl \
@@ -40,7 +42,9 @@ ENV ZLIB_SOURCE=/usr/src/zlib \
     NETCDF4_SOURCE=/usr/src/netcdf4 \
     NETCDF4_PREFIX=/usr/local \
     HDFEOS_SOURCE=/usr/src/hdfeos \
-    HDFEOS_PREFIX=/usr/local
+    HDFEOS_PREFIX=/usr/local \
+    GDAL_SOURCE=/usr/src/gdal \
+    GDAL_PREFIX=/usr/local
 
 # ----------------------------------------------
 # Include and library paths
@@ -54,6 +58,8 @@ ENV ZLIBINC=$ZLIB_PREFIX/include \
     SZIPLIB=$SZIP_PREFIX/lib \
     XML2INC=$XML2_PREFIX/include/libxml2 \
     XML2LIB=$XML2_PREFIX/lib \
+    XSLTINC=$XSLT_PREFIX/include/libxslt \
+    XSLTLIB=$XSLT_PREFIX/lib \
     IDNINC=$IDN_PREFIX/include \
     IDNLIB=$IDN_PREFIX/lib \
     CURLINC=$CURL_PREFIX/include \
@@ -83,7 +89,9 @@ ENV ZLIBINC=$ZLIB_PREFIX/include \
     HDFEOS_INC=$HDFEOS_PREFIX/include \
     HDFEOS_LIB=$HDFEOS_PREFIX/lib \
     HDFEOS_GCTPINC=$HDFEOS_PREFIX/include \
-    HDFEOS_GCTPLIB=$HDFEOS_PREFIX/lib
+    HDFEOS_GCTPLIB=$HDFEOS_PREFIX/lib \
+    GDAL_INC=$GDAL_PREFIX/include \
+    GDAL_LIB=$GDAL_PREFIX/lib
 
 
 # ---------------------------------------------------------------------------
@@ -122,7 +130,7 @@ RUN cd $SZIP_SOURCE \
 
 # ----------------------------------------------
 # Install libxml2
-COPY ./cots_src/libxml2-2.9.1 $XML2_SOURCE
+COPY ./cots_src/libxml2-2.9.3 $XML2_SOURCE
 RUN cd $XML2_SOURCE \
     && ./configure --prefix=$XML2_PREFIX \
         --with-zlib=$ZLIB_PREFIX \
@@ -134,6 +142,20 @@ RUN cd $XML2_SOURCE \
     && make install \
     && cd ..
 #    && rm -rf $XML2_SOURCE
+
+# ----------------------------------------------
+# Install libxslt
+COPY ./cots_src/libxslt-1.1.28 $XSLT_SOURCE
+RUN cd $XSLT_SOURCE \
+    && ./configure --prefix=$XSLT_PREFIX \
+        --with-libxml-libs-prefix=$XSLTLIB \
+        --without-python \
+        --enable-shared \
+        --enable-static \
+    && make \
+    && make install \
+    && cd ..
+#    && rm -rf $XSLT_SOURCE
 
 # ----------------------------------------------
 # Install libidn
@@ -297,8 +319,24 @@ RUN cd $HDFEOS_SOURCE \
         --enable-install-include \
         --disable-shared \
         --enable-static \
-   && make \
-   && make install \
-   && cd ..
+    && make \
+    && make install \
+    && cd ..
 #    && rm -rf $HDFEOS_SOURCE
+
+# ----------------------------------------------
+# Install GDAL
+COPY ./cots_src/gdal-1.11.1 $GDAL_SOURCE
+RUN cd $GDAL_SOURCE \
+    && ./configure \
+        --prefix=$GDAL_PREFIX \
+        --with-liblzma=yes \
+        --enable-static=yes \
+        --enable-shared=no \
+        --without-ld-shared \
+        --with-gnu-ld \
+    && make
+#    && make install \
+#    && cd ..
+#    && rm -rf $GDAL_SOURCE
 

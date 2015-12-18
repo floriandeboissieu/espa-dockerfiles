@@ -24,11 +24,40 @@ ENV THE_USER=espa-developer
 # docker image generation.
 # ---------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------
 # Define the installation and library locations
 ENV PREFIX=/espa/runtime \
     ESPAINC=/espa/runtime/include \
     ESPALIB=/espa/runtime/lib
 
+
+# ---------------------------------------------------------------------------
+# Python virtual environment setup
+RUN source /python-virtual/bin/activate \
+    && pip install \
+        --global-option=build_ext \
+        --global-option="-L/usr/local/lib" \
+        --global-option="-I/usr/local/include/libxml2" \
+        python-dateutil==1.5 \
+        numpy==1.8.2 \
+        scipy==0.13.3
+
+# These work
+#        requests==2.2.1 \
+#        lxml==3.3.3 \
+#
+
+# These don't work yet
+#        GDAL==1.11.2 \
+#        GDAL==1.10.1 \
+#        matplotlib==1.3.1 \
+#
+
+RUN crash
+
+#pip install --global-option=build_ext --global-option="-L/usr/local/lib" --global-option="-I/usr/local/include/libxml2" lxml==3.3.3
+
+# ---------------------------------------------------------------------------
 
 # ---------------------------------------------------------------------------
 # Clone the software and then build and install it
@@ -117,19 +146,6 @@ RUN REPO_NAME=espa-snow-covered-area \
     && cd /espa/src
 
 RUN cd /espa
-
-RUN . /python-virtual/bin/activate \
-    && pip install \
-        python-dateutil==1.5 \
-        requests==2.2.1 \
-        lxml==3.3.3
-
-#        scipy==0.13.3 \
-#        numpy==1.8.2 \
-#        GDAL==1.11.2 \
-#        GDAL==1.10.1 \
-#        matplotlib==1.3.1 \
-#
 
 # ---------------------------------------------------------------------------
 # Add an entrypoint so that we execute as a specific user
