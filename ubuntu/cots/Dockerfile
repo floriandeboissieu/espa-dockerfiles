@@ -335,8 +335,8 @@ RUN cd $GDAL_SOURCE \
         --enable-shared=no \
         --without-ld-shared \
         --with-gnu-ld \
-    && make
-#    && make install \
-#    && cd ..
+    && make \
+    && make install \
+    && cd ..
 #    && rm -rf $GDAL_SOURCE
 

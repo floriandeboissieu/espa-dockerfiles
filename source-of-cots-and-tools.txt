@@ -5,6 +5,7 @@
    jbigkit:      (2.0)        (2.1)  http://www.cl.cam.ac.uk/~mgk25/jbigkit/
       jpeg:       (6a)         (9a)  http://www.ijg.org/files/
    libxml2:    (2.9.1)      (2.9.1)  ftp://xmlsoft.org/libxml2/
+   libxslt:   (1.1.26)     (1.1.28)  ftp://xmlsoft.org/libxslt/
       szip:      (2.1)        (2.1)  https://www.hdfgroup.org/doc_resource/SZIP/
       tiff:    (3.8.2)      (4.0.6)  http://download.osgeo.org/libtiff/
 libgeotiff:    (1.2.5)      (1.4.1)  http://download.osgeo.org/geotiff/libgeotiff/
@@ -24,7 +25,6 @@ libgeotiff:    (1.2.5)      (1.4.1)  http://download.osgeo.org/geotiff/libgeotif
 
 
 #### TODO TODO TODO
-libxslt:   (1.1.26)    (1.1.28)  ftp://xmlsoft.org/libxslt/
 boost (1.54.0)
 gctp (TODO)
 TBB (4.3)
