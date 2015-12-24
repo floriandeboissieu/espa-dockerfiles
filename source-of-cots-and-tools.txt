@@ -25,6 +25,7 @@ libgeotiff:    (1.2.5)      (1.4.1)  http://download.osgeo.org/geotiff/libgeotif
 
 
 #### TODO TODO TODO
+lapack:    (?.?.?)      (3.6.0)  http://www.netlib.org/lapack/
 boost (1.54.0)
 gctp (TODO)
 TBB (4.3)
