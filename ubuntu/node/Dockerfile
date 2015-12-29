@@ -42,51 +42,15 @@ ENV PREFIX=/espa/runtime \
     ESPAINC=/espa/runtime/include \
     ESPALIB=/espa/runtime/lib
 
-# NEED THESE FOR SCIPY ????????????? DO WE EVEN NEED SCIPY ??????????????????
-##apt-get install liblapack-pic liblapack-dev libblas-dev
-
-# ----------------------------------------------------------------------------
-# Python virtual environment setup
-RUN . /python-virtual/bin/activate \
-    && pip install \
-        --global-option=build_ext \
-        --global-option="-L/usr/local/lib" \
-        --global-option="-I/usr/local/include/libxml2" \
-        python-dateutil==1.5 \
-        requests==2.2.1 \
-        lxml==3.3.3 \
-        numpy==1.10.2
-#        scipy==0.16.1
-
-# WORKING ON THE FOLLOWING
-#
-
-RUN . /python-virtual/bin/activate \
-    && pip install \
-        --global-option=build_ext \
-        --global-option="-L/usr/local/lib" \
-        --global-option="-I/usr/local/include/libxml2" \
-        GDAL==1.11.2
-
-# These don't work yet
-#        GDAL==1.11.2 \
-#        GDAL==1.10.1 \
-#        matplotlib==1.3.1 \
-#
-
-#pip install --global-option=build_ext --global-option="-L/usr/local/lib" --global-option="-I/usr/local/include/libxml2" lxml==3.3.3
-
-# ----------------------------------------------------------------------------
 
 # ----------------------------------------------------------------------------
 # Clone the software and then build and install it
 # ----------------------------------------------------------------------------
+RUN mkdir -p /espa/src
 
-#RUN mkdir -p /espa/src
-#
-#RUN REPO_NAME=espa-product-formatter \
-#    && REPO_TAG=docker-development \
-#    && cd /espa/src \
+RUN REPO_NAME=espa-product-formatter \
+    && REPO_TAG=docker-development
+RUN cd /espa/src \
 #    && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
 #    && cd ${REPO_NAME} \
 #    && git checkout $REPO_TAG \
@@ -94,7 +58,7 @@ RUN . /python-virtual/bin/activate \
 #    && make -f Makefile.static install \
 #    && cd .. \
 #    && rm -rf ${REPO_NAME}
-#
+
 #RUN REPO_NAME=espa-spectral-indices \
 #    && REPO_TAG=docker-development \
 #    && cd /espa/src \

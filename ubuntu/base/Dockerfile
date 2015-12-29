@@ -58,17 +58,18 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN gem install gosu
 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        libcurl4-openssl-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 # ----------------------------------------------------------------------------
 # Update git to a version that isn't broken
-ENV GIT_VERSION=v2.6.0 \
-    GIT_SOURCE=/usr/src/git.git
+ENV GIT_VERSION=v2.6.4 \
+    GIT_SOURCE=/usr/local/src/git.git
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends \
         expat \
         gettext \
-        libcurl4-openssl-dev \
         libexpat-dev \
         libssl-dev \
     && apt-get install -y --no-install-recommends \
@@ -88,7 +89,6 @@ RUN apt-get update \
     && apt-get remove -y \
         expat \
         gettext \
-        libcurl4-openssl-dev \
         libexpat-dev \
         libssl-dev \
         zlib1g-dev \

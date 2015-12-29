@@ -18,6 +18,10 @@ ENV ZLIB_SOURCE=/usr/local/src/zlib \
     XZ_PREFIX=/usr/local \
     SZIP_SOURCE=/usr/local/src/szip \
     SZIP_PREFIX=/usr/local \
+    PNG_SOURCE=/usr/local/src/libpng \
+    PNG_PREFIX=/usr/local \
+    FREETYPE2_SOURCE=/usr/local/src/freetype2 \
+    FREETYPE2_PREFIX=/usr/local \
     XML2_SOURCE=/usr/local/src/xml2 \
     XML2_PREFIX=/usr/local \
     XSLT_SOURCE=/usr/local/src/xslt \
@@ -57,6 +61,10 @@ ENV ZLIBINC=$ZLIB_PREFIX/include \
     LZMALIB=$XZ_PREFIX/lib \
     SZIPINC=$SZIP_PREFIX/include \
     SZIPLIB=$SZIP_PREFIX/lib \
+    PNGINC=$PNG_PREFIX/include \
+    PNGLIB=$PNG_PREFIX/lib \
+    FREETYPE2INC=$FREETYPE2_PREFIX/include \
+    FREETYPE2LIB=$FREETYPE2_PREFIX/lib \
     XML2INC=$XML2_PREFIX/include/libxml2 \
     XML2LIB=$XML2_PREFIX/lib \
     XSLTINC=$XSLT_PREFIX/include/libxslt \
@@ -119,6 +127,8 @@ RUN cd $ZLIB_SOURCE \
 COPY ./cots_src/xz-5.2.1 $XZ_SOURCE
 RUN cd $XZ_SOURCE \
     && ./configure --prefix=$XZ_PREFIX \
+        --enable-shared \
+        --enable-static \
     && make \
     && make install \
     && make clean \
@@ -130,11 +140,42 @@ RUN cd $XZ_SOURCE \
 COPY ./cots_src/szip-2.1 $SZIP_SOURCE
 RUN cd $SZIP_SOURCE \
     && ./configure --prefix=$SZIP_PREFIX \
+        --enable-shared \
+        --enable-static \
     && make \
     && make install \
     && make clean \
     && cd ..
 #    && rm -rf $SZIP_SOURCE
+
+# --------------------------------------
+# Install libpng
+COPY ./cots_src/libpng-1.6.20 $PNG_SOURCE
+RUN cd $PNG_SOURCE \
+    && ./configure --prefix=$PNG_PREFIX \
+        --with-zlib-prefix=$ZLIB_PREFIX \
+        --enable-shared \
+        --enable-static \
+    && make \
+    && make install \
+    && make clean \
+    && cd ..
+#    && rm -rf $PNG_SOURCE
+
+# --------------------------------------
+# Install freetype2
+COPY ./cots_src/freetype-2.6.2 $FREETYPE2_SOURCE
+RUN cd $FREETYPE2_SOURCE \
+    && ./configure --prefix=$FREETYPE2_PREFIX \
+        --with-zlib=yes \
+        --with-png=yes \
+        --enable-shared \
+        --enable-static \
+    && make \
+    && make install \
+    && make clean \
+    && cd ..
+#    && rm -rf $FREETYPE2_SOURCE
 
 # --------------------------------------
 # Install libxml2
@@ -182,18 +223,18 @@ RUN cd $IDN_SOURCE \
 
 # --------------------------------------
 # Install curl
-COPY ./cots_src/curl-7.43.0 $CURL_SOURCE
-RUN cd $CURL_SOURCE \
-    && ./configure --prefix=$CURL_PREFIX \
-        --with-zlib=$ZLIB_PREFIX \
-        --without-ssl \
-        --without-gssapi \
-        --enable-shared \
-        --enable-static \
-    && make \
-    && make install \
-    && make clean \
-    && cd ..
+#COPY ./cots_src/curl-7.43.0 $CURL_SOURCE
+#RUN cd $CURL_SOURCE \
+#    && ./configure --prefix=$CURL_PREFIX \
+#        --with-zlib=$ZLIB_PREFIX \
+#        --without-ssl \
+#        --without-gssapi \
+#        --enable-shared \
+#        --enable-static \
+#    && make \
+#    && make install \
+#    && make clean \
+#    && cd ..
 #    && rm -rf $CURL_SOURCE
 
 # --------------------------------------
@@ -218,6 +259,8 @@ RUN cd $JPEG_SOURCE \
     && mkdir -p $JPEGINC \
     && mkdir -p $JPEGLIB \
     && ./configure --prefix=$JPEG_PREFIX \
+        --enable-shared \
+        --enable-static \
     && make \
     && make install \
     && make clean \
@@ -235,8 +278,8 @@ RUN cd $JBIG_SOURCE \
     && /usr/bin/install libjbig/libjbig85.a $JBIGLIB/libjbig85.a \
     && /usr/bin/install libjbig/*.h $JBIGINC \
     && make clean \
-    && cd ..
-#    && rm -rf $JBIG_SOURCE
+    && cd .. \
+    && rm -rf $JBIG_SOURCE
 
 # --------------------------------------
 # Install tiff
@@ -280,32 +323,31 @@ RUN cd $GEOTIFF_SOURCE \
 
 # --------------------------------------
 # Install HDF4
-#        --with-szlib=$SZIPLIB
 COPY ./cots_src/hdf-4.2.11 $HDF4_SOURCE
 RUN cd $HDF4_SOURCE \
     && ./configure --prefix=$HDF4_PREFIX \
         --with-jpeg=$JPEGLIB \
         --with-zlib=$ZLIBLIB \
+        --with-szlib=$SZIPLIB \
         --disable-netcdf \
         --disable-fortran \
         --enable-shared \
         --enable-static \
         --enable-static-exec \
-        --with-gnu-ld \
     && make \
     && make install \
-    && make clean \
     && cd ..
+#    && make clean \
 #    && rm -rf $HDF4_SOURCE
 
 # --------------------------------------
 # Install HDF5
-#        --with-szlib=$SZIPINC,$SZIPLIB
 COPY ./cots_src/hdf5-1.8.15-patch1 $HDF5_SOURCE
 RUN cd $HDF5_SOURCE \
     && ./configure --prefix=$HDF5_PREFIX \
         --with-jpeg=$JPEGINC,$JPEGLIB \
         --with-zlib=$ZLIBINC,$ZLIBLIB \
+        --with-szlib=$SZIPINC,$SZIPLIB \
         --enable-threadsafe \
         --with-pthread=/usr/lib64 \
         --enable-shared \
@@ -324,6 +366,7 @@ RUN cd $NETCDF4_SOURCE \
        LDFLAGS="-L$CURLLIB -L$ZLIBLIB -L$SZIPLIB -L$HDF5LIB" \
        ./configure --prefix=$NETCDF4_PREFIX \
            --enable-netcdf-4 \
+           --enable-hdf4 \
            --enable-shared \
            --enable-static \
     && make \
@@ -334,16 +377,15 @@ RUN cd $NETCDF4_SOURCE \
 
 # --------------------------------------
 # Install hdfeos2
-#        --with-szlib=$SZIPLIB
 COPY ./cots_src/hdfeos-2.19 $HDFEOS_SOURCE
 RUN cd $HDFEOS_SOURCE \
     && ./configure CC="$HDF4_PREFIX/bin/h4cc -Df2cFortran" \
         --prefix=$HDFEOS_PREFIX \
         --with-jpeg=$JPEGLIB \
         --with-zlib=$ZLIBLIB \
+        --with-szlib=$SZIPINC,$SZIPLIB \
         --disable-shared \
         --enable-static \
-        --with-gnu-ld \
     && make \
     && make install \
     && make clean \
@@ -365,4 +407,36 @@ RUN . /python-virtual/bin/activate \
     && make clean \
     && cd ..
 #    && rm -rf $GDAL_SOURCE
+
+
+# NEED THESE FOR SCIPY ????????????? DO WE EVEN NEED SCIPY ??????????????????
+##apt-get install liblapack-pic liblapack-dev libblas-dev
+
+# ----------------------------------------------------------------------------
+# Python virtual environment setup
+# GDAL is installed into python through the COTS source
+RUN . /python-virtual/bin/activate \
+    && pip install \
+        --global-option=build_ext \
+        --global-option="-L/usr/local/lib" \
+        --global-option="-I/usr/local/include/libxml2" \
+        python-dateutil==1.5 \
+        requests==2.2.1 \
+        lxml==3.3.3 \
+        numpy==1.10.2 \
+        matplotlib==1.5.0
+#        scipy==0.16.1
+
+# WORKING ON THE FOLLOWING
+#
+#RUN . /python-virtual/bin/activate \
+#    && pip install \
+#        --global-option=build_ext \
+#        --global-option="-L/usr/local/lib" \
+#        --global-option="-I/usr/local/include/libxml2" \
+#        matplotlib==1.5.0
+
+# These don't work yet
+#
+#
 

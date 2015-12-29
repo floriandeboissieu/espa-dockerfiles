@@ -25,7 +25,9 @@ libgeotiff:    (1.2.5)      (1.4.1)  http://download.osgeo.org/geotiff/libgeotif
 
 
 #### TODO TODO TODO
-lapack:    (?.?.?)      (3.6.0)  http://www.netlib.org/lapack/
+   lapack: (?.?.?)      (3.6.0)  http://www.netlib.org/lapack/
+freetype2: (?.?.?)      (2.6.2)  http://sourceforge.net/projects/freetype/files/freetype2/
+   libpng: (?.?.?)     (1.6.20)  http://sourceforge.net/projects/libpng/files/libpng16/
 boost (1.54.0)
 gctp (TODO)
 TBB (4.3)
