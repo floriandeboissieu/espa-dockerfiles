@@ -7,16 +7,11 @@ TAG_PREFIX = usgs-espa
 
 all: clean build-all
 
-build-all: espa
+build-all: espa-node
 
-#espa: debian-espa ubuntu-espa
-espa-node: espa-ubuntu
+espa: espa-node
+espa-node: ubuntu-node
 
-#debian-espa: debian-py-espa debian-lfe-espa debian-clj-espa
-
-espa-ubuntu: ubuntu-cots
-
-#base: debian-base ubuntu-base centos-base
 base: ubuntu-base
 
 clean: clean-containers clean-images
@@ -27,7 +22,7 @@ clean-containers:
 clean-images:
 	@-./remove-dangling-images.sh
 
-.PHONY: all build-all espa-node espa-ubuntu base clean clean-containers clean-images base-build base-python base-cots base-development base production ubuntu-base ubuntu-python ubuntu-cots ubuntu-development ubuntu-production
+.PHONY: all build-all espa espa-node base clean clean-containers clean-images base-build base-python base-cots base-development base-node ubuntu-base ubuntu-python ubuntu-cots ubuntu-development ubuntu-node
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Common
@@ -45,8 +40,8 @@ base-cots:
 base-development:
 	@docker build -t $(TAG_PREFIX)/$(SYSTEM)-development $(SYSTEM)/development
 
-base-production:
-	@docker build -t $(TAG_PREFIX)/$(SYSTEM)-production $(SYSTEM)/production
+base-node:
+	@docker build -t $(TAG_PREFIX)/$(SYSTEM)-node $(SYSTEM)/node
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Ubuntu
@@ -64,6 +59,6 @@ ubuntu-cots: ubuntu-python
 ubuntu-development: ubuntu-cots
 	@SYSTEM=ubuntu make base-development
 
-ubuntu-production: ubuntu-cots
-	@SYSTEM=ubuntu make base-production
+ubuntu-node: ubuntu-cots
+	@SYSTEM=ubuntu make base-node
 
