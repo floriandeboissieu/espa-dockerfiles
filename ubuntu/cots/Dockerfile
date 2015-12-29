@@ -94,6 +94,10 @@ ENV ZLIBINC=$ZLIB_PREFIX/include \
     GDAL_INC=$GDAL_PREFIX/include \
     GDAL_LIB=$GDAL_PREFIX/lib
 
+# --------------------------------------
+# Needed for python to find installed shared libraries
+ENV LD_LIBRARY_PATH=/usr/local/lib
+
 
 # ----------------------------------------------------------------------------
 # Section for building each of the cots packages
@@ -276,12 +280,12 @@ RUN cd $GEOTIFF_SOURCE \
 
 # --------------------------------------
 # Install HDF4
+#        --with-szlib=$SZIPLIB
 COPY ./cots_src/hdf-4.2.11 $HDF4_SOURCE
 RUN cd $HDF4_SOURCE \
     && ./configure --prefix=$HDF4_PREFIX \
         --with-jpeg=$JPEGLIB \
         --with-zlib=$ZLIBLIB \
-        --with-szlib=$SZIPLIB \
         --disable-netcdf \
         --disable-fortran \
         --enable-shared \
@@ -296,11 +300,12 @@ RUN cd $HDF4_SOURCE \
 
 # --------------------------------------
 # Install HDF5
+#        --with-szlib=$SZIPINC,$SZIPLIB
 COPY ./cots_src/hdf5-1.8.15-patch1 $HDF5_SOURCE
 RUN cd $HDF5_SOURCE \
     && ./configure --prefix=$HDF5_PREFIX \
+        --with-jpeg=$JPEGINC,$JPEGLIB \
         --with-zlib=$ZLIBINC,$ZLIBLIB \
-        --with-szlib=$SZIPINC,$SZIPLIB \
         --enable-threadsafe \
         --with-pthread=/usr/lib64 \
         --enable-shared \
@@ -329,6 +334,7 @@ RUN cd $NETCDF4_SOURCE \
 
 # --------------------------------------
 # Install hdfeos2
+#        --with-szlib=$SZIPLIB
 COPY ./cots_src/hdfeos-2.19 $HDFEOS_SOURCE
 RUN cd $HDFEOS_SOURCE \
     && ./configure CC="$HDF4_PREFIX/bin/h4cc -Df2cFortran" \
