@@ -384,6 +384,7 @@ RUN cd $HDFEOS_SOURCE \
         --with-jpeg=$JPEGLIB \
         --with-zlib=$ZLIBLIB \
         --with-szlib=$SZIPINC,$SZIPLIB \
+        --enable-install-include \
         --disable-shared \
         --enable-static \
     && make \
@@ -409,23 +410,26 @@ RUN . /python-virtual/bin/activate \
 #    && rm -rf $GDAL_SOURCE
 
 
-# NEED THESE FOR SCIPY ????????????? DO WE EVEN NEED SCIPY ??????????????????
-##apt-get install liblapack-pic liblapack-dev libblas-dev
-
 # ----------------------------------------------------------------------------
 # Python virtual environment setup
-# GDAL is installed into python through the COTS source
+# GDAL is installed into python through the above installation
 RUN . /python-virtual/bin/activate \
     && pip install \
         --global-option=build_ext \
         --global-option="-L/usr/local/lib" \
+        --global-option="-I/usr/local/include" \
         --global-option="-I/usr/local/include/libxml2" \
         python-dateutil==1.5 \
         requests==2.2.1 \
         lxml==3.3.3 \
         numpy==1.10.2 \
         matplotlib==1.5.0
+
+# ????????????? DO WE EVEN NEED SCIPY ??????????????????
+# This works, but I don't know if it is needed yet
 #        scipy==0.16.1
+# NEED THESE FOR SCIPY
+# apt-get install liblapack-pic liblapack-dev libblas-dev
 
 # WORKING ON THE FOLLOWING
 #
