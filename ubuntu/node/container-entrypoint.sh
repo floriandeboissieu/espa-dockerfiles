@@ -21,6 +21,6 @@ export USER=$THE_USER
 export HOME=/home/$THE_USER
 
 # Now execute as the user
-#exec gosu $THE_USER /bin/bash
-exec gosu root /bin/bash
-
+exec gosu $THE_USER /bin/bash
+#exec gosu root /bin/bash
+#/bin/bash
