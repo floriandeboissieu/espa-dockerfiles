@@ -4,7 +4,9 @@ set -e
 # THE_USER is defined in the Dockerfile
 
 THE_GID=$1
-THE_UID=$2
+shift # past the argument
+THE_UID=$1
+shift # past the argument
 
 # Add the user and group to the system
 groupadd --gid $THE_GID $THE_USER
@@ -21,6 +23,6 @@ export USER=$THE_USER
 export HOME=/home/$THE_USER
 
 # Now execute as the user
-exec gosu $THE_USER /bin/bash
+exec gosu $THE_USER /bin/bash $@
 #exec gosu root /bin/bash
 #/bin/bash
