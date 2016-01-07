@@ -22,8 +22,14 @@ export HOME=/home/$THE_USER
 # Activate the python virtual environment
 . /python-virtual/bin/activate
 
-# Change to the working/data directory where any operation will be performed
-cd /espa/data
+# Fixup the home directory since it was created before the user was
+cd $HOME
+cp /etc/skel/.bash_logout .
+cp /etc/skel/.bashrc .
+cp /etc/skel/.profile .
+chown $THE_UID:$THE_GID .bash_logout .bashrc .profile .
+chmod go=u,go-w .bash_logout .bashrc .profile
+chmod go= .
 
 # Now execute as the user
 exec gosu $THE_USER $@
