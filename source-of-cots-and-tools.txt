@@ -1,33 +1,56 @@
     Library    Current          New  Internet Source I Found And Used
 -----------  ---------  -----------  ---------------------------------------------
       curl:   (7.38.0)     (7.43.0)  http://curl.haxx.se/download.html
+                                     Required
        idn:     (1.29)       (1.32)  ftp://ftp.gnu.org/gnu/libidn/
+                                     Required
    jbigkit:      (2.0)        (2.1)  http://www.cl.cam.ac.uk/~mgk25/jbigkit/
+                                     Required
       jpeg:       (6a)         (9a)  http://www.ijg.org/files/
+                                     Required
    libxml2:    (2.9.1)      (2.9.1)  ftp://xmlsoft.org/libxml2/
+                                     Required
    libxslt:   (1.1.26)     (1.1.28)  ftp://xmlsoft.org/libxslt/
+                                     Required for python requirements
       szip:      (2.1)        (2.1)  https://www.hdfgroup.org/doc_resource/SZIP/
+                                     Required
       tiff:    (3.8.2)      (4.0.6)  http://download.osgeo.org/libtiff/
+                                     Required
 libgeotiff:    (1.2.5)      (1.4.1)  http://download.osgeo.org/geotiff/libgeotiff/
+                                     Required
    xz/lzma:    (5.0.5)      (5.2.1)  http://tukaani.org/xz/
+                                     Required
       zlib:    (1.2.7)      (1.2.8)  http://www.zlib.net/
+                                     Required
       hdf4:    (4.2.5)     (4.2.11)  https://www.hdfgroup.org/downloads/index.html
+                                     Required
       hdf5:   (1.8.13)  (1.8.15-p1)  (p1 = patch1) https://www.hdfgroup.org/downloads/index.html
+                                     Required
   netcdf-4:    (4.3.2)    (4.3.3.1)  http://www.unidata.ucar.edu/software/netcdf/
+                                     Required
    hdfeos2:     (2.18)       (2.19)  ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos/latest_release/
-
+                                     Required
+ freetype2:    (?.?.?)      (2.6.2)  http://sourceforge.net/projects/freetype/files/freetype2/
+                                     Required for python requirements
+      gdal:    (?.?.?)     (1.11.1)  http://download.osgeo.org/gdal    OR    ftp://ftp.remotesensing.org/gdal
+                                     Required for python requirements as well as processing code
 
     Tool    Current         New  Internet Source I Found And Used
 --------  ---------  ----------  ---------------------------------------------
   wgrib: (1.8.1.2c)  (1.8.1.2c)  http://www.cpc.ncep.noaa.gov/products/wesley/wgrib.html
-    git:    (2.5.0)     (2.6.0)  git clone https://github.com/git/git.git git.git
+                                 Only Required for Land Surface Temperature processing
+    git:    (2.5.0)     (2.7.0)  git clone https://github.com/git/git.git git.git
+                                 Installed into the base image and used for retrieving science source code.
+MODTRAN:      (5.3)       (5.3)  Our own internal source.  For others  (http://www.spectral.com/MODTRAN.shtml)
+                                 Only Required for Land Surface Temperature processing
 
 
 
 #### TODO TODO TODO
    lapack: (?.?.?)      (3.6.0)  http://www.netlib.org/lapack/
-freetype2: (?.?.?)      (2.6.2)  http://sourceforge.net/projects/freetype/files/freetype2/
+                                 Required for scipy
    libpng: (?.?.?)     (1.6.20)  http://sourceforge.net/projects/libpng/files/libpng16/
+                                 Required for ????
 boost (1.54.0)
 gctp (TODO)
 TBB (4.3)
