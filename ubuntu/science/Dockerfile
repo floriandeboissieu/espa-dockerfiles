@@ -103,8 +103,8 @@ ENV ESPA_SCHEMA=/home/espa/runtime/espa-product-formatter/schema/espa_internal_m
     PYTHONPATH=/home/espa/runtime/python \
     OMP_NUM_THREADS=1
 
-# MODTRAN_PATH=/home/dilley/lsrd-src/MODTRAN
-# MODTRAN_DATA_DIR=/home/dilley/lsrd-src/MODTRAN/DATA
+# MODTRAN_PATH=/home/espa/MODTRAN
+# MODTRAN_DATA_DIR=/home/espa/MODTRAN/DATA
 
 
 # ----------------------------------------------------------------------------
