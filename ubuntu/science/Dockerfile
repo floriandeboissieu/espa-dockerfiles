@@ -12,9 +12,9 @@ software we use installed into the image."
 
 # ----------------------------------------------------------------------------
 # Define the installation and library locations
-ENV PREFIX=/home/espa/runtime \
-    ESPAINC=/home/espa/runtime/include \
-    ESPALIB=/home/espa/runtime/lib
+ENV PREFIX=/usr/local \
+    ESPAINC=/usr/local/include \
+    ESPALIB=/usr/local/lib
 
 # ----------------------------------------------------------------------------
 # Clone the software and then build and install it
@@ -87,21 +87,31 @@ RUN REPO_NAME=espa-land-surface-temperature \
     && cd .. \
     && rm -rf ${REPO_NAME}
 
+# ----------------------------------------------------------------------------
 # ESPA Runtime Environment Variable Configuration
-ENV ESPA_SCHEMA=/home/espa/runtime/espa-product-formatter/schema/espa_internal_metadata_v1_3.xsd \
-    ESPA_LAND_MASS_POLYGON=/home/espa/auxiliaries/land_water_polygon/land_no_buf.ply \
+# /usr/local/.....
+ENV ESPA_SCHEMA=/usr/local/espa-product-formatter/schema/espa_internal_metadata_v1_3.xsd \
+    ESUN=/usr/local/espa-cloud-masking/static_data \
+    LST_DATA_DIR=/usr/local/espa-land-surface-temperature/l5-7_lst/static_data
+
+# /home/espa/.....
+ENV ESPA_LAND_MASS_POLYGON=/home/espa/auxiliaries/land_water_polygon/land_no_buf.ply \
     ESPA_WORK_DIR=/home/espa/work-dir \
     ESPA_DISTRIBUTION_DIR=/home/espa/output-data \
-    ESPA_DISTRIBUTION_METHOD=local \
-    ESUN=/home/espa/runtime/espa-cloud-masking/static_data \
     IAS_DATA_DIR=/home/espa/auxiliaries/gls-dem \
     LEDAPS_AUX_DIR=/home/espa/auxiliaries/L17 \
     L8_AUX_DIR=/home/espa/auxiliaries/L8 \
-    ASTER_GED_SERVER_NAME=e4ftl01.cr.usgs.gov \
-    LST_AUX_DIR=/home/espa/auxiliaries/LST/NARR \
-    LST_DATA_DIR=/home/espa/runtime/espa-land-surface-temperature/l5-7_lst/static_data \
-    PYTHONPATH=/home/espa/runtime/python \
-    OMP_NUM_THREADS=1
+    LST_AUX_DIR=/home/espa/auxiliaries/LST/NARR
+
+# Other
+ENV ESPA_DISTRIBUTION_METHOD=local \
+    ASTER_GED_SERVER_NAME=e4ftl01.cr.usgs.gov
+
+# Python
+ENV PYTHONPATH=/usr/local/espa-product-formatter/python
+
+# Threading
+ENV OMP_NUM_THREADS=1
 
 # MODTRAN_PATH=/home/espa/MODTRAN
 # MODTRAN_DATA_DIR=/home/espa/MODTRAN/DATA
