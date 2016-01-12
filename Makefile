@@ -9,9 +9,6 @@ all: clean build-all
 
 build-all: espa-node
 
-espa: espa-node
-espa-node: ubuntu-node
-
 base: ubuntu-base
 
 clean: clean-containers clean-images
@@ -22,7 +19,7 @@ clean-containers:
 clean-images:
 	@-./remove-dangling-images.sh
 
-.PHONY: all build-all espa espa-node base clean clean-containers clean-images base-build base-python base-cots base-science base-node ubuntu-base ubuntu-python ubuntu-cots ubuntu-science ubuntu-node
+.PHONY: all build-all base clean clean-containers clean-images base-build base-python base-cots base-science base-ias ubuntu-base ubuntu-python ubuntu-cots ubuntu-science ubuntu-ias
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Common
@@ -40,8 +37,8 @@ base-cots:
 base-science:
 	@docker build -t $(TAG_PREFIX)/$(SYSTEM)-science $(SYSTEM)/science
 
-base-node:
-	@docker build -t $(TAG_PREFIX)/$(SYSTEM)-node $(SYSTEM)/node
+base-ias:
+	@docker build -t $(TAG_PREFIX)/$(SYSTEM)-ias $(SYSTEM)/ias
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Ubuntu
@@ -59,6 +56,6 @@ ubuntu-cots: ubuntu-python
 ubuntu-science: ubuntu-cots
 	@SYSTEM=ubuntu make base-science
 
-ubuntu-node: ubuntu-cots
-	@SYSTEM=ubuntu make base-node
+ubuntu-ias: ubuntu-science
+	@SYSTEM=ubuntu make base-ias
 

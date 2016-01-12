@@ -44,6 +44,13 @@ libgeotiff:    (1.2.5)      (1.4.1)  http://download.osgeo.org/geotiff/libgeotif
 MODTRAN:      (5.3)       (5.3)  Our own internal source.  For others  (http://www.spectral.com/MODTRAN.shtml)
                                  Only Required for Land Surface Temperature processing
 
+IAS SOURCE CODE:  Required for ESPA processing node software
+IAS COTS: <internal svn server>/path/to/l8/tags/oli_ias/IAS_COTS_3_6_1
+     IAS: <internal svn server>/path/to/l8/tags/oli_ias/IAS_3_6_1_OPS
+IAS PATCH FILES FOR BUILDING:
+    IAS_COTS_ESPA_PATCH.diff
+    IAS_OPS_ESPA_PATCH.diff
+    <internal git server>/path/to/ias_patch_files
 
 
 #### TODO TODO TODO
