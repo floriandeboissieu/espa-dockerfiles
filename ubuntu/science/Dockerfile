@@ -22,7 +22,7 @@ ENV PREFIX=/usr/local \
 RUN mkdir -p /espa/src
 
 RUN REPO_NAME=espa-product-formatter \
-    && REPO_TAG=remotes/origin/docker-development \
+    && REPO_TAG=remotes/origin/dev_v1.6.0 \
     && cd /espa/src \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
@@ -33,7 +33,7 @@ RUN REPO_NAME=espa-product-formatter \
     && rm -rf ${REPO_NAME}
 
 RUN REPO_NAME=espa-spectral-indices \
-    && REPO_TAG=remotes/origin/docker-development \
+    && REPO_TAG=remotes/origin/dev_v2.4.0 \
     && cd /espa/src \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
@@ -44,7 +44,7 @@ RUN REPO_NAME=espa-spectral-indices \
     && rm -rf ${REPO_NAME}
 
 RUN REPO_NAME=espa-cloud-masking \
-    && REPO_TAG=dev_mar2016 \
+    && REPO_TAG=remotes/origin/dev_mar2016 \
     && cd /espa/src \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
@@ -55,18 +55,18 @@ RUN REPO_NAME=espa-cloud-masking \
     && rm -rf ${REPO_NAME}
 
 RUN REPO_NAME=espa-surface-water-extent \
-    && REPO_TAG=docker-development \
+    && REPO_TAG=remotes/origin/dev_mar2016 \
     && cd /espa/src \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
     && git checkout ${REPO_TAG} \
     && make BUILD_STATIC=yes \
     && make install \
-    && cd ../.. \
+    && cd .. \
     && rm -rf ${REPO_NAME}
 
 RUN REPO_NAME=espa-surface-reflectance \
-    && REPO_TAG=docker-development \
+    && REPO_TAG=remotes/origin/dev_mar2016 \
     && cd /espa/src \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
