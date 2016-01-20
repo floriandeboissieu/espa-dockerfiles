@@ -44,7 +44,7 @@ RUN tcsh -c 'source $SRCROOT/ias_lib/setup/iaslib_setup --enable-dev --disable-d
 
 # --------------------------------------
 # Configure the path to include the IAS software
-# TODO TODO TODO
+ENV PATH=/usr/local/build_ias/bin:$PATH
 
 
 # --------------------------------------
