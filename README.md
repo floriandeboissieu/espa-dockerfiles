@@ -12,6 +12,7 @@
   - If you want to mount read-only specify (:ro)
   - See example in System Time below.
 - When specifying a volume, <b>if it does not exist on the host</b>, it will be created (assuming you have privileges).
+  - Learned that the hard way......
 
 #### System Time
 By default the time on the system is UTC.  If you wish to change that to the time specified on the host system, you simply have to mount /etc/localtime from the host.
