@@ -108,7 +108,7 @@ ENV ESPA_DISTRIBUTION_METHOD=local \
     ASTER_GED_SERVER_NAME=e4ftl01.cr.usgs.gov
 
 # Python
-ENV PYTHONPATH=/usr/local/espa-product-formatter/python
+ENV PYTHONPATH=/usr/local/python
 
 # Threading
 ENV OMP_NUM_THREADS=1
