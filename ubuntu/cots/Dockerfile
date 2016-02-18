@@ -48,6 +48,8 @@ ENV ZLIB_SOURCE=/usr/local/src/zlib \
     NETCDF4_PREFIX=/usr/local \
     HDFEOS_SOURCE=/usr/local/src/hdfeos \
     HDFEOS_PREFIX=/usr/local \
+    PROJ4_SOURCE=/usr/local/src/proj4 \
+    PROJ4_PREFIX=/usr/local \
     GDAL_SOURCE=/usr/local/src/gdal \
     GDAL_PREFIX=/usr/local
 
@@ -99,6 +101,8 @@ ENV ZLIBINC=$ZLIB_PREFIX/include \
     HDFEOS_LIB=$HDFEOS_PREFIX/lib \
     HDFEOS_GCTPINC=$HDFEOS_PREFIX/include \
     HDFEOS_GCTPLIB=$HDFEOS_PREFIX/lib \
+    PROJ4_INC=$PROJ4_PREFIX/include \
+    PROJ4_LIB=$PROJ4_PREFIX/lib \
     GDAL_INC=$GDAL_PREFIX/include \
     GDAL_LIB=$GDAL_PREFIX/lib
 
@@ -124,7 +128,7 @@ RUN cd $ZLIB_SOURCE \
 
 # --------------------------------------
 # Install xz
-COPY ./cots_src/xz-5.2.1 $XZ_SOURCE
+COPY ./cots_src/xz-5.2.2 $XZ_SOURCE
 RUN cd $XZ_SOURCE \
     && ./configure --prefix=$XZ_PREFIX \
         --enable-shared \
@@ -164,7 +168,7 @@ RUN cd $PNG_SOURCE \
 
 # --------------------------------------
 # Install freetype2
-COPY ./cots_src/freetype-2.6.2 $FREETYPE2_SOURCE
+COPY ./cots_src/freetype-2.6.3 $FREETYPE2_SOURCE
 RUN cd $FREETYPE2_SOURCE \
     && ./configure --prefix=$FREETYPE2_PREFIX \
         --with-zlib=yes \
@@ -223,7 +227,7 @@ RUN cd $IDN_SOURCE \
 
 # --------------------------------------
 # Install curl
-#COPY ./cots_src/curl-7.43.0 $CURL_SOURCE
+#COPY ./cots_src/curl-7.47.1 $CURL_SOURCE
 #RUN cd $CURL_SOURCE \
 #    && ./configure --prefix=$CURL_PREFIX \
 #        --with-zlib=$ZLIB_PREFIX \
@@ -252,7 +256,7 @@ RUN cd $WGRIB_SOURCE \
 #    && make install-lib \
 #    && make install-headers \
 #
-COPY ./cots_src/jpeg-9a $JPEG_SOURCE
+COPY ./cots_src/jpeg-9b $JPEG_SOURCE
 RUN cd $JPEG_SOURCE \
     && mkdir -p $JPEG_PREFIX/bin/cjpeg \
     && mkdir -p $JPEG_PREFIX/man/man1 \
@@ -342,13 +346,17 @@ RUN cd $HDF4_SOURCE \
 
 # --------------------------------------
 # Install HDF5
-COPY ./cots_src/hdf5-1.8.15-patch1 $HDF5_SOURCE
+# This option is required to add the high-level library because
+# I selected --enable-threadsafe
+#        --enable-unsupported
+COPY ./cots_src/hdf5-1.8.16 $HDF5_SOURCE
 RUN cd $HDF5_SOURCE \
     && ./configure --prefix=$HDF5_PREFIX \
         --with-jpeg=$JPEGINC,$JPEGLIB \
         --with-zlib=$ZLIBINC,$ZLIBLIB \
         --with-szlib=$SZIPINC,$SZIPLIB \
         --enable-threadsafe \
+        --enable-unsupported \
         --with-pthread=/usr/lib64 \
         --enable-shared \
         --enable-static \
@@ -360,7 +368,7 @@ RUN cd $HDF5_SOURCE \
 
 # --------------------------------------
 # Install netcdf-4
-COPY ./cots_src/netcdf-4.3.3.1 $NETCDF4_SOURCE
+COPY ./cots_src/netcdf-4.4.0 $NETCDF4_SOURCE
 RUN cd $NETCDF4_SOURCE \
     && CPPFLAGS="-I$CURLINC -I$ZLIBINC -I$SZIPINC -I$HDF5INC" \
        LDFLAGS="-L$CURLLIB -L$ZLIBLIB -L$SZIPLIB -L$HDF5LIB" \
@@ -394,8 +402,21 @@ RUN cd $HDFEOS_SOURCE \
 #    && rm -rf $HDFEOS_SOURCE
 
 # --------------------------------------
+# Install proj4
+COPY ./cots_src/proj-4.9.1 $PROJ4_SOURCE
+RUN cd $PROJ4_SOURCE \
+    && ./configure --prefix=$PROJ4_PREFIX \
+        --enable-shared \
+        --enable-static \
+    && make \
+    && make install \
+    && make clean \
+    && cd ..
+#    && rm -rf $PROJ4_SOURCE
+
+# --------------------------------------
 # Install GDAL
-COPY ./cots_src/gdal-1.11.1 $GDAL_SOURCE
+COPY ./cots_src/gdal-1.11.4 $GDAL_SOURCE
 RUN . /python-virtual/bin/activate \
     && cd $GDAL_SOURCE \
     && ./configure --prefix=$GDAL_PREFIX \
@@ -403,6 +424,7 @@ RUN . /python-virtual/bin/activate \
         --enable-shared \
         --enable-static \
         --with-python=yes \
+        --with-static-proj4=/usr/local/lib \
     && make \
     && make install \
     && make clean \
@@ -414,6 +436,7 @@ RUN . /python-virtual/bin/activate \
 # Python virtual environment setup
 # GDAL is installed into python through the above installation
 RUN . /python-virtual/bin/activate \
+    && pip install --upgrade pip \
     && pip install \
         --global-option=build_ext \
         --global-option="-L/usr/local/lib" \
@@ -423,7 +446,8 @@ RUN . /python-virtual/bin/activate \
         requests==2.2.1 \
         lxml==3.3.3 \
         numpy==1.10.2 \
-        matplotlib==1.5.0
+        matplotlib==1.5.0 \
+        h5py==2.5.0
 
 # ????????????? DO WE EVEN NEED SCIPY ??????????????????
 # This works, but I don't know if it is needed yet
@@ -438,9 +462,5 @@ RUN . /python-virtual/bin/activate \
 #        --global-option=build_ext \
 #        --global-option="-L/usr/local/lib" \
 #        --global-option="-I/usr/local/include/libxml2" \
-#        matplotlib==1.5.0
-
-# These don't work yet
-#
-#
+#        h5py==2.5.0
 
