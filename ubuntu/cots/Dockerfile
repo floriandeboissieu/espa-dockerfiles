@@ -414,6 +414,30 @@ RUN cd $PROJ4_SOURCE \
     && cd ..
 #    && rm -rf $PROJ4_SOURCE
 
+# ----------------------------------------------------------------------------
+# Python virtual environment setup
+# GDAL is installed into python through the below installation
+# ----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
+# Numpy must be installed into python before building GDAL
+# ----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
+RUN . /python-virtual/bin/activate \
+    && pip install --upgrade pip \
+    && pip install \
+        --global-option=build_ext \
+        --global-option="-L/usr/local/lib" \
+        --global-option="-I/usr/local/include" \
+        --global-option="-I/usr/local/include/libxml2" \
+        python-dateutil==1.5 \
+        requests==2.2.1 \
+        lxml==3.3.3 \
+        numpy==1.10.2 \
+        matplotlib==1.5.0 \
+        h5py==2.5.0
+
 # --------------------------------------
 # Install GDAL
 COPY ./cots_src/gdal-1.11.4 $GDAL_SOURCE
@@ -430,24 +454,6 @@ RUN . /python-virtual/bin/activate \
     && make clean \
     && cd ..
 #    && rm -rf $GDAL_SOURCE
-
-
-# ----------------------------------------------------------------------------
-# Python virtual environment setup
-# GDAL is installed into python through the above installation
-RUN . /python-virtual/bin/activate \
-    && pip install --upgrade pip \
-    && pip install \
-        --global-option=build_ext \
-        --global-option="-L/usr/local/lib" \
-        --global-option="-I/usr/local/include" \
-        --global-option="-I/usr/local/include/libxml2" \
-        python-dateutil==1.5 \
-        requests==2.2.1 \
-        lxml==3.3.3 \
-        numpy==1.10.2 \
-        matplotlib==1.5.0 \
-        h5py==2.5.0
 
 # ????????????? DO WE EVEN NEED SCIPY ??????????????????
 # This works, but I don't know if it is needed yet
