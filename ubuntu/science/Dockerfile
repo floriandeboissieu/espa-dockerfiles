@@ -22,7 +22,7 @@ ENV PREFIX=/usr/local \
 RUN mkdir -p /espa/src
 
 RUN REPO_NAME=espa-product-formatter \
-    && REPO_TAG=remotes/origin/dev_v1.6.0 \
+    && REPO_TAG=product_formatter_v1.6.0 \
     && cd /espa/src \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
@@ -33,7 +33,7 @@ RUN REPO_NAME=espa-product-formatter \
     && rm -rf ${REPO_NAME}
 
 RUN REPO_NAME=espa-spectral-indices \
-    && REPO_TAG=remotes/origin/dev_v2.4.0 \
+    && REPO_TAG=spectral_indices_v2.4.0 \
     && cd /espa/src \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
@@ -44,7 +44,7 @@ RUN REPO_NAME=espa-spectral-indices \
     && rm -rf ${REPO_NAME}
 
 RUN REPO_NAME=espa-cloud-masking \
-    && REPO_TAG=remotes/origin/dev_mar2016 \
+    && REPO_TAG=2016_Mar \
     && cd /espa/src \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
@@ -55,7 +55,7 @@ RUN REPO_NAME=espa-cloud-masking \
     && rm -rf ${REPO_NAME}
 
 RUN REPO_NAME=espa-surface-water-extent \
-    && REPO_TAG=remotes/origin/dev_mar2016 \
+    && REPO_TAG=2016_Mar \
     && cd /espa/src \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
@@ -66,7 +66,7 @@ RUN REPO_NAME=espa-surface-water-extent \
     && rm -rf ${REPO_NAME}
 
 RUN REPO_NAME=espa-surface-reflectance \
-    && REPO_TAG=remotes/origin/dev_mar2016 \
+    && REPO_TAG=surface_reflectance_mar2016 \
     && cd /espa/src \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
@@ -77,7 +77,7 @@ RUN REPO_NAME=espa-surface-reflectance \
     && rm -rf ${REPO_NAME}
 
 RUN REPO_NAME=espa-land-surface-temperature \
-    && REPO_TAG=2015_Dec \
+    && REPO_TAG=2016_Mar \
     && cd /espa/src \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
@@ -88,6 +88,12 @@ RUN REPO_NAME=espa-land-surface-temperature \
     && rm -rf ${REPO_NAME}
 
 # ----------------------------------------------------------------------------
+# Install the espa-python-library
+RUN . /python-virtual/bin/activate \
+    && pip install \
+        --upgrade git+https://github.com/USGS-EROS/espa-python-library
+
+# ----------------------------------------------------------------------------
 # ESPA Runtime Environment Variable Configuration
 # /usr/local/.....
 ENV ESPA_SCHEMA=/usr/local/espa-product-formatter/schema/espa_internal_metadata_v1_3.xsd \
@@ -96,12 +102,15 @@ ENV ESPA_SCHEMA=/usr/local/espa-product-formatter/schema/espa_internal_metadata_
 
 # /home/espa/.....
 ENV ESPA_LAND_MASS_POLYGON=/home/espa/auxiliaries/land_water_polygon/land_no_buf.ply \
-    ESPA_WORK_DIR=/home/espa/work-dir \
+    ESPA_AUX_DIR=/home/espa/auxiliaries \
     ESPA_DISTRIBUTION_DIR=/home/espa/output-data \
-    IAS_DATA_DIR=/home/espa/auxiliaries/gls-dem \
-    LEDAPS_AUX_DIR=/home/espa/auxiliaries/L17 \
-    L8_AUX_DIR=/home/espa/auxiliaries/L8 \
-    LST_AUX_DIR=/home/espa/auxiliaries/LST/NARR
+    ESPA_WORK_DIR=/home/espa/work-dir
+
+# /home/espa/.....
+ENV ESPA_ELEVATION_DIR=$ESPA_AUX_DIR/elevation \
+    LEDAPS_AUX_DIR=$ESPA_AUX_DIR/L17 \
+    L8_AUX_DIR=$ESPA_AUX_DIR/L8 \
+    LST_AUX_DIR=$ESPA_AUX_DIR/LST/NARR
 
 # Other
 ENV ESPA_DISTRIBUTION_METHOD=local \
@@ -112,9 +121,6 @@ ENV PYTHONPATH=/usr/local/python
 
 # Threading
 ENV OMP_NUM_THREADS=1
-
-# MODTRAN_PATH=/home/espa/MODTRAN
-# MODTRAN_DATA_DIR=/home/espa/MODTRAN/DATA
 
 
 # ----------------------------------------------------------------------------
