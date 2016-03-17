@@ -1,5 +1,11 @@
 # NOT WORKING - DEVELOPMENT - PROTOTYPE - WORK IN PROGRESS
 
+### Source of External Dependencies
+| Dependency  | Version | Source | Required |
+| ------------- | ------------- | ------------- | ------------- |
+| Information Cell  | Information Cell | Information Cell  | Information Cell  |
+| Information Cell  | Information Cell | Information Cell  | Information Cell  |
+
 ### General Docker Notes
 
 #### Mounting A Volume
