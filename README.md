@@ -2,6 +2,9 @@
 
 ### Source of External Dependencies
 <b>Note:</b> At this point in time, the dependencies listed here, do not reflect the versions currently used in production.  Production is using older versions.
+
+<b>Note:</b> The "Required" column indicates the dependency is utilized by the processing system.  Otherwise it is probably only used by our auxiliary retrieval and generation tools.
+
 | Dependency  | Version | Source | Required | Information |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | curl | 7.47.1 | http://curl.haxx.se/download.html | No | |
