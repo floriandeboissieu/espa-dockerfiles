@@ -1,6 +1,7 @@
 # NOT WORKING - DEVELOPMENT - PROTOTYPE - WORK IN PROGRESS
 
 ### Source of External Dependencies
+<b>Note:</b> At this point in time, the dependencies listed here, do not reflect the versions currently used in production.  Production is using older versions.
 | Dependency  | Version | Source | Required | Information |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | curl | 7.47.1 | http://curl.haxx.se/download.html | No | |
