@@ -5,12 +5,12 @@
 
 <b>Note:</b> At this point in time, the dependencies listed here, do not reflect the versions currently used in production.  AND AS SUCH HAVE NOT BEEN THROUGH VALIDATION.  Production is using older versions of nearly all dependencies.
 
-<b>Note:</b> The "Required" column indicates the dependency is utilized by the processing system.  Otherwise it is probably only used by our auxiliary retrieval and generation tools.
+<b>Note:</b> The "Required" column indicates the dependency is utilized by the processing system.  Otherwise it is probably only used by our auxiliary retrieval and generation tools and not currently compiled into the image.
 
 | Dependency | Version | Source                                                          | Required | Information |
 | ---------- | ------- | --------------------------------------------------------------- | -------- | ----------- |
-| curl       | 7.47.1  | http://curl.haxx.se/download.html                               | No       | |
-| idn        | 1.32    | ftp://ftp.gnu.org/gnu/libidn/                                   | Yes      | |
+| curl       | 7.47.1  | http://curl.haxx.se/download.html                               | No       | Used by auxiliary generation software |
+| idn        | 1.32    | ftp://ftp.gnu.org/gnu/libidn/                                   | No       | Used by auxiliary generation software |
 | jbigkit    | 2.1     | http://www.cl.cam.ac.uk/~mgk25/jbigkit/                         | Yes      | |
 | jpeg       | 9b      | http://www.ijg.org/files/                                       | Yes      | |
 | libxml2    | 2.9.3   | ftp://xmlsoft.org/libxml2/                                      | Yes      | |
