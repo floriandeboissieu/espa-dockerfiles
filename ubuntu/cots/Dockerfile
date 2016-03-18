@@ -1,8 +1,7 @@
 FROM usgs-espa/ubuntu-python
 MAINTAINER USGS LSRD http://eros.usgs.gov
 
-LABEL description="This is a build containing all of the cots software we use \
-installed into the image."
+LABEL description="This is a build containing all of the cots software we use installed into the image."
 
 
 # ----------------------------------------------------------------------------
@@ -123,8 +122,8 @@ RUN cd $ZLIB_SOURCE \
     && make \
     && make install \
     && make clean \
-    && cd ..
-#    && rm -rf $ZLIB_SOURCE
+    && cd .. \
+    && rm -rf $ZLIB_SOURCE
 
 # --------------------------------------
 # Install xz
@@ -136,8 +135,8 @@ RUN cd $XZ_SOURCE \
     && make \
     && make install \
     && make clean \
-    && cd ..
-#    && rm -rf $XZ_SOURCE
+    && cd .. \
+    && rm -rf $XZ_SOURCE
 
 # --------------------------------------
 # Install szip
@@ -149,8 +148,8 @@ RUN cd $SZIP_SOURCE \
     && make \
     && make install \
     && make clean \
-    && cd ..
-#    && rm -rf $SZIP_SOURCE
+    && cd .. \
+    && rm -rf $SZIP_SOURCE
 
 # --------------------------------------
 # Install libpng
@@ -163,8 +162,8 @@ RUN cd $PNG_SOURCE \
     && make \
     && make install \
     && make clean \
-    && cd ..
-#    && rm -rf $PNG_SOURCE
+    && cd .. \
+    && rm -rf $PNG_SOURCE
 
 # --------------------------------------
 # Install freetype2
@@ -178,8 +177,8 @@ RUN cd $FREETYPE2_SOURCE \
     && make \
     && make install \
     && make clean \
-    && cd ..
-#    && rm -rf $FREETYPE2_SOURCE
+    && cd .. \
+    && rm -rf $FREETYPE2_SOURCE
 
 # --------------------------------------
 # Install libxml2
@@ -194,8 +193,8 @@ RUN cd $XML2_SOURCE \
     && make \
     && make install \
     && make clean \
-    && cd ..
-#    && rm -rf $XML2_SOURCE
+    && cd .. \
+    && rm -rf $XML2_SOURCE
 
 # --------------------------------------
 # Install libxslt
@@ -209,20 +208,20 @@ RUN cd $XSLT_SOURCE \
     && make \
     && make install \
     && make clean \
-    && cd ..
-#    && rm -rf $XSLT_SOURCE
+    && cd .. \
+    && rm -rf $XSLT_SOURCE
 
 # --------------------------------------
 # Install libidn
-COPY ./cots_src/libidn-1.32 $IDN_SOURCE
-RUN cd $IDN_SOURCE \
-    && ./configure --prefix=$IDN_PREFIX \
-        --enable-shared \
-        --enable-static \
-    && make \
-    && make install \
-    && make clean \
-    && cd ..
+#COPY ./cots_src/libidn-1.32 $IDN_SOURCE
+#RUN cd $IDN_SOURCE \
+#    && ./configure --prefix=$IDN_PREFIX \
+#        --enable-shared \
+#        --enable-static \
+#    && make \
+#    && make install \
+#    && make clean \
+#    && cd .. \
 #    && rm -rf $IDN_SOURCE
 
 # --------------------------------------
@@ -248,6 +247,7 @@ RUN cd $WGRIB_SOURCE \
     && make \
     && mkdir -p $WGRIB_PREFIX/bin \
     && cp wgrib $WGRIB_PREFIX/bin \
+    && cd .. \
     && rm -rf $WGRIB_SOURCE
 
 # --------------------------------------
@@ -268,8 +268,8 @@ RUN cd $JPEG_SOURCE \
     && make \
     && make install \
     && make clean \
-    && cd ..
-#    && rm -rf $JPEG_SOURCE
+    && cd .. \
+    && rm -rf $JPEG_SOURCE
 
 # --------------------------------------
 # Install jbigkit
@@ -303,8 +303,8 @@ RUN cd $TIFF_SOURCE \
     && make \
     && make install \
     && make clean \
-    && cd ..
-#    && rm -rf $TIFF_SOURCE
+    && cd .. \
+    && rm -rf $TIFF_SOURCE
 
 # --------------------------------------
 # Install libgeotiff
@@ -322,8 +322,8 @@ RUN cd $GEOTIFF_SOURCE \
     && make \
     && make install \
     && make clean \
-    && cd ..
-#    && rm -rf $GEOTIFF_SOURCE
+    && cd .. \
+    && rm -rf $GEOTIFF_SOURCE
 
 # --------------------------------------
 # Install HDF4
@@ -340,9 +340,9 @@ RUN cd $HDF4_SOURCE \
         --enable-static-exec \
     && make \
     && make install \
-    && cd ..
-#    && make clean \
-#    && rm -rf $HDF4_SOURCE
+    && cd .. \
+    && rm -rf $HDF4_SOURCE
+#    && make clean
 
 # --------------------------------------
 # Install HDF5
@@ -363,8 +363,8 @@ RUN cd $HDF5_SOURCE \
     && make \
     && make install \
     && make clean \
-    && cd ..
-#    && rm -rf $HDF5_SOURCE
+    && cd .. \
+    && rm -rf $HDF5_SOURCE
 
 # --------------------------------------
 # Install netcdf-4
@@ -380,8 +380,8 @@ RUN cd $NETCDF4_SOURCE \
     && make \
     && make install \
     && make clean \
-    && cd ..
-#    && rm -rf $NETCDF4_SOURCE
+    && cd .. \
+    && rm -rf $NETCDF4_SOURCE
 
 # --------------------------------------
 # Install hdfeos2
@@ -398,8 +398,8 @@ RUN cd $HDFEOS_SOURCE \
     && make \
     && make install \
     && make clean \
-    && cd ..
-#    && rm -rf $HDFEOS_SOURCE
+    && cd .. \
+    && rm -rf $HDFEOS_SOURCE
 
 # --------------------------------------
 # Install proj4
@@ -411,8 +411,8 @@ RUN cd $PROJ4_SOURCE \
     && make \
     && make install \
     && make clean \
-    && cd ..
-#    && rm -rf $PROJ4_SOURCE
+    && cd .. \
+    && rm -rf $PROJ4_SOURCE
 
 # ----------------------------------------------------------------------------
 # Python virtual environment setup
@@ -435,8 +435,7 @@ RUN . /python-virtual/bin/activate \
         requests==2.2.1 \
         lxml==3.3.3 \
         numpy==1.10.2 \
-        matplotlib==1.5.0 \
-        h5py==2.5.0
+        matplotlib==1.5.0
 
 # --------------------------------------
 # Install GDAL
@@ -452,8 +451,8 @@ RUN . /python-virtual/bin/activate \
     && make \
     && make install \
     && make clean \
-    && cd ..
-#    && rm -rf $GDAL_SOURCE
+    && cd .. \
+    && rm -rf $GDAL_SOURCE
 
 # ????????????? DO WE EVEN NEED SCIPY ??????????????????
 # This works, but I don't know if it is needed yet
