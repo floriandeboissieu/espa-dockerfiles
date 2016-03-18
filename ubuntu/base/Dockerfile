@@ -1,11 +1,7 @@
-FROM ubuntu:15.04
+FROM ubuntu:15.10
 MAINTAINER USGS LSRD http://eros.usgs.gov
 
-LABEL description="This is a build of our base system with some essential \
-tools installed and/or upgraded."
-
-
-ENV DEBIAN_FRONTEND noninteractive
+LABEL description="This is a build of our base system with some essential tools installed and/or upgraded."
 
 
 # ----------------------------------------------------------------------------
@@ -76,7 +72,7 @@ RUN curl -o /usr/local/bin/gosu -fSL "https://github.com/tianon/gosu/releases/do
 
 # ----------------------------------------------------------------------------
 # Update git to a version that isn't broken
-ENV GIT_VERSION=v2.7.0 \
+ENV GIT_VERSION=v2.7.4 \
     GIT_SOURCE=/usr/local/src/git.git
 
 RUN apt-get update \
