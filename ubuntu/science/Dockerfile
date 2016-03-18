@@ -98,7 +98,7 @@ RUN . /python-virtual/bin/activate \
 # /usr/local/.....
 ENV ESPA_SCHEMA=/usr/local/espa-product-formatter/schema/espa_internal_metadata_v1_3.xsd \
     ESUN=/usr/local/espa-cloud-masking/static_data \
-    LST_DATA_DIR=/usr/local/espa-land-surface-temperature/l5-7_lst/static_data
+    LST_DATA_DIR=/usr/local/espa-land-surface-temperature/lst/static_data
 
 # /home/espa/.....
 ENV ESPA_LAND_MASS_POLYGON=/home/espa/auxiliaries/land_water_polygon/land_no_buf.ply \
