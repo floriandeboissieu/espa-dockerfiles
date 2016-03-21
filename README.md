@@ -30,6 +30,31 @@
 | gdal       | 1.11.4   | http://download.osgeo.org/gdal ftp://ftp.remotesensing.org/gdal | Yes      | |
 | wgrib      | 1.8.1.2c | http://www.cpc.ncep.noaa.gov/products/wesley/wgrib.html         | Yes      | |
 
+### Building the Images
+##### Building the Base Image
+
+Builds repository name "usgs-espa/ubuntu-base".
+
+```make ubuntu-base```
+
+##### Building the Python Image
+
+Builds repository name "usgs-espa/ubuntu-python".
+
+```make ubuntu-python```
+
+##### Building the COTS Image
+
+Builds repository name "usgs-espa/ubuntu-cots".
+
+```make ubuntu-cots```
+
+##### Building the Science Image
+
+Builds repository name "usgs-espa/ubuntu-science".
+
+```make ubuntu-science```
+
 ### General Docker Notes
 
 #### Mounting A Volume
