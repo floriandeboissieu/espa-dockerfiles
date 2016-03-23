@@ -28,6 +28,7 @@ RUN apk add --update \
         xz \
         xz-libs \
         xz-dev \
+        gnupg \
      && rm -rf /var/cache/apk/*
 
 #        wget \
@@ -43,8 +44,6 @@ RUN apk add --update \
 #        autoconf \
 #        automake \
 #        texinfo \
-#        openssl \
-#        openssl-dev \
 #        expat \
 #        gettext \
 #        expat \
