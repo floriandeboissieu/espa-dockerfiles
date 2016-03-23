@@ -22,20 +22,34 @@ RUN apk add --update \
         curl-dev \
         libssh2 \
         libssh2-dev \
-     && rm -rf /var/cache/apk/*
-
-RUN apk add --update \
         xz \
         xz-libs \
         xz-dev \
+        libgpg-error \
+        libassuan \
+        libattr \
+        libcap \
+        ncurses-terminfo-base \
+        ncurses-terminfo \
+        ncurses-libs \
+        pinentry \
+        libgcrypt \
+        libksba \
+        db \
+        libsasl \
+        libldap \
+        npth \
         gnupg \
+        unzip \
+        bzip2 \
+        gzip \
      && rm -rf /var/cache/apk/*
+
+#RUN apk add --update \
+#     && rm -rf /var/cache/apk/*
 
 #        wget \
 #        git \
-#        unzip \
-#        bzip2 \
-#        gzip \
 #        bison \
 #        flex \
 #        bison \
