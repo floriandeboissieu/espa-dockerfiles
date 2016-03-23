@@ -43,25 +43,38 @@ RUN apk add --update \
         unzip \
         bzip2 \
         gzip \
+        expat \
+        pcre \
+        git \
+        wget \
+        binutils-libs \
+        binutils \
+        gmp \
+        isl \
+        libgomp \
+        libatomic \
+        libgcc \
+        mpfr3 \
+        mpc1 \
+        libstdc++ \
+        gcc \
+        libquadmath \
+        libgfortran \
+        gfortran \
+        readline \
+        bash \
      && rm -rf /var/cache/apk/*
 
 #RUN apk add --update \
 #     && rm -rf /var/cache/apk/*
 
-#        wget \
-#        git \
+
 #        bison \
 #        flex \
-#        bison \
-#        gfortran \
-#        libgfortran \
 #        autoconf \
 #        automake \
 #        texinfo \
-#        expat \
 #        gettext \
-#        expat \
-#        expat-dev \
 #        vim \
 #     && rm -rf /var/cache/apk/*
 
@@ -77,20 +90,9 @@ RUN apk add --update \
 #        apt-utils \
 #        build-essential \
 #    && apt-get install -y --no-install-recommends \
-#        openssh-client \
-#        ca-certificates \
-#    && apt-get install -y --no-install-recommends \
 #        file \
-#        curl \
 #    && apt-get install -y --no-install-recommends \
 #        wget \
-#        git \
-#    && apt-get install -y --no-install-recommends \
-#        subversion \
-#        unzip \
-#    && apt-get install -y --no-install-recommends \
-#        bzip2 \
-#        gzip \
 #    && apt-get install -y --no-install-recommends \
 #        xz-utils \
 #        bison \
@@ -108,7 +110,6 @@ RUN apk add --update \
 #        mlocate \
 #    && apt-get install -y --no-install-recommends \
 #        pkg-config \
-#        expat \
 #    && apt-get install -y --no-install-recommends \
 #        gettext \
 #        libexpat-dev \
@@ -122,35 +123,11 @@ RUN apk add --update \
 #     https://github.com/tianon/gosu/releases
 # - This is the source I used to figure out how to install it
 #     https://github.com/docker-library/redis/blob/master/2.8/Dockerfile
-#RUN gpg --keyserver pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4
-#RUN curl -o /usr/local/bin/gosu -fSL "https://github.com/tianon/gosu/releases/download/1.7/gosu-$(dpkg --print-architecture)" \
-#    && curl -o /usr/local/bin/gosu.asc -fSL "https://github.com/tianon/gosu/releases/download/1.7/gosu-$(dpkg --print-architecture).asc" \
-#    && gpg --verify /usr/local/bin/gosu.asc \
-#    && rm /usr/local/bin/gosu.asc \
-#    && chmod +x /usr/local/bin/gosu
-
-
-# ----------------------------------------------------------------------------
-# Update git to a version that isn't broken
-#ENV GIT_VERSION=v2.7.4 \
-#    GIT_SOURCE=/usr/local/src/git.git
-
-#RUN apt-get update \
-#    && apt-get install -y --no-install-recommends \
-#        zlib1g-dev \
-#    && mkdir $GIT_SOURCE \
-#    && cd $GIT_SOURCE \
-#    && git clone \
-#       --depth 1 \
-#       --branch $GIT_VERSION \
-#       https://github.com/git/git.git . \
-#    && make configure \
-#    && ./configure --without-tcltk \
-#    && make \
-#    && make install \
-#    && cd .. \
-#    && rm -rf $GIT_SOURCE \
-#    && apt-get remove -y \
-#        zlib1g-dev \
-#    && apt-get autoremove -y \
-#    && rm -rf /var/lib/apt/lists/*
+# NOTE apk --print-arch returnes x86_64, when it should probably return amd64
+#
+RUN gpg --keyserver pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4
+RUN curl -o /usr/local/bin/gosu -fSL "https://github.com/tianon/gosu/releases/download/1.7/gosu-amd64" \
+    && curl -o /usr/local/bin/gosu.asc -fSL "https://github.com/tianon/gosu/releases/download/1.7/gosu-amd64.asc" \
+    && gpg --verify /usr/local/bin/gosu.asc \
+    && rm /usr/local/bin/gosu.asc \
+    && chmod +x /usr/local/bin/gosu
