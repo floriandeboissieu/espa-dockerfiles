@@ -27,7 +27,7 @@ RUN REPO_NAME=espa-product-formatter \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
     && git checkout ${REPO_TAG} \
-    && make BUILD_STATIC=yes \
+    && make BUILD_STATIC=no \
     && make install \
     && cd .. \
     && rm -rf ${REPO_NAME}
@@ -38,7 +38,7 @@ RUN REPO_NAME=espa-spectral-indices \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
     && git checkout ${REPO_TAG} \
-    && make BUILD_STATIC=yes \
+    && make BUILD_STATIC=no \
     && make install \
     && cd .. \
     && rm -rf ${REPO_NAME}
@@ -49,7 +49,7 @@ RUN REPO_NAME=espa-cloud-masking \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
     && git checkout ${REPO_TAG} \
-    && make BUILD_STATIC=yes \
+    && make BUILD_STATIC=no \
     && make install \
     && cd .. \
     && rm -rf ${REPO_NAME}
@@ -60,7 +60,7 @@ RUN REPO_NAME=espa-surface-water-extent \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
     && git checkout ${REPO_TAG} \
-    && make BUILD_STATIC=yes \
+    && make BUILD_STATIC=no \
     && make install \
     && cd .. \
     && rm -rf ${REPO_NAME}
@@ -71,7 +71,7 @@ RUN REPO_NAME=espa-surface-reflectance \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
     && git checkout ${REPO_TAG} \
-    && make BUILD_STATIC=yes \
+    && make BUILD_STATIC=no \
     && make install \
     && cd .. \
     && rm -rf ${REPO_NAME}
@@ -82,7 +82,7 @@ RUN REPO_NAME=espa-land-surface-temperature \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
     && git checkout ${REPO_TAG} \
-    && make BUILD_STATIC=yes \
+    && make BUILD_STATIC=no \
     && make install \
     && cd .. \
     && rm -rf ${REPO_NAME}
