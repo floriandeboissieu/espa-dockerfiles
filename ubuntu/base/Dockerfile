@@ -72,7 +72,7 @@ RUN curl -o /usr/local/bin/gosu -fSL "https://github.com/tianon/gosu/releases/do
 
 # ----------------------------------------------------------------------------
 # Update git to a version that isn't broken
-ENV GIT_VERSION=v2.7.4 \
+ENV GIT_VERSION=v2.8.1 \
     GIT_SOURCE=/usr/local/src/git.git
 
 RUN apt-get update \
