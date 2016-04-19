@@ -19,7 +19,7 @@ clean-containers:
 clean-images:
 	@-./remove-dangling-images.sh
 
-.PHONY: all build-all base clean clean-containers clean-images base-build base-python base-cots base-science ubuntu-base ubuntu-python ubuntu-cots ubuntu-science
+.PHONY: all build-all base clean clean-containers clean-images base-build base-python base-cots base-science ubuntu-base ubuntu-python ubuntu-cots ubuntu-science centos-base centos-python centos-cots centos-science
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Common
@@ -52,4 +52,20 @@ ubuntu-cots: ubuntu-python
 
 ubuntu-science: ubuntu-cots
 	@SYSTEM=ubuntu make base-science
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# CentOS
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+centos-base:
+	@SYSTEM=centos make base-build
+
+centos-python: centos-base
+	@SYSTEM=centos make base-python
+
+centos-cots: centos-python
+	@SYSTEM=centos make base-cots
+
+centos-science: centos-cots
+	@SYSTEM=centos make base-science
 
