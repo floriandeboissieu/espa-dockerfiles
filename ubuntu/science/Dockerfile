@@ -90,8 +90,8 @@ RUN REPO_NAME=espa-land-surface-temperature \
 # ----------------------------------------------------------------------------
 # Install the espa-python-library
 RUN . /python-virtual/bin/activate \
-    && pip install \
-        --upgrade git+https://github.com/USGS-EROS/espa-python-library
+    && pip install --upgrade \
+       git+https://github.com/USGS-EROS/espa-python-library.git@v1.0.0#espa
 
 # ----------------------------------------------------------------------------
 # Add an entrypoint so that we execute the specified application as the
