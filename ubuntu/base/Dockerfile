@@ -1,4 +1,4 @@
-FROM ubuntu:15.10
+FROM ubuntu:16.04
 MAINTAINER USGS LSRD http://eros.usgs.gov
 
 LABEL description="This is a build of our base system with some essential tools installed and/or upgraded."
