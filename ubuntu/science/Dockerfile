@@ -1,4 +1,4 @@
-FROM usgs-espa/ubuntu-cots
+FROM usgs.espa.ubuntu.cots
 MAINTAINER USGS LSRD http://eros.usgs.gov
 
 LABEL description="This is a build containing all of the science processing \

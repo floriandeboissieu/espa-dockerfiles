@@ -1,4 +1,4 @@
-FROM usgs-espa/ubuntu-python
+FROM usgs.espa.ubuntu.python
 MAINTAINER USGS LSRD http://eros.usgs.gov
 
 LABEL description="This is a build containing all of the cots software we use installed into the image."

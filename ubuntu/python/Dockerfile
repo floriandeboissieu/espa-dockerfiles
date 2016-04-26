@@ -1,4 +1,4 @@
-FROM usgs-espa/ubuntu-base
+FROM usgs.espa.ubuntu.base
 MAINTAINER USGS LSRD http://eros.usgs.gov
 
 LABEL description="This is a build from our base system which includes the default python along with some python tools"
