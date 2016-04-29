@@ -1,6 +1,8 @@
     Library    Current          New  Internet Source I Found And Used
 -----------  ---------  -----------  ---------------------------------------------
       curl:   (7.38.0)     (7.47.1)  http://curl.haxx.se/download.html
+                                     https://curl.haxx.se/download/curl-7.48.0.tar.gz
+                                     https://curl.haxx.se/download/curl-7.48.0.tar.gz.asc
                                      Not Required
        idn:     (1.29)       (1.32)  ftp://ftp.gnu.org/gnu/libidn/
                                      Required
