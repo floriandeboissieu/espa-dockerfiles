@@ -1,8 +1,6 @@
     Library    Current          New  Internet Source I Found And Used
 -----------  ---------  -----------  ---------------------------------------------
       curl:   (7.38.0)     (7.47.1)  http://curl.haxx.se/download.html
-                                     https://curl.haxx.se/download/curl-7.48.0.tar.gz
-                                     https://curl.haxx.se/download/curl-7.48.0.tar.gz.asc
                                      Not Required
        idn:     (1.29)       (1.32)  ftp://ftp.gnu.org/gnu/libidn/
                                      Required
@@ -32,7 +30,7 @@ libgeotiff:    (1.2.5)      (1.4.1)  http://download.osgeo.org/geotiff/libgeotif
                                      Required
    hdfeos2:     (2.18)       (2.19)  ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos/latest_release/
                                      Required
- freetype2:    (?.?.?)      (2.6.2)  http://sourceforge.net/projects/freetype/files/freetype2/
+ freetype2:    (?.?.?)      (2.6.3)  http://sourceforge.net/projects/freetype/files/freetype2/
                                      Required for python requirements
      proj4:    (?.?.?)      (4.9.1)  https://trac.osgeo.org/proj/
                                      Required for GDAL
