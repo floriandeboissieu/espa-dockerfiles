@@ -123,6 +123,11 @@ retrieve_tool $tool https://www.python.org/ftp/python/2.7.11
 validate_tool $tool
 
 #-----------------------------------------------------------------------------
+tool=gosu-amd64
+retrieve_tool $tool https://github.com/tianon/gosu/releases/download/1.8
+validate_tool $tool
+
+#-----------------------------------------------------------------------------
 #tool=package_name
 #retrieve_tool $tool URL
 #validate_tool $tool
