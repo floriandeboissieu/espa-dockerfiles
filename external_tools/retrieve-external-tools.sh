@@ -118,16 +118,6 @@ retrieve_tool $tool ftp://ftp.cpc.ncep.noaa.gov/wd51we/wgrib
 validate_tool $tool
 
 #-----------------------------------------------------------------------------
-#tool=XXX
-#retrieve_tool $tool XXX
-#validate_tool $tool
-
-#-----------------------------------------------------------------------------
-#tool=XXX
-#retrieve_tool $tool XXX
-#validate_tool $tool
-
-#-----------------------------------------------------------------------------
-#tool=XXX
-#retrieve_tool $tool XXX
+#tool=package_name
+#retrieve_tool $tool URL
 #validate_tool $tool
