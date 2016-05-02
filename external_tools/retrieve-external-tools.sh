@@ -51,6 +51,51 @@ retrieve_tool $tool ftp://xmlsoft.org/libxslt
 validate_tool $tool
 
 #-----------------------------------------------------------------------------
+tool=szip-2.1.tar.gz
+retrieve_tool $tool http://www.hdfgroup.org/ftp/lib-external/szip/2.1/src
+validate_tool $tool
+
+#-----------------------------------------------------------------------------
+tool=tiff-4.0.6.tar.gz
+retrieve_tool $tool http://download.osgeo.org/libtiff
+validate_tool $tool
+
+#-----------------------------------------------------------------------------
+tool=libgeotiff-1.4.1.tar.gz
+retrieve_tool $tool http://download.osgeo.org/geotiff/libgeotiff
+validate_tool $tool
+
+#-----------------------------------------------------------------------------
+tool=xz-5.2.2.tar.gz
+retrieve_tool $tool http://tukaani.org/xz
+validate_tool $tool
+
+#-----------------------------------------------------------------------------
+tool=zlib-1.2.8.tar.gz
+retrieve_tool $tool http://zlib.net
+validate_tool $tool
+
+#-----------------------------------------------------------------------------
+tool=hdf-4.2.11.tar.gz
+retrieve_tool $tool http://www.hdfgroup.org/ftp/HDF/HDF_Current/src
+validate_tool $tool
+
+#-----------------------------------------------------------------------------
+tool=hdf5-1.8.16.tar.gz
+retrieve_tool $tool http://www.hdfgroup.org/ftp/HDF5/current/src
+validate_tool $tool
+
+#-----------------------------------------------------------------------------
+#tool=XXX
+#retrieve_tool $tool XXX
+#validate_tool $tool
+
+#-----------------------------------------------------------------------------
+#tool=XXX
+#retrieve_tool $tool XXX
+#validate_tool $tool
+
+#-----------------------------------------------------------------------------
 #tool=XXX
 #retrieve_tool $tool XXX
 #validate_tool $tool
