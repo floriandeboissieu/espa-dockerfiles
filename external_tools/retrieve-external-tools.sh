@@ -118,6 +118,11 @@ retrieve_tool $tool ftp://ftp.cpc.ncep.noaa.gov/wd51we/wgrib
 validate_tool $tool
 
 #-----------------------------------------------------------------------------
+tool=Python-2.7.11.tgz
+retrieve_tool $tool https://www.python.org/ftp/python/2.7.11
+validate_tool $tool
+
+#-----------------------------------------------------------------------------
 #tool=package_name
 #retrieve_tool $tool URL
 #validate_tool $tool
