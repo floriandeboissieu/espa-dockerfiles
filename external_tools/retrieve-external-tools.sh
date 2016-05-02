@@ -86,14 +86,36 @@ retrieve_tool $tool http://www.hdfgroup.org/ftp/HDF5/current/src
 validate_tool $tool
 
 #-----------------------------------------------------------------------------
-#tool=XXX
-#retrieve_tool $tool XXX
-#validate_tool $tool
+tool=netcdf-4.4.0.tar.gz
+retrieve_tool $tool ftp://ftp.unidata.ucar.edu/pub/netcdf
+validate_tool $tool
 
 #-----------------------------------------------------------------------------
-#tool=XXX
-#retrieve_tool $tool XXX
-#validate_tool $tool
+tool=HDF-EOS2.19v1.00.tar.Z
+retrieve_tool $tool ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos/latest_release
+validate_tool $tool
+
+#-----------------------------------------------------------------------------
+version=2.6.3
+tool=freetype-$version\.tar.gz
+retrieve_tool $tool https://sourceforge.net/projects/freetype/files/freetype2/$version
+validate_tool $tool
+
+#-----------------------------------------------------------------------------
+tool=proj-4.9.1.tar.gz
+retrieve_tool $tool http://download.osgeo.org/proj
+validate_tool $tool
+
+#-----------------------------------------------------------------------------
+version=1.11.4
+tool=gdal-$version\.tar.gz
+retrieve_tool $tool http://download.osgeo.org/gdal/$version
+validate_tool $tool
+
+#-----------------------------------------------------------------------------
+tool=wgrib.tar.v1.8.1.2c
+retrieve_tool $tool ftp://ftp.cpc.ncep.noaa.gov/wd51we/wgrib
+validate_tool $tool
 
 #-----------------------------------------------------------------------------
 #tool=XXX
