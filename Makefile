@@ -24,16 +24,24 @@ clean.images:
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 base.build:
-	@docker build -t $(TAG_PREFIX).$(SYSTEM).base $(SYSTEM)/base
+	@docker build -t $(TAG_PREFIX).$(SYSTEM).base \
+         -f $(SYSTEM)/base/Dockerfile .
+
+base.external:
+	@docker build -t $(TAG_PREFIX).$(SYSTEM).external \
+         -f $(SYSTEM)/external/Dockerfile .
 
 base.python:
-	@docker build -t $(TAG_PREFIX).$(SYSTEM).python $(SYSTEM)/python
+	@docker build -t $(TAG_PREFIX).$(SYSTEM).python \
+         -f $(SYSTEM)/python/Dockerfile .
 
 base.cots:
-	@docker build -t $(TAG_PREFIX).$(SYSTEM).cots $(SYSTEM)/cots
+	@docker build -t $(TAG_PREFIX).$(SYSTEM).cots \
+         -f $(SYSTEM)/cots/Dockerfile .
 
 base.science:
-	@docker build -t $(TAG_PREFIX).$(SYSTEM).science $(SYSTEM)/science
+	@docker build -t $(TAG_PREFIX).$(SYSTEM).science \
+         -f $(SYSTEM)/science/Dockerfile .
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Ubuntu
@@ -58,12 +66,12 @@ ubuntu.science: ubuntu.cots
 centos.base:
 	@SYSTEM=centos make base.build
 
-centos.python: centos.base
+centos.external: centos.base
+	@SYSTEM=centos make base.external
+
+centos.python: centos.cots
 	@SYSTEM=centos make base.python
 
-centos.cots: centos.python
-	@SYSTEM=centos make base.cots
-
-centos.science: centos.cots
+centos.science: centos.python
 	@SYSTEM=centos make base.science
 
