@@ -54,5 +54,5 @@ RUN GIT_SOURCE=/usr/local/src/git.git \
 # Initial Python Configuration
 RUN yum install -y python-virtualenv \
     && cd / \
-    && virtualenv python_env \
+    && virtualenv python-env \
     && yum clean metadata

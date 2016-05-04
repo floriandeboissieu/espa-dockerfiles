@@ -115,6 +115,19 @@ ENV LD_LIBRARY_PATH=/usr/local/lib
 # Section for building each of the external packages
 # ----------------------------------------------------------------------------
 
+# Other libraries required from centos
+RUN yum install -y freetype freetype-devel \
+    && yum clean metadata
+RUN yum install -y libpng libpng-devel libpng-static \
+    && yum clean metadata
+RUN yum install -y libxml2 libxml2-devel libxslt libxslt-devel \
+    && yum clean metadata
+RUN yum install -y libjpeg-turbo libjpeg-turbo-devel libjpeg-turbo-static \
+    && yum clean metadata
+RUN yum install -y jbigkit jbigkit-devel jbigkit-libs \
+    && yum clean metadata
+RUN yum install -y libtiff libtiff-devel libtiff-static \
+    && yum clean metadata
 
 # --------------------------------------
 # Install szip
@@ -131,7 +144,6 @@ RUN cd /usr/local/src \
     && cd .. \
     && rm -rf szip-2.1 szip-2.1.tar.gz
 
-
 # --------------------------------------
 # Install wgrib
 COPY external_tools/wgrib.tar.v1.8.1.2c /usr/local/src
@@ -144,290 +156,102 @@ RUN cd /usr/local/src \
     && cd .. \
     && rm -rf wgrib wgrib.tar.v1.8.1.2c
 
-
-RUN yum install -y libjpeg-turbo libjpeg-turbo-devel libjpeg-turbo-static \
-    && yum clean metadata
-RUN yum install -y jbigkit jbigkit-devel jbigkit-libs \
-    && yum clean metadata
-RUN yum install -y libtiff libtiff-devel libtiff-static \
-    && yum clean metadata
-
 # --------------------------------------
-# Install zlib
-#COPY ./cots_src/zlib-1.2.8 $ZLIB_SOURCE
-#RUN cd $ZLIB_SOURCE \
-#    && ./configure --prefix=$ZLIB_PREFIX \
-#    && make \
-#    && make install \
-#    && make clean \
-#    && cd .. \
-#    && rm -rf $ZLIB_SOURCE
-
-# --------------------------------------
-# Install xz
-#COPY ./cots_src/xz-5.2.2 $XZ_SOURCE
-#RUN cd $XZ_SOURCE \
-#    && ./configure --prefix=$XZ_PREFIX \
-#        --enable-shared \
-#        --enable-static \
-#    && make \
-#    && make install \
-#    && make clean \
-#    && cd .. \
-#    && rm -rf $XZ_SOURCE
-
-# --------------------------------------
-# Install libpng
-#COPY ./cots_src/libpng-1.6.20 $PNG_SOURCE
-#RUN cd $PNG_SOURCE \
-#    && ./configure --prefix=$PNG_PREFIX \
-#        --with-zlib-prefix=$ZLIB_PREFIX \
-#        --enable-shared \
-#        --enable-static \
-#    && make \
-#    && make install \
-#    && make clean \
-#    && cd .. \
-#    && rm -rf $PNG_SOURCE
-
-# --------------------------------------
-# Install freetype2
-#COPY ./cots_src/freetype-2.6.3 $FREETYPE2_SOURCE
-#RUN cd $FREETYPE2_SOURCE \
-#    && ./configure --prefix=$FREETYPE2_PREFIX \
-#        --with-zlib=yes \
-#        --with-png=yes \
-#        --enable-shared \
-#        --enable-static \
-#    && make \
-#    && make install \
-#    && make clean \
-#    && cd .. \
-#    && rm -rf $FREETYPE2_SOURCE
-
-# --------------------------------------
-# Install libxml2
-#COPY ./cots_src/libxml2-2.9.3 $XML2_SOURCE
-#RUN cd $XML2_SOURCE \
-#    && ./configure --prefix=$XML2_PREFIX \
-#        --with-zlib=$ZLIB_PREFIX \
-#        --with-lzma=$XZ_PREFIX \
-#        --without-python \
-#        --enable-shared \
-#        --enable-static \
-#    && make \
-#    && make install \
-#    && make clean \
-#    && cd .. \
-#    && rm -rf $XML2_SOURCE
-
-# --------------------------------------
-# Install libxslt
-#COPY ./cots_src/libxslt-1.1.28 $XSLT_SOURCE
-#RUN cd $XSLT_SOURCE \
-#    && ./configure --prefix=$XSLT_PREFIX \
-#        --with-libxml-libs-prefix=$XSLTLIB \
-#        --without-python \
-#        --enable-shared \
-#        --enable-static \
-#    && make \
-#    && make install \
-#    && make clean \
-#    && cd .. \
-#    && rm -rf $XSLT_SOURCE
-
-# --------------------------------------
-# Install libidn
-##COPY ./cots_src/libidn-1.32 $IDN_SOURCE
-##RUN cd $IDN_SOURCE \
-##    && ./configure --prefix=$IDN_PREFIX \
-##        --enable-shared \
-##        --enable-static \
-##    && make \
-##    && make install \
-##    && make clean \
-##    && cd .. \
-##    && rm -rf $IDN_SOURCE
-
-# --------------------------------------
-# Install curl
-##COPY ./cots_src/curl-7.47.1 $CURL_SOURCE
-##RUN cd $CURL_SOURCE \
-##    && ./configure --prefix=$CURL_PREFIX \
-##        --with-zlib=$ZLIB_PREFIX \
-##        --without-ssl \
-##        --without-gssapi \
-##        --enable-shared \
-##        --enable-static \
-##    && make \
-##    && make install \
-##    && make clean \
-##    && cd ..
-##    && rm -rf $CURL_SOURCE
-
-# --------------------------------------
-# Install jpeg
-# These are needed with jpeg-6b
-#    && make install-lib \
-#    && make install-headers \
-#
-#COPY ./cots_src/jpeg-9b $JPEG_SOURCE
-#RUN cd $JPEG_SOURCE \
-#    && mkdir -p $JPEG_PREFIX/bin/cjpeg \
-#    && mkdir -p $JPEG_PREFIX/man/man1 \
-#    && mkdir -p $JPEGINC \
-#    && mkdir -p $JPEGLIB \
-#    && ./configure --prefix=$JPEG_PREFIX \
-#        --enable-shared \
-#        --enable-static \
-#    && make \
-#    && make install \
-#    && make clean \
-#    && cd .. \
-#    && rm -rf $JPEG_SOURCE
-
-# --------------------------------------
-# Install jbigkit
-#COPY ./cots_src/jbigkit-2.1 $JBIG_SOURCE
-#RUN cd $JBIG_SOURCE \
-#    && make \
-#    && mkdir -p $JBIGINC \
-#    && mkdir -p $JBIGLIB \
-#    && /usr/bin/install libjbig/libjbig.a $JBIGLIB/libjbig.a \
-#    && /usr/bin/install libjbig/libjbig85.a $JBIGLIB/libjbig85.a \
-#    && /usr/bin/install libjbig/*.h $JBIGINC \
-#    && make clean \
-#    && cd .. \
-#    && rm -rf $JBIG_SOURCE
-
-# --------------------------------------
-# Install tiff
-#COPY ./cots_src/tiff-4.0.6 $TIFF_SOURCE
-#RUN cd $TIFF_SOURCE \
-#    && ./configure --prefix=$TIFF_PREFIX \
-#        --with-jpeg-include-dir=$JPEGINC \
-#        --with-jpeg-lib-dir=$JPEGLIB \
-#        --with-jbig-include-dir=$JBIGINC \
-#        --with-jbig-lib-dir=$JBIGLIB \
-#        --with-zlib-include-dir=$ZLIBINC \
-#        --with-zlib-lib-dir=$ZLIBLIB \
-#        --with-lzma-include-dir=$LZMAINC \
-#        --with-lzma-lib-dir=$LZMALIB \
-#        --enable-shared \
-#        --enable-static \
-#    && make \
-#    && make install \
-#    && make clean \
-#    && cd .. \
-#    && rm -rf $TIFF_SOURCE
+# Install proj4
+COPY external_tools/proj-4.9.1.tar.gz /usr/local/src
+RUN cd /usr/local/src \
+    && tar -xvf proj-4.9.1.tar.gz \
+    && cd proj-4.9.1 \
+    && ./configure --prefix=/usr/local \
+       --enable-shared \
+       --enable-static \
+    && make \
+    && make install \
+    && cd .. \
+    && rm -rf proj-4.9.1 proj-4.9.1.tar.gz
 
 # --------------------------------------
 # Install libgeotiff
-#COPY ./cots_src/libgeotiff-1.4.1 $GEOTIFF_SOURCE
-#RUN cd $GEOTIFF_SOURCE \
-#    && ./configure --prefix=$GEOTIFF_PREFIX \
-#        --with-jpeg-include-dir=$JPEGINC \
-#        --with-jpeg-lib-dir=$JPEGLIB \
-#        --with-zlib-include-dir=$ZLIBINC \
-#        --with-zlib-lib-dir=$ZLIBLIB \
-#        --with-libtiff=$TIFF_PREFIX \
-#        --without-proj \
-#        --enable-shared \
-#        --enable-static \
-#    && make \
-#    && make install \
-#    && make clean \
-#    && cd .. \
-#    && rm -rf $GEOTIFF_SOURCE
+COPY external_tools/libgeotiff-1.4.1.tar.gz /usr/local/src
+RUN cd /usr/local/src \
+    && tar -xvf libgeotiff-1.4.1.tar.gz \
+    && cd libgeotiff-1.4.1 \
+    && ./configure --prefix=/usr/local \
+       --with-jpeg=yes \
+       --with-zlib=yes \
+       --enable-shared \
+       --enable-static \
+    && make \
+    && make install \
+    && cd .. \
+    && rm -rf libgeotiff-1.4.1 libgeotiff-1.4.1.tar.gz
 
 # --------------------------------------
 # Install HDF4
-#COPY ./cots_src/hdf-4.2.11 $HDF4_SOURCE
-#RUN cd $HDF4_SOURCE \
-#    && ./configure --prefix=$HDF4_PREFIX \
-#        --with-jpeg=$JPEGLIB \
-#        --with-zlib=$ZLIBLIB \
-#        --with-szlib=$SZIPLIB \
-#        --disable-netcdf \
-#        --disable-fortran \
-#        --enable-shared \
-#        --enable-static \
-#        --enable-static-exec \
-#    && make \
-#    && make install \
-#    && cd .. \
-#    && rm -rf $HDF4_SOURCE
-##    && make clean
+COPY external_tools/hdf-4.2.11.tar.gz /usr/local/src
+RUN cd /usr/local/src \
+    && tar -xvf hdf-4.2.11.tar.gz \
+    && cd hdf-4.2.11 \
+    && ./configure --prefix=/usr/local \
+       --disable-fortran \
+       --enable-shared \
+       --enable-static \
+       --enable-static-exec \
+    && make \
+    && make install \
+    && cd .. \
+    && rm -rf hdf-4.2.11  hdf-4.2.11.tar.gz
 
 # --------------------------------------
 # Install HDF5
-# This option is required to add the high-level library because
-# I selected --enable-threadsafe
-#        --enable-unsupported
-#COPY ./cots_src/hdf5-1.8.16 $HDF5_SOURCE
-#RUN cd $HDF5_SOURCE \
-#    && ./configure --prefix=$HDF5_PREFIX \
-#        --with-jpeg=$JPEGINC,$JPEGLIB \
-#        --with-zlib=$ZLIBINC,$ZLIBLIB \
-#        --with-szlib=$SZIPINC,$SZIPLIB \
-#        --enable-threadsafe \
-#        --enable-unsupported \
-#        --with-pthread=/usr/lib64 \
-#        --enable-shared \
-#        --enable-static \
-#    && make \
-#    && make install \
-#    && make clean \
-#    && cd .. \
-#    && rm -rf $HDF5_SOURCE
+COPY external_tools/hdf5-1.8.16.tar.gz /usr/local/src
+RUN cd /usr/local/src \
+    && tar -xvf hdf5-1.8.16.tar.gz \
+    && cd hdf5-1.8.16 \
+    && ./configure --prefix=/usr/local \
+       --enable-threadsafe \
+       --enable-unsupported \
+       --with-pthread=/usr/lib64 \
+       --enable-shared \
+       --enable-static \
+    && make \
+    && make install \
+    && cd .. \
+    && rm -rf hdf5-1.8.16  hdf5-1.8.16.tar.gz
+
 
 # --------------------------------------
 # Install netcdf-4
-#COPY ./cots_src/netcdf-4.4.0 $NETCDF4_SOURCE
-#RUN cd $NETCDF4_SOURCE \
-#    && CPPFLAGS="-I$CURLINC -I$ZLIBINC -I$SZIPINC -I$HDF5INC" \
-#       LDFLAGS="-L$CURLLIB -L$ZLIBLIB -L$SZIPLIB -L$HDF5LIB" \
-#       ./configure --prefix=$NETCDF4_PREFIX \
-#           --enable-netcdf-4 \
-#           --enable-hdf4 \
-#           --enable-shared \
-#           --enable-static \
-#    && make \
-#    && make install \
-#    && make clean \
-#    && cd .. \
-#    && rm -rf $NETCDF4_SOURCE
+COPY external_tools/netcdf-4.4.0.tar.gz /usr/local/src
+RUN cd /usr/local/src \
+    && tar -xvf netcdf-4.4.0.tar.gz \
+    && cd netcdf-4.4.0 \
+    && ./configure --prefix=/usr/local \
+       --enable-netcdf-4 \
+       --enable-hdf4 \
+       --enable-shared \
+       --enable-static \
+    && make \
+    && make install \
+    && cd .. \
+    && rm -rf netcdf-4.4.0 netcdf-4.4.0.tar.gz
 
 # --------------------------------------
-# Install hdfeos2
-#COPY ./cots_src/hdfeos-2.19 $HDFEOS_SOURCE
-#RUN cd $HDFEOS_SOURCE \
-#    && ./configure CC="$HDF4_PREFIX/bin/h4cc -Df2cFortran" \
-#        --prefix=$HDFEOS_PREFIX \
-#        --with-jpeg=$JPEGLIB \
-#        --with-zlib=$ZLIBLIB \
-#        --with-szlib=$SZIPINC,$SZIPLIB \
-#        --enable-install-include \
-#        --disable-shared \
-#        --enable-static \
-#    && make \
-#    && make install \
-#    && make clean \
-#    && cd .. \
-#    && rm -rf $HDFEOS_SOURCE
+# Install HDFEOS2
+COPY external_tools/HDF-EOS2.19v1.00.tar.Z /usr/local/src
+RUN cd /usr/local/src \
+    && tar -xvf HDF-EOS2.19v1.00.tar.Z \
+    && cd hdfeos \
+    && ./configure --prefix=/usr/local \
+       --enable-install-include \
+       --disable-shared \
+       --enable-static \
+       CC="/usr/local/bin/h4cc -Df2cFortran" \
+    && make \
+    && make install \
+    && cd .. \
+    && rm -rf hdfeos HDF-EOS2.19v1.00.tar.Z
 
-# --------------------------------------
-# Install proj4
-#COPY ./cots_src/proj-4.9.1 $PROJ4_SOURCE
-#RUN cd $PROJ4_SOURCE \
-#    && ./configure --prefix=$PROJ4_PREFIX \
-#        --enable-shared \
-#        --enable-static \
-#    && make \
-#    && make install \
-#    && make clean \
-#    && cd .. \
-#    && rm -rf $PROJ4_SOURCE
 
 # ----------------------------------------------------------------------------
 # Python virtual environment setup
@@ -439,48 +263,28 @@ RUN yum install -y libtiff libtiff-devel libtiff-static \
 # ----------------------------------------------------------------------------
 # ----------------------------------------------------------------------------
 # ----------------------------------------------------------------------------
-#RUN . /python-virtual/bin/activate \
-#    && pip install --upgrade pip \
-#    && pip install \
-#        --global-option=build_ext \
-#        --global-option="-L/usr/local/lib" \
-#        --global-option="-I/usr/local/include" \
-#        --global-option="-I/usr/local/include/libxml2" \
-#        python-dateutil==1.5 \
-#        requests==2.2.1 \
-#        lxml==3.3.3 \
-#        numpy==1.10.2 \
-#        matplotlib==1.5.0
+RUN source /python-env/bin/activate \
+    && pip install --upgrade pip \
+    && pip install \
+       python-dateutil==1.5 \
+       requests==2.2.1 \
+       lxml==3.3.3 \
+       numpy==1.10.2 \
+       matplotlib==1.5.0
 
 # --------------------------------------
 # Install GDAL
-#COPY ./cots_src/gdal-1.11.4 $GDAL_SOURCE
-#RUN . /python-virtual/bin/activate \
-#    && cd $GDAL_SOURCE \
-#    && ./configure --prefix=$GDAL_PREFIX \
-#        --with-liblzma \
-#        --enable-shared \
-#        --enable-static \
-#        --with-python=yes \
-#        --with-static-proj4=/usr/local/lib \
-#    && make \
-#    && make install \
-#    && make clean \
-#    && cd .. \
-#    && rm -rf $GDAL_SOURCE
-
-# ????????????? DO WE EVEN NEED SCIPY ??????????????????
-# This works, but I don't know if it is needed yet
-#        scipy==0.16.1
-# NEED THESE FOR SCIPY
-# apt-get install liblapack-pic liblapack-dev libblas-dev
-
-# WORKING ON THE FOLLOWING
-#
-#RUN . /python-virtual/bin/activate \
-#    && pip install \
-#        --global-option=build_ext \
-#        --global-option="-L/usr/local/lib" \
-#        --global-option="-I/usr/local/include/libxml2" \
-#        h5py==2.5.0
-
+COPY external_tools/gdal-1.11.4.tar.gz /usr/local/src
+RUN source /python-env/bin/activate \
+    && cd /usr/local/src \
+    && tar -xvf gdal-1.11.4.tar.gz \
+    && cd gdal-1.11.4 \
+    && ./configure --prefix=/usr/local \
+       --with-python=yes \
+       --with-static-proj4=/usr/local/lib \
+       --enable-shared \
+       --enable-static \
+    && make \
+    && make install \
+    && cd .. \
+    && rm -rf gdal-1.11.4 gdal-1.11.4.tar.gz
