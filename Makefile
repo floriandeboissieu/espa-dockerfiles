@@ -69,9 +69,6 @@ centos.base:
 centos.external: centos.base
 	@SYSTEM=centos make base.external
 
-centos.python: centos.cots
-	@SYSTEM=centos make base.python
-
-centos.science: centos.python
+centos.science: centos.external
 	@SYSTEM=centos make base.science
 
