@@ -102,6 +102,12 @@ retrieve_tool $tool https://sourceforge.net/projects/freetype/files/freetype2/$v
 validate_tool $tool
 
 #-----------------------------------------------------------------------------
+version=1.6.21
+tool=libpng-$version\.tar.gz
+retrieve_tool $tool https://sourceforge.net/projects/libpng/files/libpng16/$version
+validate_tool $tool
+
+#-----------------------------------------------------------------------------
 tool=proj-4.9.1.tar.gz
 retrieve_tool $tool http://download.osgeo.org/proj
 validate_tool $tool
