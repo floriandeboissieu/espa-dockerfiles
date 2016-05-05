@@ -201,7 +201,7 @@ RUN cd $XML2_SOURCE \
 COPY ./cots_src/libxslt-1.1.28 $XSLT_SOURCE
 RUN cd $XSLT_SOURCE \
     && ./configure --prefix=$XSLT_PREFIX \
-        --with-libxml-libs-prefix=$XSLTLIB \
+        --with-libxml-libs-prefix=$XML2LIB \
         --without-python \
         --enable-shared \
         --enable-static \
