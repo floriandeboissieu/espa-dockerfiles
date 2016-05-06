@@ -100,22 +100,6 @@ ENV LD_LIBRARY_PATH=/usr/local/lib
 # Section for building each of the external packages
 # ----------------------------------------------------------------------------
 
-# --------------------------------------
-# Other libraries required from the CENTOS repo
-#RUN yum install -y libjpeg-turbo libjpeg-turbo-devel libjpeg-turbo-static \
-#    && yum clean metadata
-#RUN yum install -y jbigkit jbigkit-devel jbigkit-libs \
-#    && yum clean metadata
-#RUN yum install -y libtiff libtiff-devel libtiff-static \
-#    && yum clean metadata
-
-# --------------------------------------
-# Required for matplotlib only
-RUN yum install -y freetype freetype-devel \
-    && yum clean metadata
-RUN yum install -y libpng libpng-devel libpng-static \
-    && yum clean metadata
-
 
 # --------------------------------------
 # Install zlib
@@ -161,40 +145,41 @@ RUN cd $SRC_DIR \
 
 
 # USE THE CENTOS REPO VERSIONS OF THIS????????
-# CURRENTLY USING THE REPO VERSIONS
-## --------------------------------------
-## Install libpng
-#COPY external_tools/libpng-1.6.21.tar.gz $SRC_DIR
-#RUN cd $SRC_DIR \
-#    && tar -xvf libpng-1.6.21.tar.gz \
-#    && cd libpng-1.6.21 \
-#    && ./configure --prefix=$PNG_PREFIX \
-#        --with-zlib-prefix=$ZLIB_PREFIX \
-#        --enable-shared \
-#        --enable-static \
-#    && make \
-#    && make install \
-#    && cd $SRC_DIR \
-#    && rm -rf libpng-1.6.21 libpng-1.6.21.tar.gz
+# --------------------------------------
+# Install libpng
+COPY external_tools/libpng-1.6.21.tar.gz $SRC_DIR
+RUN cd $SRC_DIR \
+    && tar -xvf libpng-1.6.21.tar.gz \
+    && cd libpng-1.6.21 \
+    && ./configure --prefix=$PNG_PREFIX \
+        --with-zlib-prefix=$ZLIB_PREFIX \
+        --enable-shared \
+        --enable-static \
+    && make \
+    && make install \
+    && cd $SRC_DIR \
+    && rm -rf libpng-1.6.21 libpng-1.6.21.tar.gz
 
 
 # USE THE CENTOS REPO VERSIONS OF THIS????????
-# CURRENTLY USING THE REPO VERSIONS
-## --------------------------------------
-## Install freetype2
-#COPY external_tools/freetype-2.6.3.tar.gz $SRC_DIR
-#RUN cd $SRC_DIR \
-#    && tar -xvf freetype-2.6.3.tar.gz \
-#    && cd freetype-2.6.3 \
-#    && ./configure --prefix=$FREETYPE2_PREFIX \
-#        --with-zlib=yes \
-#        --with-png=yes \
-#        --enable-shared \
-#        --enable-static \
-#    && make \
-#    && make install \
-#    && cd $SRC_DIR \
-#    && rm -rf freetype-2.6.3 freetype-2.6.3.tar.gz
+# --------------------------------------
+# Install freetype2
+# Added a symlink to fix a problem with pip install matplotlib
+# not being able to find the library
+COPY external_tools/freetype-2.6.3.tar.gz $SRC_DIR
+RUN cd $SRC_DIR \
+    && tar -xvf freetype-2.6.3.tar.gz \
+    && cd freetype-2.6.3 \
+    && ./configure --prefix=$FREETYPE2_PREFIX \
+        --with-zlib=yes \
+        --with-png=yes \
+        --enable-shared \
+        --enable-static \
+    && make \
+    && make install \
+    && ln -s /usr/local/include/freetype2/ft2build.h /usr/local/include/ \
+    && cd $SRC_DIR \
+    && rm -rf freetype-2.6.3 freetype-2.6.3.tar.gz
 
 
 # --------------------------------------
@@ -234,149 +219,220 @@ RUN source /python-env/bin/activate \
     && rm -rf libxslt-1.1.28 libxslt-1.1.28.tar.gz
 
 
-## --------------------------------------
-## Install wgrib
-#COPY external_tools/wgrib.tar.v1.8.1.2c /usr/local/src
-#RUN cd /usr/local/src \
-#    && mkdir wgrib \
-#    && tar -xvf wgrib.tar.v1.8.1.2c -C wgrib \
-#    && cd wgrib \
-#    && make \
-#    && cp wgrib /usr/local/bin \
-#    && cd .. \
-#    && rm -rf wgrib wgrib.tar.v1.8.1.2c
+# --------------------------------------
+# Install wgrib
+COPY external_tools/wgrib.tar.v1.8.1.2c $SRC_DIR
+RUN cd $SRC_DIR \
+    && mkdir wgrib \
+    && tar -xvf wgrib.tar.v1.8.1.2c -C wgrib \
+    && cd wgrib \
+    && make \
+    && cp wgrib $WGRIB_PREFIX/bin \
+    && cd $SRC_DIR \
+    && rm -rf wgrib wgrib.tar.v1.8.1.2c
+
+
+# --------------------------------------
+# Install jpeg
+# These are needed with jpeg-6b
+#    && make install-lib \
+#    && make install-headers \
 #
-#
-## --------------------------------------
-## Install proj4
-#COPY external_tools/proj-4.9.1.tar.gz /usr/local/src
-#RUN cd /usr/local/src \
-#    && tar -xvf proj-4.9.1.tar.gz \
-#    && cd proj-4.9.1 \
-#    && ./configure --prefix=/usr/local \
-#       --enable-shared \
-#       --enable-static \
-#    && make \
-#    && make install \
-#    && cd .. \
-#    && rm -rf proj-4.9.1 proj-4.9.1.tar.gz
-#
-#
-## --------------------------------------
-## Install libgeotiff
-#COPY external_tools/libgeotiff-1.4.1.tar.gz /usr/local/src
-#RUN cd /usr/local/src \
-#    && tar -xvf libgeotiff-1.4.1.tar.gz \
-#    && cd libgeotiff-1.4.1 \
-#    && ./configure --prefix=/usr/local \
-#       --with-jpeg=yes \
-#       --with-zlib=yes \
-#       --enable-shared \
-#       --enable-static \
-#    && make \
-#    && make install \
-#    && cd .. \
-#    && rm -rf libgeotiff-1.4.1 libgeotiff-1.4.1.tar.gz
-#
-#
-## --------------------------------------
-## Install HDF4
-#COPY external_tools/hdf-4.2.11.tar.gz /usr/local/src
-#RUN cd /usr/local/src \
-#    && tar -xvf hdf-4.2.11.tar.gz \
-#    && cd hdf-4.2.11 \
-#    && ./configure --prefix=/usr/local \
-#       --disable-fortran \
-#       --enable-shared \
-#       --enable-static \
-#       --enable-static-exec \
-#    && make \
-#    && make install \
-#    && cd .. \
-#    && rm -rf hdf-4.2.11  hdf-4.2.11.tar.gz
-#
-#
-## --------------------------------------
-## Install HDF5
-#COPY external_tools/hdf5-1.8.16.tar.gz /usr/local/src
-#RUN cd /usr/local/src \
-#    && tar -xvf hdf5-1.8.16.tar.gz \
-#    && cd hdf5-1.8.16 \
-#    && ./configure --prefix=/usr/local \
-#       --enable-threadsafe \
-#       --enable-unsupported \
-#       --with-pthread=/usr/lib64 \
-#       --enable-shared \
-#       --enable-static \
-#    && make \
-#    && make install \
-#    && cd .. \
-#    && rm -rf hdf5-1.8.16  hdf5-1.8.16.tar.gz
-#
-#
-## --------------------------------------
-## Install netcdf-4
-#COPY external_tools/netcdf-4.4.0.tar.gz /usr/local/src
-#RUN cd /usr/local/src \
-#    && tar -xvf netcdf-4.4.0.tar.gz \
-#    && cd netcdf-4.4.0 \
-#    && ./configure --prefix=/usr/local \
-#       --enable-netcdf-4 \
-#       --enable-hdf4 \
-#       --enable-shared \
-#       --enable-static \
-#    && make \
-#    && make install \
-#    && cd .. \
-#    && rm -rf netcdf-4.4.0 netcdf-4.4.0.tar.gz
-#
-#
-## --------------------------------------
-## Install HDFEOS2
-#COPY external_tools/HDF-EOS2.19v1.00.tar.Z /usr/local/src
-#RUN cd /usr/local/src \
-#    && tar -xvf HDF-EOS2.19v1.00.tar.Z \
-#    && cd hdfeos \
-#    && ./configure --prefix=/usr/local \
-#       --enable-install-include \
-#       --disable-shared \
-#       --enable-static \
-#       CC="/usr/local/bin/h4cc -Df2cFortran" \
-#    && make \
-#    && make install \
-#    && cd .. \
-#    && rm -rf hdfeos HDF-EOS2.19v1.00.tar.Z
-#
-#
-## ----------------------------------------------------------------------------
-## Python virtual environment setup
-## GDAL is installed into python through the below installation, because Numpy
-## must be installed into python before building GDAL
-## --------------------------------------
-#RUN source /python-env/bin/activate \
-#    && pip install --upgrade pip \
-#    && pip install \
-#       python-dateutil==1.5 \
-#       requests==2.2.1 \
-#       lxml==3.3.3 \
-#       numpy==1.10.2 \
-#       matplotlib==1.5.0
-#
-#
-## --------------------------------------
-## Install GDAL
-#COPY external_tools/gdal-1.11.4.tar.gz /usr/local/src
-#RUN source /python-env/bin/activate \
-#    && cd /usr/local/src \
-#    && tar -xvf gdal-1.11.4.tar.gz \
-#    && cd gdal-1.11.4 \
-#    && ./configure --prefix=/usr/local \
-#       --with-liblzma \
-#       --with-python=yes \
-#       --with-static-proj4=/usr/local/lib \
-#       --enable-shared \
-#       --enable-static \
-#    && make \
-#    && make install \
-#    && cd .. \
-#    && rm -rf gdal-1.11.4 gdal-1.11.4.tar.gz
+COPY external_tools/jpegsrc.v9b.tar.gz $SRC_DIR
+RUN cd $SRC_DIR \
+    && tar -xvf jpegsrc.v9b.tar.gz \
+    && cd jpeg-9b \
+    && ./configure --prefix=$JPEG_PREFIX \
+        --enable-shared \
+        --enable-static \
+    && make \
+    && make install \
+    && cd $SRC_DIR \
+    && rm -rf jpeg-9b jpegsrc.v9b.tar.gz
+
+
+# --------------------------------------
+# Install jbigkit
+COPY external_tools/jbigkit-2.1-espa.tar.gz $SRC_DIR
+RUN cd $SRC_DIR \
+    && tar -xvf jbigkit-2.1-espa.tar.gz \
+    && cd jbigkit-2.1 \
+    && make \
+    && /usr/bin/install libjbig/libjbig.a $JBIGLIB/libjbig.a \
+    && /usr/bin/install libjbig/libjbig85.a $JBIGLIB/libjbig85.a \
+    && /usr/bin/install libjbig/*.h $JBIGINC \
+    && cd $SRC_DIR \
+    && rm -rf jbigkit-2.1  jbigkit-2.1-espa.tar.gz
+
+
+# --------------------------------------
+# Install proj4
+COPY external_tools/proj-4.9.1.tar.gz $SRC_DIR
+RUN cd $SRC_DIR \
+    && tar -xvf proj-4.9.1.tar.gz \
+    && cd proj-4.9.1 \
+    && ./configure --prefix=$PROJ4_PREFIX \
+       --enable-shared \
+       --enable-static \
+    && make \
+    && make install \
+    && cd $SRC_DIR \
+    && rm -rf proj-4.9.1 proj-4.9.1.tar.gz
+
+
+# --------------------------------------
+# Install tiff
+COPY external_tools/tiff-4.0.6.tar.gz $SRC_DIR
+RUN cd $SRC_DIR \
+    && tar -xvf tiff-4.0.6.tar.gz \
+    && cd tiff-4.0.6 \
+    && ./configure --prefix=$TIFF_PREFIX \
+        --with-jpeg-include-dir=$JPEGINC \
+        --with-jpeg-lib-dir=$JPEGLIB \
+        --with-jbig-include-dir=$JBIGINC \
+        --with-jbig-lib-dir=$JBIGLIB \
+        --with-zlib-include-dir=$ZLIBINC \
+        --with-zlib-lib-dir=$ZLIBLIB \
+        --with-lzma-include-dir=$LZMAINC \
+        --with-lzma-lib-dir=$LZMALIB \
+        --enable-shared \
+        --enable-static \
+    && make \
+    && make install \
+    && cd $SRC_DIR \
+    && rm -rf tiff-4.0.6 tiff-4.0.6.tar.gz
+
+
+# --------------------------------------
+# Install libgeotiff
+COPY external_tools/libgeotiff-1.4.1.tar.gz $SRC_DIR
+RUN cd $SRC_DIR \
+    && tar -xvf libgeotiff-1.4.1.tar.gz \
+    && cd libgeotiff-1.4.1 \
+    && ./configure --prefix=$GEOTIFF_PREFIX \
+        --with-jpeg-include-dir=$JPEGINC \
+        --with-jpeg-lib-dir=$JPEGLIB \
+        --with-zlib-include-dir=$ZLIBINC \
+        --with-zlib-lib-dir=$ZLIBLIB \
+       --enable-shared \
+       --enable-static \
+    && make \
+    && make install \
+    && cd $SRC_DIR \
+    && rm -rf libgeotiff-1.4.1 libgeotiff-1.4.1.tar.gz
+
+
+# --------------------------------------
+# Install HDF4
+COPY external_tools/hdf-4.2.11.tar.gz $SRC_DIR
+RUN cd $SRC_DIR \
+    && tar -xvf hdf-4.2.11.tar.gz \
+    && cd hdf-4.2.11 \
+    && ./configure --prefix=$HDF4_PREFIX \
+        --with-jpeg=$JPEGLIB \
+        --with-zlib=$ZLIBLIB \
+        --with-szlib=$SZIPLIB \
+       --disable-fortran \
+       --enable-shared \
+       --enable-static \
+       --enable-static-exec \
+    && make \
+    && make install \
+    && cd $SRC_DIR \
+    && rm -rf hdf-4.2.11 hdf-4.2.11.tar.gz
+
+
+# --------------------------------------
+# Install HDF5
+COPY external_tools/hdf5-1.8.16.tar.gz $SRC_DIR
+RUN cd $SRC_DIR \
+    && tar -xvf hdf5-1.8.16.tar.gz \
+    && cd hdf5-1.8.16 \
+    && ./configure --prefix=$HDF5_PREFIX \
+        --with-jpeg=$JPEGINC,$JPEGLIB \
+        --with-zlib=$ZLIBINC,$ZLIBLIB \
+        --with-szlib=$SZIPINC,$SZIPLIB \
+       --enable-threadsafe \
+       --enable-unsupported \
+       --with-pthread=/usr/lib64 \
+       --enable-shared \
+       --enable-static \
+    && make \
+    && make install \
+    && cd $SRC_DIR \
+    && rm -rf hdf5-1.8.16 hdf5-1.8.16.tar.gz
+
+
+# --------------------------------------
+# Install netcdf-4
+COPY external_tools/netcdf-4.4.0.tar.gz $SRC_DIR
+RUN cd $SRC_DIR \
+    && tar -xvf netcdf-4.4.0.tar.gz \
+    && cd netcdf-4.4.0 \
+    && ./configure --prefix=$NETCDF4_PREFIX \
+       --enable-netcdf-4 \
+       --enable-hdf4 \
+       --enable-shared \
+       --enable-static \
+    && make \
+    && make install \
+    && cd $SRC_DIR \
+    && rm -rf netcdf-4.4.0 netcdf-4.4.0.tar.gz
+
+
+# --------------------------------------
+# Install HDFEOS2
+COPY external_tools/HDF-EOS2.19v1.00.tar.Z $SRC_DIR
+RUN cd $SRC_DIR \
+    && tar -xvf HDF-EOS2.19v1.00.tar.Z \
+    && cd hdfeos \
+    && ./configure --prefix=$HDFEOS_PREFIX \
+        --with-jpeg=$JPEGLIB \
+        --with-zlib=$ZLIBLIB \
+        --with-szlib=$SZIPINC,$SZIPLIB \
+       --enable-install-include \
+       --disable-shared \
+       --enable-static \
+       CC="/usr/local/bin/h4cc -Df2cFortran" \
+    && make \
+    && make install \
+    && cd $SRC_DIR \
+    && rm -rf hdfeos HDF-EOS2.19v1.00.tar.Z
+
+
+# ----------------------------------------------------------------------------
+# Python virtual environment setup
+# GDAL is installed into python through the below installation, because Numpy
+# must be installed into python before building GDAL
+# --------------------------------------
+RUN source /python-env/bin/activate \
+    && pip install --upgrade pip \
+    && pip install \
+        --global-option=build_ext \
+        --global-option="-L/usr/local/lib" \
+        --global-option="-I/usr/local/include" \
+        --global-option="-I/usr/local/include/libxml2" \
+        python-dateutil==2.5.3 \
+        requests==2.10.0 \
+        lxml==3.6.0 \
+        numpy==1.11.0 \
+        matplotlib==1.5.1
+
+
+# --------------------------------------
+# Install GDAL
+COPY external_tools/gdal-1.11.4.tar.gz $SRC_DIR
+RUN source /python-env/bin/activate \
+    && cd $SRC_DIR \
+    && tar -xvf gdal-1.11.4.tar.gz \
+    && cd gdal-1.11.4 \
+    && ./configure --prefix=$GDAL_PREFIX \
+       --with-liblzma \
+       --with-python=yes \
+       --with-static-proj4=$PROJ4_LIB \
+       --enable-shared \
+       --enable-static \
+    && make \
+    && make install \
+    && cd $SRC_DIR \
+    && rm -rf gdal-1.11.4 gdal-1.11.4.tar.gz

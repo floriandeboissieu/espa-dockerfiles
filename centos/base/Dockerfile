@@ -21,6 +21,9 @@ RUN chmod +x /usr/local/bin/gosu
 # ----------------------------------------------------------------------------
 # Common tool and applications provided by the base system
 RUN yum group install -y "Development Tools" \
+    && yum install -y glibc-static \
+    && yum install -y libgfortran-static \
+    && yum install -y libquadmath-static \
     && yum clean metadata
 
 

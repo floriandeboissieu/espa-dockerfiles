@@ -31,9 +31,9 @@ retrieve_tool $tool ftp://ftp.gnu.org/gnu/libidn
 validate_tool $tool
 
 #-----------------------------------------------------------------------------
-tool=jbigkit-2.1.tar.gz
-retrieve_tool $tool https://www.cl.cam.ac.uk/~mgk25/jbigkit//download
-validate_tool $tool
+#tool=jbigkit-2.1.tar.gz
+#retrieve_tool $tool https://www.cl.cam.ac.uk/~mgk25/jbigkit//download
+#validate_tool $tool
 
 #-----------------------------------------------------------------------------
 tool=jpegsrc.v9b.tar.gz
