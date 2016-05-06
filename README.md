@@ -31,6 +31,7 @@
 | wgrib      | 1.8.1.2c | http://www.cpc.ncep.noaa.gov/products/wesley/wgrib.html         | Yes      | |
 
 ### Building the Images
+Each build command will build any required inherited images.
 ##### Ubuntu Versions (PROBABLY BROKEN)
   - Image <b>usgs.espa.ubuntu.base</b>
 ```make ubuntu.base```
