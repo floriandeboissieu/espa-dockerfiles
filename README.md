@@ -31,7 +31,7 @@
 | wgrib      | 1.8.1.2c | http://www.cpc.ncep.noaa.gov/products/wesley/wgrib.html         | Yes      | |
 
 ### Building the Images
-####Ubuntu Versions
+##### Ubuntu Versions (PROBABLY BROKEN)
   - Image <b>usgs.espa.ubuntu.base</b>
 ```make ubuntu.base```
   - Image <b>usgs.espa.ubuntu.python</b>
@@ -40,6 +40,14 @@
 ```make ubuntu.cots```
   - Image <b>usgs.espa.ubuntu.science</b>
 ```make ubuntu.science```
+
+##### CentOS Versions (WORKING ON)
+  - Image <b>usgs.espa.centos.base</b>
+```make centos.base```
+  - Image <b>usgs.espa.centos.external</b>
+```make centos.external```
+  - Image <b>usgs.espa.ubuntu.cots</b>
+```make centos.science```
 
 ### General Docker Notes
 
