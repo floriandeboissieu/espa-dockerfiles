@@ -11,14 +11,14 @@
 | ---------- | -------- | --------------------------------------------------------------- | -------- | ----------- |
 | curl       | 7.47.1   | http://curl.haxx.se/download.html                               | No       | Used by auxiliary generation software |
 | idn        | 1.32     | ftp://ftp.gnu.org/gnu/libidn/                                   | No       | Used by auxiliary generation software |
-| jbigkit    | 2.1      | http://www.cl.cam.ac.uk/~mgk25/jbigkit/                         | Yes      | Add -fPIC to the Makefile CFLAGS |
+| jbigkit    | 2.1      | http://www.cl.cam.ac.uk/~mgk25/jbigkit/                         | Yes      | Add -fPIC -DPIC to the CFLAGS in the top-level Makefile |
 | jpeg       | 9b       | http://www.ijg.org/files/                                       | Yes      | |
 | libxml2    | 2.9.3    | ftp://xmlsoft.org/libxml2/                                      | Yes      | |
 | libxslt    | 1.1.28   | ftp://xmlsoft.org/libxslt/                                      | Yes      | Required for python lxml module |
 | szip       | 2.1      | https://www.hdfgroup.org/doc_resource/SZIP/                     | Yes      | |
 | tiff       | 4.0.6    | http://download.osgeo.org/libtiff/                              | Yes      | |
 | libgeotiff | 1.4.1    | http://download.osgeo.org/geotiff/libgeotiff/                   | Yes      | |
-| libpng     | 1.6.20   | http://sourceforge.net/projects/libpng/files/libpng16/          | Yes      | |
+| libpng     | 1.6.21   | http://sourceforge.net/projects/libpng/files/libpng16/          | Yes      | Required for python matplotlib module |
 | xz/lzma    | 5.2.2    | http://tukaani.org/xz/                                          | Yes      | |
 | zlib       | 1.2.8    | http://www.zlib.net/                                            | Yes      | |
 | hdf4       | 4.2.11   | https://www.hdfgroup.org/downloads/index.html                   | Yes      | |
@@ -31,29 +31,24 @@
 | wgrib      | 1.8.1.2c | http://www.cpc.ncep.noaa.gov/products/wesley/wgrib.html         | Yes      | |
 
 ### Building the Images
-##### Building the Base Image
+Each build command will build any required inherited images.
+##### Ubuntu Versions (PROBABLY BROKEN)
+  - Image <b>usgs.espa.ubuntu.base</b>
+```make ubuntu.base```
+  - Image <b>usgs.espa.ubuntu.python</b>
+```make ubuntu.python```
+  - Image <b>usgs.espa.ubuntu.cots</b>
+```make ubuntu.cots```
+  - Image <b>usgs.espa.ubuntu.science</b>
+```make ubuntu.science```
 
-Builds repository name "usgs-espa/ubuntu-base".
-
-```make ubuntu-base```
-
-##### Building the Python Image
-
-Builds repository name "usgs-espa/ubuntu-python".
-
-```make ubuntu-python```
-
-##### Building the COTS Image
-
-Builds repository name "usgs-espa/ubuntu-cots".
-
-```make ubuntu-cots```
-
-##### Building the Science Image
-
-Builds repository name "usgs-espa/ubuntu-science".
-
-```make ubuntu-science```
+##### CentOS Versions (WORKING ON)
+  - Image <b>usgs.espa.centos.base</b>
+```make centos.base```
+  - Image <b>usgs.espa.centos.external</b>
+```make centos.external```
+  - Image <b>usgs.espa.ubuntu.cots</b>
+```make centos.science```
 
 ### General Docker Notes
 
