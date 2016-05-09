@@ -20,8 +20,6 @@ ENV PREFIX=/usr/local \
 # Clone the software and then build and install it
 # ----------------------------------------------------------------------------
 
-# --------------------------------------
-# ESPA Product Formatter
 RUN REPO_NAME=espa-product-formatter \
     && REPO_TAG=product_formatter_v1.6.0 \
     && cd $SRC_DIR \
@@ -34,8 +32,6 @@ RUN REPO_NAME=espa-product-formatter \
     && rm -rf ${REPO_NAME}
 
 
-# --------------------------------------
-# ESPA Spectral Indices
 RUN REPO_NAME=espa-spectral-indices \
     && REPO_TAG=spectral_indices_v2.4.0 \
     && cd $SRC_DIR \

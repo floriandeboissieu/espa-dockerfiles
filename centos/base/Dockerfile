@@ -19,23 +19,17 @@ RUN chmod +x /usr/local/bin/gosu
 
 
 # ----------------------------------------------------------------------------
-# Common tool and applications provided by the base system
+# Tools and libraries required for development
 RUN yum group install -y "Development Tools" \
-    && yum install -y glibc-static \
-    && yum install -y libgfortran-static \
-    && yum install -y libquadmath-static \
+    && yum install -y expat-devel glibc-static libcurl-devel \
+                      libgfortran-static libquadmath-static zlib-devel \
     && yum clean metadata
 
 
-RUN yum install -y which \
-    && yum install -y wget \
-    && yum install -y texinfo \
-    && yum install -y vim-enhanced \
-    && yum install -y mlocate \
-    && yum install -y libcurl-devel \
-    && yum install -y expat-devel \
-    && yum install -y zlib-devel \
-    && yum install -y perl-ExtUtils-MakeMaker \
+# ----------------------------------------------------------------------------
+# Tools required for development and system usage
+RUN yum install -y mlocate perl-ExtUtils-MakeMaker sudo texinfo valgrind \
+                   vim-enhanced wget which \
     && yum clean metadata
 
 

@@ -5,9 +5,7 @@ TAG_PREFIX = usgs.espa
 # General targets
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-all: clean ubuntu.science
-
-base: ubuntu.base
+all: clean centos.modtran
 
 clean: clean-containers clean-images
 
@@ -17,7 +15,7 @@ clean.containers:
 clean.images:
 	@-./remove-dangling-images.sh
 
-.PHONY: all base clean clean.containers clean.images base.build base.python base.cots base.science ubuntu.base ubuntu.python ubuntu.cots ubuntu.science centos.base centos.python centos.cots centos.science
+.PHONY: all base clean clean.containers clean.images base.build base.python base.cots base.science ubuntu.base ubuntu.python ubuntu.cots ubuntu.science centos.base centos.python centos.cots centos.science centos.modtran
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Common
@@ -42,6 +40,10 @@ base.cots:
 base.science:
 	@docker build -t $(TAG_PREFIX).$(SYSTEM).science \
          -f $(SYSTEM)/science/Dockerfile .
+
+base.modtran:
+	@docker build -t $(TAG_PREFIX).$(SYSTEM).modtran \
+         -f $(SYSTEM)/modtran/Dockerfile .
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Ubuntu
@@ -71,4 +73,7 @@ centos.external: centos.base
 
 centos.science: centos.external
 	@SYSTEM=centos make base.science
+
+centos.modtran: centos.science
+	@SYSTEM=centos make base.modtran
 
