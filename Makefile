@@ -7,13 +7,13 @@ TAG_PREFIX = usgs.espa
 
 all: clean centos.modtran
 
-clean: clean-containers clean-images
+clean: clean.containers clean.images
 
 clean.containers:
-	@-./remove-all-stopped-containers.sh
+	@-./scripts/remove-all-stopped-containers.sh
 
 clean.images:
-	@-./remove-dangling-images.sh
+	@-./scripts/remove-dangling-images.sh
 
 .PHONY: all base clean clean.containers clean.images base.build base.python base.cots base.science ubuntu.base ubuntu.python ubuntu.cots ubuntu.science centos.base centos.python centos.cots centos.science centos.modtran
 
