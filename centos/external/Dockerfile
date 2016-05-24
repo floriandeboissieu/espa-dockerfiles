@@ -24,7 +24,6 @@ ENV SRC_DIR=/usr/local/src \
     XSLT_PREFIX=/usr/local \
     IDN_PREFIX=/usr/local \
     CURL_PREFIX=/usr/local \
-    WGRIB_PREFIX=/usr/local \
     JPEG_PREFIX=/usr/local \
     JBIG_PREFIX=/usr/local \
     TIFF_PREFIX=/usr/local \
@@ -217,19 +216,6 @@ RUN source /python-env/bin/activate \
     && make install \
     && cd $SRC_DIR \
     && rm -rf libxslt-1.1.28 libxslt-1.1.28.tar.gz
-
-
-# --------------------------------------
-# Install wgrib
-COPY external_tools/wgrib.tar.v1.8.1.2c $SRC_DIR
-RUN cd $SRC_DIR \
-    && mkdir wgrib \
-    && tar -xvf wgrib.tar.v1.8.1.2c -C wgrib \
-    && cd wgrib \
-    && make \
-    && cp wgrib $WGRIB_PREFIX/bin \
-    && cd $SRC_DIR \
-    && rm -rf wgrib wgrib.tar.v1.8.1.2c
 
 
 # --------------------------------------

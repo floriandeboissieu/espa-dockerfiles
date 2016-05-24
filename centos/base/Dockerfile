@@ -29,7 +29,7 @@ RUN yum group install -y "Development Tools" \
 # ----------------------------------------------------------------------------
 # Tools required for development and system usage
 RUN yum install -y e2fsprogs mlocate perl-ExtUtils-MakeMaker sudo texinfo \
-                   valgrind vim-enhanced wget which \
+                   valgrind vim-enhanced wget wgrib which \
     && yum clean metadata
 
 
