@@ -24,15 +24,13 @@ export HOME=/home/$THE_USER
 
 # Fixup the home directory since it was created before the user was
 cd $HOME
+chown $THE_UID:$THE_GID $HOME
 cp /etc/skel/.bash_logout .
+cp /etc/skel/.bash_profile .
 cp /etc/skel/.bashrc .
-cp /etc/skel/.profile .
-chown $THE_UID:$THE_GID .bash_logout .bashrc .profile .
-chmod go=u,go-w .bash_logout .bashrc .profile
+chown $THE_UID:$THE_GID .bash_logout .bash_profile .bashrc
+chmod go=u,go-w .bash_logout .bash_profile .bashrc
 chmod go= .
 
 # Now execute as the user
 exec gosu $THE_USER $@
-#exec gosu $THE_USER /bin/bash $@
-#exec gosu root /bin/bash
-#/bin/bash
