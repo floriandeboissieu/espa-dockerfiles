@@ -3,7 +3,7 @@
 <b>This is very much a WORK IN PROGRESS.  Not currently used for anything other than development by some members of the team.</b>
 
 ### System Dependencies
-At this point in time, the dependencies listed here, do not reflect the versions currently used in production.  <b>AND AS SUCH HAVE NOT BEEN THROUGH VALIDATION</b>.  Production is using older versions of nearly all dependencies.<br>
+At this point in time, the dependencies listed here, do not reflect the versions currently used in production.  <b>AND AS SUCH HAVE NOT BEEN THROUGH VALIDATION and may be reverted back to older versions</b>.  Production is using older versions for nearly all dependencies.<br>
 
 The "Required" column indicates the dependency is utilized by the processing system.  Otherwise it is probably only used by our auxiliary retrieval and generation tools and not currently added to any of the Docker images.  Also a "yes" only indicates used by one or more applications.
 
@@ -13,6 +13,10 @@ These dependencies are installed through the Linux distro.  Current development 
 | Dependency | Version  | Source                                                          | Required | Information |
 | ---------- | -------- | --------------------------------------------------------------- | -------- | ----------- |
 | wgrib      | 1.8.1.2c | Centos 7                                                        | Yes      | |
+| TODO       |          | Centos 7                                                        | Yes      | I'm sure more should be listed here |
+| TODO       |          | Centos 7                                                        | Yes      | |
+| TODO       |          | Centos 7                                                        | Yes      | |
+| TODO       |          | Centos 7                                                        | Yes      | |
 
 #### Other External Libraries and Applications
 These libraries and applications are built and installed into the system from source code.
@@ -55,23 +59,29 @@ $ ./retrieve-external-tools.sh
 To properly build jbigkit with the rest of the libraries and applications, a modification to the top-level makefile is required.  Please replace the top-level Makefile with <b>jbigkit-2.1-Makefile</b>.  This will properly set compiling options.
 
 #### Ubuntu Versions (No Longer Supported and Probably Broken)
-  - Image <b>usgs.espa.ubuntu.base</b> ```make ubuntu.base```
-  - Image <b>usgs.espa.ubuntu.python</b> ```make ubuntu.python```
-  - Image <b>usgs.espa.ubuntu.cots</b> ```make ubuntu.cots```
-  - Image <b>usgs.espa.ubuntu.science</b> ```make ubuntu.science```
+  - Image <b>usgs.espa.ubuntu.base</b><br>```$ make ubuntu.base```
+  - Image <b>usgs.espa.ubuntu.python</b><br>```$ make ubuntu.python```
+  - Image <b>usgs.espa.ubuntu.cots</b><br>```$ make ubuntu.cots```
+  - Image <b>usgs.espa.ubuntu.science</b><br>```$ make ubuntu.science```
 
 #### CentOS Versions (Working On and Used By Some Developers)
-  - Image <b>usgs.espa.centos.base</b> ```make centos.base```
-  - Image <b>usgs.espa.centos.external</b> ```make centos.external```
-  - Image <b>usgs.espa.ubuntu.science</b> ```make centos.science```
-  - Image <b>usgs.espa.ubuntu.modtran</b> ```make centos.modtran```<br>
+  - Image <b>usgs.espa.centos.base</b><br>```$ make centos.base```
+  - Image <b>usgs.espa.centos.external</b><br>```$ make centos.external```
+  - Image <b>usgs.espa.ubuntu.science</b><br>```$ make centos.science```
+  - Image <b>usgs.espa.ubuntu.modtran</b><br>```$ make centos.modtran```<br>
 Only used by a prototype science application and you would need to obtain your own version of MODTRAN.
 
 ### Running Science Applications
 In the future more enhancements will be made to make running science applications easier.  At this point in time it is very manual as it is only used by some developers.
 
-#### Starting the <b>usgs.espa.ubuntu.science</b> Docker Image
-TODO TODO TODO
+#### Starting the <b>usgs.espa.centos.science</b> Docker Image
+
+##### Simplified Running of a Science Container
+I'll leave the mounting of disk paths for input and output as an exercise for the user.  <b>Note:</b> The science image could use a better command line prompt.
+
+```
+docker run --rm --tty --interactive usgs.espa.centos.science `id -g` `id -u` /bin/bash
+```
 
 ### General Docker Notes
 
