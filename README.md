@@ -3,7 +3,11 @@
 <b>This is very much a WORK IN PROGRESS.  Not currently used for anything other than development by some members of the team.</b>
 
 ### System Dependencies
-At this point in time, the dependencies listed here, do not reflect the versions currently used in production.  <b>AND AS SUCH HAVE NOT BEEN THROUGH VALIDATION</b>.  Production is using older versions of nearly all dependencies.
+At this point in time, the dependencies listed here, do not reflect the versions currently used in production.  <b>AND AS SUCH HAVE NOT BEEN THROUGH VALIDATION</b>.  Production is using older versions of nearly all dependencies.<br>
+
+The "Required" column indicates the dependency is utilized by the processing system.  Otherwise it is probably only used by our auxiliary retrieval and generation tools and not currently added to any of the Docker images.  Also a "yes" only indicates used by one or more applications.
+
+| Dependency | Version  | Source                                                          | Required | Information |
 
 #### System Provided External Libraries and Applications
 These dependencies are installed through the Linux distro.  Current development is utilizing Centos 7.
@@ -15,10 +19,6 @@ These dependencies are installed through the Linux distro.  Current development 
 #### Other External Libraries and Applications
 These libraries and applications are built and installed into the system from source code.
 
-
-The "Required" column indicates the dependency is utilized by the processing system.  Otherwise it is probably only used by our auxiliary retrieval and generation tools and not currently added to any of the Docker images.  Also a "yes" only indicates used by one or more applications.
-
-| Dependency | Version  | Source                                                          | Required | Information |
 | ---------- | -------- | --------------------------------------------------------------- | -------- | ----------- |
 | curl       | 7.48.0   | http://curl.haxx.se/download.html                               | No       | Used by auxiliary generation software |
 | idn        | 1.32     | ftp://ftp.gnu.org/gnu/libidn/                                   | No       | Used by auxiliary generation software |
@@ -44,24 +44,23 @@ The "Required" column indicates the dependency is utilized by the processing sys
 Each build command will build any required inherited images.
 
 ##### Ubuntu Versions (No Longer Supported and Probably Broken)
-  - Image <b>usgs.espa.ubuntu.base</b>
-```make ubuntu.base```
-  - Image <b>usgs.espa.ubuntu.python</b>
-```make ubuntu.python```
-  - Image <b>usgs.espa.ubuntu.cots</b>
-```make ubuntu.cots```
-  - Image <b>usgs.espa.ubuntu.science</b>
-```make ubuntu.science```
+  - Image <b>usgs.espa.ubuntu.base</b> ```make ubuntu.base```
+  - Image <b>usgs.espa.ubuntu.python</b> ```make ubuntu.python```
+  - Image <b>usgs.espa.ubuntu.cots</b> ```make ubuntu.cots```
+  - Image <b>usgs.espa.ubuntu.science</b> ```make ubuntu.science```
 
 ##### CentOS Versions (Working On and Used By Some Developers)
-  - Image <b>usgs.espa.centos.base</b>
-```make centos.base```
-  - Image <b>usgs.espa.centos.external</b>
-```make centos.external```
-  - Image <b>usgs.espa.ubuntu.science</b>
-```make centos.science```
-  - Image <b>usgs.espa.ubuntu.modtran</b>  Only used by a prototype science application and you would need to obtain your own version.
-```make centos.modtran```
+  - Image <b>usgs.espa.centos.base</b> ```make centos.base```
+  - Image <b>usgs.espa.centos.external</b> ```make centos.external```
+  - Image <b>usgs.espa.ubuntu.science</b> ```make centos.science```
+  - Image <b>usgs.espa.ubuntu.modtran</b> ```make centos.modtran```<br>
+Only used by a prototype science application and you would need to obtain your own version.
+
+### Running Science Applications
+In the future more enhancements will be made to make running science applications easier.  At this point in time it is very manual as it is only used by some developers.
+
+#### Starting the <b>usgs.espa.ubuntu.science</b> Docker
+TODO TODO TODO
 
 ### General Docker Notes
 
