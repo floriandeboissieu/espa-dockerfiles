@@ -46,11 +46,13 @@ Each build command will build any required inherited images.
 #### Retireving External Libraries and Applications Source Code
 A script is provided, with some validation for corruption, to download each of the required items.
 
-```cd external_tools```
-```./retrieve-external-tools.sh```
+```
+$ cd external_tools
+$ ./retrieve-external-tools.sh
+```
 
 ##### jbigkit Requires Makefile Modification
-To properly build jbigkit with the rest of the libraries and applications, a modification to the top-level makefile is required.  Please replace the top-level Makefile with <i>jbigkit-2.1-Makefile</i>   This will properly set compiling options.
+To properly build jbigkit with the rest of the libraries and applications, a modification to the top-level makefile is required.  Please replace the top-level Makefile with <b>jbigkit-2.1-Makefile</b>.  This will properly set compiling options.
 
 #### Ubuntu Versions (No Longer Supported and Probably Broken)
   - Image <b>usgs.espa.ubuntu.base</b> ```make ubuntu.base```
