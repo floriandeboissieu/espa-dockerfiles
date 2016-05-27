@@ -80,7 +80,7 @@ In the future more enhancements will be made to make running science application
 I'll leave the mounting of disk paths for input and output as an exercise for the user.  <b>Note:</b> The science image could use a better command line prompt.
 
 ```
-docker run --rm --tty --interactive usgs.espa.centos.science `id -g` `id -u` /bin/bash
+$ docker run --rm --tty --interactive usgs.espa.centos.science `id -g` `id -u` /bin/bash
 ```
 
 ### General Docker Notes
