@@ -102,7 +102,7 @@ RUN source /python-env/bin/activate \
 # ----------------------------------------------------------------------------
 # Add an entrypoint so that we execute the specified application as the
 # specified user (THE_USER specified below)
-#ENV THE_USER=espa
-#COPY science-entrypoint.sh /entrypoint.sh
-#RUN chmod 755 /entrypoint.sh
-#ENTRYPOINT ["/entrypoint.sh"]
+ENV THE_USER=espa
+COPY centos/science/science-entrypoint.sh /entrypoint.sh
+RUN chmod 755 /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
