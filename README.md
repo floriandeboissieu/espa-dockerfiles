@@ -67,16 +67,16 @@ To properly build jbigkit with the rest of the libraries and applications, a mod
 #### CentOS Versions (Working On and Used By Some Developers)
   - Image <b>usgs.espa.centos.base</b><br>```$ make centos.base```
   - Image <b>usgs.espa.centos.external</b><br>```$ make centos.external```
-  - Image <b>usgs.espa.ubuntu.science</b><br>```$ make centos.science```
-  - Image <b>usgs.espa.ubuntu.modtran</b><br>```$ make centos.modtran```<br>
+  - Image <b>usgs.espa.centos.science</b><br>```$ make centos.science```
+  - Image <b>usgs.espa.centos.modtran</b><br>```$ make centos.modtran```<br>
 Only used by a prototype science application and you would need to obtain your own version of MODTRAN.
 
 ### Running Science Applications
 In the future more enhancements will be made to make running science applications easier.  At this point in time it is very manual as it is only used by some developers.
 
-#### Starting the <b>usgs.espa.centos.science</b> Docker Image
+#### Starting a <b>usgs.espa.centos.science</b> Docker Container
 
-##### Simplified Running of a Science Container
+##### Simplified Running of the Science Container
 I'll leave the mounting of disk paths for input and output as an exercise for the user.  <b>Note:</b> The science image could use a better command line prompt.
 
 ```
