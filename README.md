@@ -7,8 +7,6 @@ At this point in time, the dependencies listed here, do not reflect the versions
 
 The "Required" column indicates the dependency is utilized by the processing system.  Otherwise it is probably only used by our auxiliary retrieval and generation tools and not currently added to any of the Docker images.  Also a "yes" only indicates used by one or more applications.
 
-| Dependency | Version  | Source                                                          | Required | Information |
-
 #### System Provided External Libraries and Applications
 These dependencies are installed through the Linux distro.  Current development is utilizing Centos 7.
 
@@ -19,6 +17,7 @@ These dependencies are installed through the Linux distro.  Current development 
 #### Other External Libraries and Applications
 These libraries and applications are built and installed into the system from source code.
 
+| Dependency | Version  | Source                                                          | Required | Information |
 | ---------- | -------- | --------------------------------------------------------------- | -------- | ----------- |
 | curl       | 7.48.0   | http://curl.haxx.se/download.html                               | No       | Used by auxiliary generation software |
 | idn        | 1.32     | ftp://ftp.gnu.org/gnu/libidn/                                   | No       | Used by auxiliary generation software |
@@ -39,27 +38,37 @@ These libraries and applications are built and installed into the system from so
 | freetype2  | 2.6.3    | http://sourceforge.net/projects/freetype/files/freetype2/       | Yes      | Required for python matplotlib module |
 | proj4      | 4.9.1    | https://trac.osgeo.org/proj/                                    | Yes      | GDAL needs this |
 | gdal       | 1.11.4   | http://download.osgeo.org/gdal ftp://ftp.remotesensing.org/gdal | Yes      | |
+| MODTRAN    | 5.3.2    |                                                                 | Yes      | |
 
 ### Building the Images
 Each build command will build any required inherited images.
 
-##### Ubuntu Versions (No Longer Supported and Probably Broken)
+#### Retireving External Libraries and Applications Source Code
+A script is provided, with some validation for corruption, to download each of the required items.
+
+```cd external_tools```
+```./retrieve-external-tools.sh```
+
+##### jbigkit Requires Makefile Modification
+To properly build jbigkit with the rest of the libraries and applications, a modification to the top-level makefile is required.  Please replace the top-level Makefile with <i>jbigkit-2.1-Makefile</i>   This will properly set compiling options.
+
+#### Ubuntu Versions (No Longer Supported and Probably Broken)
   - Image <b>usgs.espa.ubuntu.base</b> ```make ubuntu.base```
   - Image <b>usgs.espa.ubuntu.python</b> ```make ubuntu.python```
   - Image <b>usgs.espa.ubuntu.cots</b> ```make ubuntu.cots```
   - Image <b>usgs.espa.ubuntu.science</b> ```make ubuntu.science```
 
-##### CentOS Versions (Working On and Used By Some Developers)
+#### CentOS Versions (Working On and Used By Some Developers)
   - Image <b>usgs.espa.centos.base</b> ```make centos.base```
   - Image <b>usgs.espa.centos.external</b> ```make centos.external```
   - Image <b>usgs.espa.ubuntu.science</b> ```make centos.science```
   - Image <b>usgs.espa.ubuntu.modtran</b> ```make centos.modtran```<br>
-Only used by a prototype science application and you would need to obtain your own version.
+Only used by a prototype science application and you would need to obtain your own version of MODTRAN.
 
 ### Running Science Applications
 In the future more enhancements will be made to make running science applications easier.  At this point in time it is very manual as it is only used by some developers.
 
-#### Starting the <b>usgs.espa.ubuntu.science</b> Docker
+#### Starting the <b>usgs.espa.ubuntu.science</b> Docker Image
 TODO TODO TODO
 
 ### General Docker Notes

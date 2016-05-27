@@ -31,9 +31,9 @@ retrieve_tool $tool ftp://ftp.gnu.org/gnu/libidn
 validate_tool $tool
 
 #-----------------------------------------------------------------------------
-#tool=jbigkit-2.1.tar.gz
-#retrieve_tool $tool https://www.cl.cam.ac.uk/~mgk25/jbigkit//download
-#validate_tool $tool
+tool=jbigkit-2.1.tar.gz
+retrieve_tool $tool https://www.cl.cam.ac.uk/~mgk25/jbigkit//download
+validate_tool $tool
 
 #-----------------------------------------------------------------------------
 tool=jpegsrc.v9b.tar.gz
@@ -119,9 +119,9 @@ retrieve_tool $tool http://download.osgeo.org/gdal/$version
 validate_tool $tool
 
 #-----------------------------------------------------------------------------
-tool=wgrib.tar.v1.8.1.2c
-retrieve_tool $tool ftp://ftp.cpc.ncep.noaa.gov/wd51we/wgrib
-validate_tool $tool
+#tool=wgrib.tar.v1.8.1.2c
+#retrieve_tool $tool ftp://ftp.cpc.ncep.noaa.gov/wd51we/wgrib
+#validate_tool $tool
 
 #-----------------------------------------------------------------------------
 tool=Python-2.7.11.tgz
