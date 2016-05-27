@@ -20,7 +20,7 @@ export USER=$THE_USER
 export HOME=/home/$THE_USER
 
 # Activate the python virtual environment
-. /python-virtual/bin/activate
+. /python-env/bin/activate
 
 # Fixup the home directory since it was created before the user was
 cd $HOME
