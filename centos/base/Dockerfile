@@ -10,6 +10,10 @@ LABEL description="This is a build of our base system with some essential tools 
 # ----------------------------------------------------------------------------
 RUN yum update -y && yum clean metadata
 
+# ----------------------------------------------------------------------------
+# Required for wgrib install later
+RUN yum install -y epel-release && yum clean metadata
+
 
 # ----------------------------------------------------------------------------
 # Install gosu so that the entrypoint script (installed later) can change the
