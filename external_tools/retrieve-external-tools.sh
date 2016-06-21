@@ -81,8 +81,9 @@ retrieve_tool $tool http://www.hdfgroup.org/ftp/HDF/HDF_Current/src
 validate_tool $tool
 
 #-----------------------------------------------------------------------------
-tool=hdf5-1.8.16.tar.gz
-retrieve_tool $tool http://www.hdfgroup.org/ftp/HDF5/current/src
+version=hdf5-1.8.16
+tool=$version.tar.gz
+retrieve_tool $tool http://www.hdfgroup.org/ftp/HDF5/releases/$version/src
 validate_tool $tool
 
 #-----------------------------------------------------------------------------
@@ -104,7 +105,7 @@ validate_tool $tool
 #-----------------------------------------------------------------------------
 version=1.6.21
 tool=libpng-$version\.tar.gz
-retrieve_tool $tool https://sourceforge.net/projects/libpng/files/libpng16/$version
+retrieve_tool $tool https://sourceforge.net/projects/libpng/files/libpng16/older-releases/$version
 validate_tool $tool
 
 #-----------------------------------------------------------------------------
