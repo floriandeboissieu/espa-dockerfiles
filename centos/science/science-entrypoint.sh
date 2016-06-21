@@ -10,7 +10,7 @@ shift # past the argument
 
 # Add the user and group to the system
 groupadd --gid $THE_GID $THE_USER
-useradd -r --gid $THE_GID --uid $THE_UID --system --create-home $THE_USER
+useradd -r --system --gid $THE_GID --uid $THE_UID --shell /bin/bash --create-home $THE_USER
 
 # Add the espa runtime installation directory to the path
 export PATH=$PREFIX/bin:$PATH
@@ -34,3 +34,4 @@ chmod go= .
 
 # Now execute as the user
 exec gosu $THE_USER $@
+#exec /bin/bash
