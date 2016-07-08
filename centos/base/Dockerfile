@@ -8,7 +8,9 @@ LABEL description="This is a build of our base system with some essential tools 
 
 
 # ----------------------------------------------------------------------------
+# Update the OS packages to the latest versions
 RUN yum update -y && yum clean metadata
+
 
 # ----------------------------------------------------------------------------
 # Required for wgrib install later
@@ -23,7 +25,8 @@ RUN chmod +x /usr/local/bin/gosu
 
 
 # ----------------------------------------------------------------------------
-# Tools and libraries required for development
+# Tools and libraries required for development and compiling external
+# tools and libraries
 RUN yum group install -y "Development Tools" \
     && yum install -y expat-devel glibc-static libcurl-devel \
                       libgfortran-static libquadmath-static zlib-devel \
@@ -42,7 +45,7 @@ RUN yum install -y e2fsprogs mlocate perl-ExtUtils-MakeMaker sudo texinfo \
 RUN cd /usr/local/src \
     && git clone \
        --depth 1 \
-       --branch v2.8.1 \
+       --branch v2.9.0 \
        https://github.com/git/git.git git.git \
     && cd git.git \
     && make configure \
