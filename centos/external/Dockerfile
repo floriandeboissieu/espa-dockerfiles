@@ -239,16 +239,18 @@ RUN cd $SRC_DIR \
 
 # --------------------------------------
 # Install jbigkit
-COPY external_tools/jbigkit-2.1-espa.tar.gz $SRC_DIR
+COPY external_tools/jbigkit-2.1.tar.gz $SRC_DIR
+COPY external_tools/jbigkit-2.1-Makefile $SRC_DIR
 RUN cd $SRC_DIR \
-    && tar -xvf jbigkit-2.1-espa.tar.gz \
+    && tar -xvf jbigkit-2.1.tar.gz \
+    && cp jbigkit-2.1-Makefile jbigkit-2.1/Makefile \
     && cd jbigkit-2.1 \
     && make \
     && /usr/bin/install libjbig/libjbig.a $JBIGLIB/libjbig.a \
     && /usr/bin/install libjbig/libjbig85.a $JBIGLIB/libjbig85.a \
     && /usr/bin/install libjbig/*.h $JBIGINC \
     && cd $SRC_DIR \
-    && rm -rf jbigkit-2.1  jbigkit-2.1-espa.tar.gz
+    && rm -rf jbigkit-2.1 jbigkit-2.1-espa.tar.gz jbigkit-2.1-Makefile
 
 
 # --------------------------------------
