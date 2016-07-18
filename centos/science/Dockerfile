@@ -91,26 +91,25 @@ RUN REPO_NAME=espa-land-surface-temperature \
     && cd $SRC_DIR \
     && rm -rf ${REPO_NAME}
 
-RUN echo 'RC 1'
+
 RUN REPO_NAME=espa-processing \
     && REPO_TAG=dev_v2.11.2 \
     && cd $SRC_DIR \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
     && git checkout ${REPO_TAG} \
-    && make install
-#    && cd $SRC_DIR \
-#    && rm -rf ${REPO_NAME}
+    && make install \
+    && cd $SRC_DIR \
+    && rm -rf ${REPO_NAME}
+
 
 # ----------------------------------------------------------------------------
 # Install the espa-python-library
 RUN source /python-env/bin/activate \
-    && pip install click \
     && pip install --upgrade \
        git+https://github.com/USGS-EROS/espa-python-library.git@v1.0.0#espa
 
 
-RUN echo 'RC 1'
 # ----------------------------------------------------------------------------
 # Add an entrypoint so that we execute the specified application as the
 # specified user (THE_USER specified below)
