@@ -1,6 +1,6 @@
 
 TAG_PREFIX = usgs.espa
-TAG_VERSION = 0.1.0
+TAG_VERSION = 0.2.0
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # General targets
