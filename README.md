@@ -58,12 +58,6 @@ $ ./retrieve-external-tools.sh
 ##### jbigkit Requires Makefile Modification
 To properly build jbigkit with the rest of the libraries and applications, a modification to the top-level makefile is required.  Please replace the top-level Makefile with <b>jbigkit-2.1-Makefile</b>.  This will properly set compiling options.
 
-#### Ubuntu Versions (No Longer Supported and Probably Broken)
-  - Image <b>usgs.espa.ubuntu.base</b><br>```$ make ubuntu.base```
-  - Image <b>usgs.espa.ubuntu.python</b><br>```$ make ubuntu.python```
-  - Image <b>usgs.espa.ubuntu.cots</b><br>```$ make ubuntu.cots```
-  - Image <b>usgs.espa.ubuntu.science</b><br>```$ make ubuntu.science```
-
 #### CentOS Versions (Working On and Used By Some Developers)
   - Image <b>usgs.espa.centos.base</b><br>```$ make centos.base```
   - Image <b>usgs.espa.centos.external</b><br>```$ make centos.external```

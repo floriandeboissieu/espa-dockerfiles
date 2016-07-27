@@ -16,7 +16,7 @@ clean.containers:
 clean.images:
 	@-./scripts/remove-dangling-images.sh
 
-.PHONY: all base clean clean.containers clean.images base.build base.python base.cots base.science ubuntu.base ubuntu.python ubuntu.cots ubuntu.science centos.base centos.python centos.cots centos.science centos.modtran
+.PHONY: all base clean clean.containers clean.images base.build base.python base.cots base.science centos.base centos.python centos.cots centos.science centos.modtran
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Common
@@ -57,22 +57,6 @@ base.modtran:
          -f $(SYSTEM)/modtran/Dockerfile .
 	@docker tag $(TAG_PREFIX).$(SYSTEM).modtran \
         $(TAG_PREFIX).$(SYSTEM).modtran:$(TAG_VERSION)
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Ubuntu
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-ubuntu.base:
-	@SYSTEM=ubuntu make base.build
-
-ubuntu.python: ubuntu.base
-	@SYSTEM=ubuntu make base.python
-
-ubuntu.cots: ubuntu.python
-	@SYSTEM=ubuntu make base.cots
-
-ubuntu.science: ubuntu.cots
-	@SYSTEM=ubuntu make base.science
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # CentOS
