@@ -1,4 +1,4 @@
-FROM usgs.espa.centos.base
+FROM espa.centos.base
 
 
 MAINTAINER USGS LSRD http://eros.usgs.gov
@@ -96,21 +96,38 @@ ENV LD_LIBRARY_PATH=/usr/local/lib
 
 
 # ----------------------------------------------------------------------------
+# Install gosu so that the entrypoint script (installed later) can change the
+# specified user.  "gosu is used for easy step-down from root"
+COPY external_tools/gosu-amd64 /usr/local/bin/gosu
+RUN chmod +x /usr/local/bin/gosu
+
+
+# ----------------------------------------------------------------------------
+# Additional tools provided by the OS required for ESPA
+RUN yum install -y \
+        freetype-devel \
+        sudo \
+        wget \
+        wgrib \
+    && yum clean metadata
+
+
+# ----------------------------------------------------------------------------
 # Section for building each of the external packages
 # ----------------------------------------------------------------------------
 
 
 # --------------------------------------
 # Install zlib
-COPY external_tools/zlib-1.2.8.tar.gz $SRC_DIR
-RUN cd $SRC_DIR \
-    && tar -xvf zlib-1.2.8.tar.gz \
-    && cd zlib-1.2.8 \
-    && ./configure --prefix=$ZLIB_PREFIX \
-    && make \
-    && make install \
-    && cd $SRC_DIR \
-    && rm -rf zlib-1.2.8 zlib-1.2.8.tar.gz
+#COPY external_tools/zlib-1.2.8.tar.gz $SRC_DIR
+#RUN cd $SRC_DIR \
+#    && tar -xvf zlib-1.2.8.tar.gz \
+#    && cd zlib-1.2.8 \
+#    && ./configure --prefix=$ZLIB_PREFIX \
+#    && make \
+#    && make install \
+#    && cd $SRC_DIR \
+#    && rm -rf zlib-1.2.8 zlib-1.2.8.tar.gz
 
 
 # --------------------------------------
@@ -146,18 +163,18 @@ RUN cd $SRC_DIR \
 # USE THE CENTOS REPO VERSIONS OF THIS????????
 # --------------------------------------
 # Install libpng
-COPY external_tools/libpng-1.6.21.tar.gz $SRC_DIR
-RUN cd $SRC_DIR \
-    && tar -xvf libpng-1.6.21.tar.gz \
-    && cd libpng-1.6.21 \
-    && ./configure --prefix=$PNG_PREFIX \
-        --with-zlib-prefix=$ZLIB_PREFIX \
-        --enable-shared \
-        --enable-static \
-    && make \
-    && make install \
-    && cd $SRC_DIR \
-    && rm -rf libpng-1.6.21 libpng-1.6.21.tar.gz
+#COPY external_tools/libpng-1.6.21.tar.gz $SRC_DIR
+#RUN cd $SRC_DIR \
+#    && tar -xvf libpng-1.6.21.tar.gz \
+#    && cd libpng-1.6.21 \
+#    && ./configure --prefix=$PNG_PREFIX \
+#        --with-zlib-prefix=$ZLIB_PREFIX \
+#        --enable-shared \
+#        --enable-static \
+#    && make \
+#    && make install \
+#    && cd $SRC_DIR \
+#    && rm -rf libpng-1.6.21 libpng-1.6.21.tar.gz
 
 
 # USE THE CENTOS REPO VERSIONS OF THIS????????
@@ -165,20 +182,21 @@ RUN cd $SRC_DIR \
 # Install freetype2
 # Added a symlink to fix a problem with pip install matplotlib
 # not being able to find the library
-COPY external_tools/freetype-2.6.3.tar.gz $SRC_DIR
-RUN cd $SRC_DIR \
-    && tar -xvf freetype-2.6.3.tar.gz \
-    && cd freetype-2.6.3 \
-    && ./configure --prefix=$FREETYPE2_PREFIX \
-        --with-zlib=yes \
-        --with-png=yes \
-        --enable-shared \
-        --enable-static \
-    && make \
-    && make install \
-    && ln -s /usr/local/include/freetype2/ft2build.h /usr/local/include/ \
-    && cd $SRC_DIR \
-    && rm -rf freetype-2.6.3 freetype-2.6.3.tar.gz
+#COPY external_tools/freetype-2.6.3.tar.gz $SRC_DIR
+#RUN cd $SRC_DIR \
+#    && tar -xvf freetype-2.6.3.tar.gz \
+#    && cd freetype-2.6.3 \
+#    && ./configure --prefix=$FREETYPE2_PREFIX \
+#        --with-zlib=yes \
+#        --with-bzip2=yes \
+#        --with-png=yes \
+#        --enable-shared \
+#        --enable-static \
+#    && make \
+#    && make install \
+#    && ln -s /usr/local/include/freetype2/ft2build.h /usr/local/include/ \
+#    && cd $SRC_DIR \
+#    && rm -rf freetype-2.6.3 freetype-2.6.3.tar.gz
 
 
 # --------------------------------------

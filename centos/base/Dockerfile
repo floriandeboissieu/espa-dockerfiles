@@ -13,30 +13,28 @@ RUN yum update -y && yum clean metadata
 
 
 # ----------------------------------------------------------------------------
-# Required for wgrib install later
+# Required for additional tools installed later
 RUN yum install -y epel-release && yum clean metadata
-
-
-# ----------------------------------------------------------------------------
-# Install gosu so that the entrypoint script (installed later) can change the
-# specified user.  "gosu is used for easy step-down from root"
-COPY external_tools/gosu-amd64 /usr/local/bin/gosu
-RUN chmod +x /usr/local/bin/gosu
 
 
 # ----------------------------------------------------------------------------
 # Tools and libraries required for development and compiling external
 # tools and libraries
 RUN yum group install -y "Development Tools" \
-    && yum install -y expat-devel glibc-static libcurl-devel \
-                      libgfortran-static libquadmath-static zlib-devel \
-    && yum clean metadata
-
-
-# ----------------------------------------------------------------------------
-# Tools required for development and system usage
-RUN yum install -y e2fsprogs mlocate perl-ExtUtils-MakeMaker sudo texinfo \
-                   valgrind vim-enhanced wget wgrib which \
+    && yum install -y \
+        e2fsprogs \
+        expat-devel \
+        glibc-static \
+        libcurl-devel \
+        libgfortran-static \
+        libquadmath-static \
+        perl-ExtUtils-MakeMaker \
+        texinfo \
+        bzip2-devel \
+        zlib-devel \
+        zlib-static \
+        libpng-devel \
+        libpng-static \
     && yum clean metadata
 
 

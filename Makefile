@@ -1,12 +1,12 @@
 
-TAG_PREFIX = usgs.espa
+TAG_PREFIX = espa
 TAG_VERSION = 0.2.0
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # General targets
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-all: clean centos.modtran
+all: clean
 
 clean: clean.containers clean.images
 
@@ -16,61 +16,47 @@ clean.containers:
 clean.images:
 	@-./scripts/remove-dangling-images.sh
 
-.PHONY: all base clean clean.containers clean.images base.build base.python base.cots base.science centos.base centos.python centos.cots centos.science centos.modtran
+.PHONY: all clean clean.containers clean.images build.base build.external build.science centos.base centos.external centos.science base external science
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Common
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-base.build:
+build.base:
 	@docker build -t $(TAG_PREFIX).$(SYSTEM).base \
          -f $(SYSTEM)/base/Dockerfile .
 	@docker tag $(TAG_PREFIX).$(SYSTEM).base \
         $(TAG_PREFIX).$(SYSTEM).base:$(TAG_VERSION)
 
-base.external:
+build.external:
 	@docker build -t $(TAG_PREFIX).$(SYSTEM).external \
          -f $(SYSTEM)/external/Dockerfile .
 	@docker tag $(TAG_PREFIX).$(SYSTEM).external \
         $(TAG_PREFIX).$(SYSTEM).external:$(TAG_VERSION)
 
-base.python:
-	@docker build -t $(TAG_PREFIX).$(SYSTEM).python \
-         -f $(SYSTEM)/python/Dockerfile .
-	@docker tag $(TAG_PREFIX).$(SYSTEM).python \
-        $(TAG_PREFIX).$(SYSTEM).python:$(TAG_VERSION)
-
-base.cots:
-	@docker build -t $(TAG_PREFIX).$(SYSTEM).cots \
-         -f $(SYSTEM)/cots/Dockerfile .
-	@docker tag $(TAG_PREFIX).$(SYSTEM).cots \
-        $(TAG_PREFIX).$(SYSTEM).cots:$(TAG_VERSION)
-
-base.science:
+build.science:
 	@docker build -t $(TAG_PREFIX).$(SYSTEM).science \
          -f $(SYSTEM)/science/Dockerfile .
 	@docker tag $(TAG_PREFIX).$(SYSTEM).science \
         $(TAG_PREFIX).$(SYSTEM).science:$(TAG_VERSION)
-
-base.modtran:
-	@docker build -t $(TAG_PREFIX).$(SYSTEM).modtran \
-         -f $(SYSTEM)/modtran/Dockerfile .
-	@docker tag $(TAG_PREFIX).$(SYSTEM).modtran \
-        $(TAG_PREFIX).$(SYSTEM).modtran:$(TAG_VERSION)
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # CentOS
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 centos.base:
-	@SYSTEM=centos make base.build
+	@SYSTEM=centos make build.base
 
 centos.external: centos.base
-	@SYSTEM=centos make base.external
+	@SYSTEM=centos make build.external
 
 centos.science: centos.external
-	@SYSTEM=centos make base.science
+	@SYSTEM=centos make build.science
 
-centos.modtran: centos.science
-	@SYSTEM=centos make base.modtran
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Shortcuts
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+base: centos.base
+external: centos.external
+science: centos.science
