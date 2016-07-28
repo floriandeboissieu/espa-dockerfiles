@@ -12,6 +12,9 @@ shift # past the argument
 groupadd --gid $THE_GID $THE_USER
 useradd -r --system --gid $THE_GID --uid $THE_UID --shell /bin/bash --create-home $THE_USER
 
+# Add sudo stuff for the user to the system
+echo "$THE_USER ALL=(ALL) NOPASSWD: /usr/bin/chattr" >> /etc/sudoers
+
 # Add the espa runtime installation directory to the path
 export PATH=$PREFIX/bin:$PATH
 
@@ -19,8 +22,10 @@ export PATH=$PREFIX/bin:$PATH
 export USER=$THE_USER
 export HOME=/home/$THE_USER
 
+# Don't create *.pyc files
+export PYTHONDONTWRITEBYTECODE=1
 # Activate the python virtual environment
-. /python-env/bin/activate
+source /python-env/bin/activate
 
 # Fixup the home directory since it was created before the user was
 cd $HOME
@@ -34,4 +39,3 @@ chmod go= .
 
 # Now execute as the user
 exec gosu $THE_USER $@
-#exec /bin/bash
