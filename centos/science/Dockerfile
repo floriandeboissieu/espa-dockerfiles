@@ -16,12 +16,20 @@ ENV PREFIX=/usr/local \
     ESPAINC=/usr/local/include \
     ESPALIB=/usr/local/lib
 
+
+# ----------------------------------------------------------------------------
+# Install the espa-python-library
+RUN source /python-env/bin/activate \
+    && pip install --upgrade \
+       git+https://github.com/USGS-EROS/espa-python-library.git@v1.0.1#espa
+
+
 # ----------------------------------------------------------------------------
 # Clone the software and then build and install it
 # ----------------------------------------------------------------------------
 
 RUN REPO_NAME=espa-product-formatter \
-    && REPO_TAG=product_formatter_v1.7.0 \
+    && REPO_TAG=product_formatter_v1.8.0 \
     && cd $SRC_DIR \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
@@ -33,7 +41,7 @@ RUN REPO_NAME=espa-product-formatter \
 
 
 RUN REPO_NAME=espa-spectral-indices \
-    && REPO_TAG=2016_May \
+    && REPO_TAG=spectral_indices_v2.5.0 \
     && cd $SRC_DIR \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
@@ -45,7 +53,7 @@ RUN REPO_NAME=espa-spectral-indices \
 
 
 RUN REPO_NAME=espa-cloud-masking \
-    && REPO_TAG=2016_May \
+    && REPO_TAG=2016_Aug \
     && cd $SRC_DIR \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
@@ -57,7 +65,7 @@ RUN REPO_NAME=espa-cloud-masking \
 
 
 RUN REPO_NAME=espa-surface-water-extent \
-    && REPO_TAG=2016_May \
+    && REPO_TAG=2016_Aug \
     && cd $SRC_DIR \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
@@ -69,7 +77,7 @@ RUN REPO_NAME=espa-surface-water-extent \
 
 
 RUN REPO_NAME=espa-surface-reflectance \
-    && REPO_TAG=surface_reflectance_may2016 \
+    && REPO_TAG=surface_reflectance_aug2016 \
     && cd $SRC_DIR \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
@@ -81,7 +89,7 @@ RUN REPO_NAME=espa-surface-reflectance \
 
 
 RUN REPO_NAME=espa-land-surface-temperature \
-    && REPO_TAG=2016_May \
+    && REPO_TAG=2016_Aug \
     && cd $SRC_DIR \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
@@ -93,7 +101,7 @@ RUN REPO_NAME=espa-land-surface-temperature \
 
 
 RUN REPO_NAME=espa-processing \
-    && REPO_TAG=dev_v2.11.2 \
+    && REPO_TAG=dev_v2.12.0 \
     && cd $SRC_DIR \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
@@ -101,13 +109,6 @@ RUN REPO_NAME=espa-processing \
     && make install \
     && cd $SRC_DIR \
     && rm -rf ${REPO_NAME}
-
-
-# ----------------------------------------------------------------------------
-# Install the espa-python-library
-RUN source /python-env/bin/activate \
-    && pip install --upgrade \
-       git+https://github.com/USGS-EROS/espa-python-library.git@v1.0.0#espa
 
 
 # ----------------------------------------------------------------------------
