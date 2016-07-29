@@ -100,6 +100,17 @@ RUN REPO_NAME=espa-land-surface-temperature \
     && rm -rf ${REPO_NAME}
 
 
+RUN REPO_NAME=espa-elevation \
+    && REPO_TAG=v2.0.1 \
+    && cd $SRC_DIR \
+    && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
+    && cd ${REPO_NAME} \
+    && git checkout ${REPO_TAG} \
+    && make install \
+    && cd $SRC_DIR \
+    && rm -rf ${REPO_NAME}
+
+
 RUN REPO_NAME=espa-processing \
     && REPO_TAG=dev_v2.12.0 \
     && cd $SRC_DIR \
