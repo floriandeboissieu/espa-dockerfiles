@@ -76,8 +76,9 @@ retrieve_tool $tool http://zlib.net
 validate_tool $tool
 
 #-----------------------------------------------------------------------------
-tool=hdf-4.2.11.tar.gz
-retrieve_tool $tool http://www.hdfgroup.org/ftp/HDF/HDF_Current/src
+version=4.2.11
+tool=hdf-$version.tar.gz
+retrieve_tool $tool https://www.hdfgroup.org/ftp/HDF/releases/HDF$version/src
 validate_tool $tool
 
 #-----------------------------------------------------------------------------
