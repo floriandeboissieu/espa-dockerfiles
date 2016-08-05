@@ -16,7 +16,7 @@ clean.containers:
 clean.images:
 	@-./scripts/remove-dangling-images.sh
 
-.PHONY: all clean clean.containers clean.images build.base build.external build.science centos.base centos.external centos.science base external science
+.PHONY: all clean clean.containers clean.images build.base build.external build.rpmbuilder build.science centos.base centos.external centos.rpmbuilder centos.science base external rpmbuilder science
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Common
@@ -34,6 +34,10 @@ build.external:
 	@docker tag $(TAG_PREFIX).$(SYSTEM).external \
         $(TAG_PREFIX).$(SYSTEM).external:$(TAG_VERSION)
 
+build.rpmbuilder:
+	@docker build -t rpmbuilder -f centos/rpmbuilder/Dockerfile .
+	@docker tag rpmbuilder rpmbuilder:$(TAG_VERSION)
+
 build.science:
 	@docker build -t $(TAG_PREFIX).$(SYSTEM).science \
          -f $(SYSTEM)/science/Dockerfile .
@@ -50,6 +54,9 @@ centos.base:
 centos.external: centos.base
 	@SYSTEM=centos make build.external
 
+centos.rpmbuilder: centos.external
+	@SYSTEM=centos make build.external
+
 centos.science: centos.external
 	@SYSTEM=centos make build.science
 
@@ -59,4 +66,5 @@ centos.science: centos.external
 
 base: centos.base
 external: centos.external
+rpmbuilder: centos.rpmbuilder
 science: centos.science
