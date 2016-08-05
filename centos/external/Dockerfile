@@ -268,7 +268,7 @@ RUN cd $SRC_DIR \
     && /usr/bin/install libjbig/libjbig85.a $JBIGLIB/libjbig85.a \
     && /usr/bin/install libjbig/*.h $JBIGINC \
     && cd $SRC_DIR \
-    && rm -rf jbigkit-2.1 jbigkit-2.1-espa.tar.gz jbigkit-2.1-Makefile
+    && rm -rf jbigkit-2.1 jbigkit-2.1.tar.gz jbigkit-2.1-Makefile
 
 
 # --------------------------------------
