@@ -1,4 +1,4 @@
-FROM centos:7
+FROM centos:7.2.1511
 
 
 MAINTAINER USGS LSRD http://eros.usgs.gov
@@ -35,6 +35,7 @@ RUN yum group install -y "Development Tools" \
         zlib-static \
         libpng-devel \
         libpng-static \
+        rpm-build \
     && yum clean metadata
 
 
