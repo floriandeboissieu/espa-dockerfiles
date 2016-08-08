@@ -1,6 +1,6 @@
 
 TAG_PREFIX = espa
-TAG_VERSION = 0.2.0
+TAG_VERSION = 0.3.0
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # General targets
@@ -38,6 +38,14 @@ build.rpmbuilder:
 	@docker build -t rpmbuilder -f centos/rpmbuilder/Dockerfile .
 	@docker tag rpmbuilder rpmbuilder:$(TAG_VERSION)
 
+build.espa.rpmbuilder:
+	@docker build -t espa.rpmbuilder -f centos/espa-rpmbuilder/Dockerfile .
+	@docker tag espa.rpmbuilder espa.rpmbuilder:$(TAG_VERSION)
+
+build.espa.node:
+	@docker build -t espa.node -f centos/espa-node/Dockerfile .
+	@docker tag espa.node espa.node:$(TAG_VERSION)
+
 build.science:
 	@docker build -t $(TAG_PREFIX).$(SYSTEM).science \
          -f $(SYSTEM)/science/Dockerfile .
@@ -54,8 +62,14 @@ centos.base:
 centos.external: centos.base
 	@SYSTEM=centos make build.external
 
-centos.rpmbuilder: centos.external
-	@SYSTEM=centos make build.external
+centos.rpmbuilder:
+	@SYSTEM=centos make build.rpmbuilder
+
+centos.espa.rpmbuilder:
+	@SYSTEM=centos make build.espa.rpmbuilder
+
+centos.espa.node:
+	@SYSTEM=centos make build.espa.node
 
 centos.science: centos.external
 	@SYSTEM=centos make build.science
@@ -67,4 +81,6 @@ centos.science: centos.external
 base: centos.base
 external: centos.external
 rpmbuilder: centos.rpmbuilder
+espa.rpmbuilder: centos.espa.rpmbuilder
+espa.node: centos.espa.node
 science: centos.science
