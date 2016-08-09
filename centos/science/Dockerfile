@@ -1,10 +1,10 @@
-FROM espa.centos.external
+FROM espa.centos.external:0.3.0
 
 
 MAINTAINER USGS LSRD http://eros.usgs.gov
 
 
-LABEL description="This is a build containing all of the science processing software we use within ESPA-Fulfillment."
+LABEL description="Science processing software we use within ESPA-Product-Fulfillment."
 
 
 # ----------------------------------------------------------------------------
@@ -19,8 +19,7 @@ ENV PREFIX=/usr/local \
 
 # ----------------------------------------------------------------------------
 # Install the espa-python-library
-RUN source /python-env/bin/activate \
-    && pip install --upgrade \
+RUN pip install --upgrade \
        git+https://github.com/USGS-EROS/espa-python-library.git@v1.0.1#espa
 
 

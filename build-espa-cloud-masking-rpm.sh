@@ -1,1 +1,0 @@
-docker run --rm --volume /home/dilley/lsrd-src/espa-dockerfiles/SPECS:/SPECS:ro --volume /home/dilley/lsrd-src/espa-dockerfiles/RPMS:/root/rpmbuild/RPMS:rw espa.rpmbuilder rpmbuild -bb /SPECS/RPM-CFmask.spec

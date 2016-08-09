@@ -1,20 +1,51 @@
-FROM espa.centos.base
+FROM espa.centos.base:0.3.0
 
 
 MAINTAINER USGS LSRD http://eros.usgs.gov
 
 
-LABEL description="This is a build containing all of the cots software we use installed into the image as well as additional CENTOS repo packages required for building and executing ESPA-Fulfillment."
+LABEL description="External software we use installed into the image as well as additional CENTOS repo packages required for building and executing ESPA-Product-Fulfillment."
 
 
-# ----------------------------------------------------------------------------
-# Configuration of environment variables to reduce intermediate docker image
-# generation.
-# ----------------------------------------------------------------------------
+# Compilers and all the rquired libraries
+RUN yum group install -y "Development Tools" \
+    && yum install -y \
+        e2fsprogs \
+        expat-devel \
+        freetype-devel \
+        glibc-static \
+        libcurl-devel \
+        libgfortran-static \
+        libquadmath-static \
+        perl-ExtUtils-MakeMaker \
+        texinfo \
+        bzip2-devel \
+        zlib-devel \
+        zlib-static \
+        libpng-devel \
+        libpng-static \
+        rpm-build \
+    && yum clean metadata
 
-# --------------------------------------
+
+# Update git to a version that isn't broken
+RUN cd /usr/local/src \
+    && git clone \
+        --depth 1 \
+        --branch v2.9.2 \
+        https://github.com/git/git.git git.git \
+    && cd git.git \
+    && make configure \
+    && ./configure --without-tcltk \
+    && make \
+    && make install \
+    && cd .. \
+    && rm -rf git.git
+
+
 # Source and installation locations
-ENV SRC_DIR=/usr/local/src \
+ENV PREFIX=/usr/local \
+    SRC_DIR=/usr/local/src \
     ZLIB_PREFIX=/usr/local \
     XZ_PREFIX=/usr/local \
     SZIP_PREFIX=/usr/local \
@@ -35,7 +66,7 @@ ENV SRC_DIR=/usr/local/src \
     PROJ4_PREFIX=/usr/local \
     GDAL_PREFIX=/usr/local
 
-# --------------------------------------
+
 # Include and library paths
 ENV ZLIBINC=$ZLIB_PREFIX/include \
     ZLIBLIB=$ZLIB_PREFIX/lib \
@@ -89,48 +120,25 @@ ENV ZLIBINC=$ZLIB_PREFIX/include \
     GDAL_LIB=$GDAL_PREFIX/lib
 
 
-# --------------------------------------
 # Needed for python to find installed shared libraries
 # May also solve some hdfeos issues
 ENV LD_LIBRARY_PATH=/usr/local/lib
 
 
-# ----------------------------------------------------------------------------
 # Install gosu so that the entrypoint script (installed later) can change the
 # specified user.  "gosu is used for easy step-down from root"
 COPY external_tools/gosu-amd64 /usr/local/bin/gosu
 RUN chmod +x /usr/local/bin/gosu
 
 
-# ----------------------------------------------------------------------------
 # Additional tools provided by the OS required for ESPA
 RUN yum install -y \
-        freetype-devel \
         sudo \
         wget \
         wgrib \
     && yum clean metadata
 
 
-# ----------------------------------------------------------------------------
-# Section for building each of the external packages
-# ----------------------------------------------------------------------------
-
-
-# --------------------------------------
-# Install zlib
-#COPY external_tools/zlib-1.2.8.tar.gz $SRC_DIR
-#RUN cd $SRC_DIR \
-#    && tar -xvf zlib-1.2.8.tar.gz \
-#    && cd zlib-1.2.8 \
-#    && ./configure --prefix=$ZLIB_PREFIX \
-#    && make \
-#    && make install \
-#    && cd $SRC_DIR \
-#    && rm -rf zlib-1.2.8 zlib-1.2.8.tar.gz
-
-
-# --------------------------------------
 # Install xz to get the lzma library
 COPY external_tools/xz-5.2.2.tar.gz $SRC_DIR
 RUN cd $SRC_DIR \
@@ -145,7 +153,6 @@ RUN cd $SRC_DIR \
     && rm -rf xz-5.2.2 xz-5.2.2.tar.gz
 
 
-# --------------------------------------
 # Install szip
 COPY external_tools/szip-2.1.tar.gz $SRC_DIR
 RUN cd $SRC_DIR \
@@ -160,50 +167,9 @@ RUN cd $SRC_DIR \
     && rm -rf szip-2.1 szip-2.1.tar.gz
 
 
-# USE THE CENTOS REPO VERSIONS OF THIS????????
-# --------------------------------------
-# Install libpng
-#COPY external_tools/libpng-1.6.21.tar.gz $SRC_DIR
-#RUN cd $SRC_DIR \
-#    && tar -xvf libpng-1.6.21.tar.gz \
-#    && cd libpng-1.6.21 \
-#    && ./configure --prefix=$PNG_PREFIX \
-#        --with-zlib-prefix=$ZLIB_PREFIX \
-#        --enable-shared \
-#        --enable-static \
-#    && make \
-#    && make install \
-#    && cd $SRC_DIR \
-#    && rm -rf libpng-1.6.21 libpng-1.6.21.tar.gz
-
-
-# USE THE CENTOS REPO VERSIONS OF THIS????????
-# --------------------------------------
-# Install freetype2
-# Added a symlink to fix a problem with pip install matplotlib
-# not being able to find the library
-#COPY external_tools/freetype-2.6.3.tar.gz $SRC_DIR
-#RUN cd $SRC_DIR \
-#    && tar -xvf freetype-2.6.3.tar.gz \
-#    && cd freetype-2.6.3 \
-#    && ./configure --prefix=$FREETYPE2_PREFIX \
-#        --with-zlib=yes \
-#        --with-bzip2=yes \
-#        --with-png=yes \
-#        --enable-shared \
-#        --enable-static \
-#    && make \
-#    && make install \
-#    && ln -s /usr/local/include/freetype2/ft2build.h /usr/local/include/ \
-#    && cd $SRC_DIR \
-#    && rm -rf freetype-2.6.3 freetype-2.6.3.tar.gz
-
-
-# --------------------------------------
 # Install libxml2
 COPY external_tools/libxml2-2.9.3.tar.gz $SRC_DIR
-RUN source /python-env/bin/activate \
-    && cd $SRC_DIR \
+RUN cd $SRC_DIR \
     && tar -xvf libxml2-2.9.3.tar.gz \
     && cd libxml2-2.9.3 \
     && ./configure --prefix=$XML2_PREFIX \
@@ -218,11 +184,9 @@ RUN source /python-env/bin/activate \
     && rm -rf libxml2-2.9.3 libxml2-2.9.3.tar.gz
 
 
-# --------------------------------------
 # Install libxslt
 COPY external_tools/libxslt-1.1.28.tar.gz $SRC_DIR
-RUN source /python-env/bin/activate \
-    && cd $SRC_DIR \
+RUN cd $SRC_DIR \
     && tar -xvf libxslt-1.1.28.tar.gz \
     && cd libxslt-1.1.28 \
     && ./configure --prefix=$XSLT_PREFIX \
@@ -236,7 +200,6 @@ RUN source /python-env/bin/activate \
     && rm -rf libxslt-1.1.28 libxslt-1.1.28.tar.gz
 
 
-# --------------------------------------
 # Install jpeg
 # These are needed with jpeg-6b
 #    && make install-lib \
@@ -255,7 +218,6 @@ RUN cd $SRC_DIR \
     && rm -rf jpeg-9b jpegsrc.v9b.tar.gz
 
 
-# --------------------------------------
 # Install jbigkit
 COPY external_tools/jbigkit-2.1.tar.gz $SRC_DIR
 COPY external_tools/jbigkit-2.1-Makefile $SRC_DIR
@@ -271,22 +233,20 @@ RUN cd $SRC_DIR \
     && rm -rf jbigkit-2.1 jbigkit-2.1.tar.gz jbigkit-2.1-Makefile
 
 
-# --------------------------------------
 # Install proj4
 COPY external_tools/proj-4.9.1.tar.gz $SRC_DIR
 RUN cd $SRC_DIR \
     && tar -xvf proj-4.9.1.tar.gz \
     && cd proj-4.9.1 \
     && ./configure --prefix=$PROJ4_PREFIX \
-       --enable-shared \
-       --enable-static \
+        --enable-shared \
+        --enable-static \
     && make \
     && make install \
     && cd $SRC_DIR \
     && rm -rf proj-4.9.1 proj-4.9.1.tar.gz
 
 
-# --------------------------------------
 # Install tiff
 COPY external_tools/tiff-4.0.6.tar.gz $SRC_DIR
 RUN cd $SRC_DIR \
@@ -309,7 +269,6 @@ RUN cd $SRC_DIR \
     && rm -rf tiff-4.0.6 tiff-4.0.6.tar.gz
 
 
-# --------------------------------------
 # Install libgeotiff
 COPY external_tools/libgeotiff-1.4.1.tar.gz $SRC_DIR
 RUN cd $SRC_DIR \
@@ -320,15 +279,14 @@ RUN cd $SRC_DIR \
         --with-jpeg-lib-dir=$JPEGLIB \
         --with-zlib-include-dir=$ZLIBINC \
         --with-zlib-lib-dir=$ZLIBLIB \
-       --enable-shared \
-       --enable-static \
+        --enable-shared \
+        --enable-static \
     && make \
     && make install \
     && cd $SRC_DIR \
     && rm -rf libgeotiff-1.4.1 libgeotiff-1.4.1.tar.gz
 
 
-# --------------------------------------
 # Install HDF4
 COPY external_tools/hdf-4.2.11.tar.gz $SRC_DIR
 RUN cd $SRC_DIR \
@@ -338,17 +296,16 @@ RUN cd $SRC_DIR \
         --with-jpeg=$JPEGLIB \
         --with-zlib=$ZLIBLIB \
         --with-szlib=$SZIPLIB \
-       --disable-fortran \
-       --enable-shared \
-       --enable-static \
-       --enable-static-exec \
+        --disable-fortran \
+        --enable-shared \
+        --enable-static \
+        --enable-static-exec \
     && make \
     && make install \
     && cd $SRC_DIR \
     && rm -rf hdf-4.2.11 hdf-4.2.11.tar.gz
 
 
-# --------------------------------------
 # Install HDF5
 COPY external_tools/hdf5-1.8.16.tar.gz $SRC_DIR
 RUN cd $SRC_DIR \
@@ -358,35 +315,33 @@ RUN cd $SRC_DIR \
         --with-jpeg=$JPEGINC,$JPEGLIB \
         --with-zlib=$ZLIBINC,$ZLIBLIB \
         --with-szlib=$SZIPINC,$SZIPLIB \
-       --enable-threadsafe \
-       --enable-unsupported \
-       --with-pthread=/usr/lib64 \
-       --enable-shared \
-       --enable-static \
+        --enable-threadsafe \
+        --enable-unsupported \
+        --with-pthread=/usr/lib64 \
+        --enable-shared \
+        --enable-static \
     && make \
     && make install \
     && cd $SRC_DIR \
     && rm -rf hdf5-1.8.16 hdf5-1.8.16.tar.gz
 
 
-# --------------------------------------
 # Install netcdf-4
 COPY external_tools/netcdf-4.4.0.tar.gz $SRC_DIR
 RUN cd $SRC_DIR \
     && tar -xvf netcdf-4.4.0.tar.gz \
     && cd netcdf-4.4.0 \
     && ./configure --prefix=$NETCDF4_PREFIX \
-       --enable-netcdf-4 \
-       --enable-hdf4 \
-       --enable-shared \
-       --enable-static \
+        --enable-netcdf-4 \
+        --enable-hdf4 \
+        --enable-shared \
+        --enable-static \
     && make \
     && make install \
     && cd $SRC_DIR \
     && rm -rf netcdf-4.4.0 netcdf-4.4.0.tar.gz
 
 
-# --------------------------------------
 # Install HDFEOS2
 COPY external_tools/HDF-EOS2.19v1.00.tar.Z $SRC_DIR
 RUN cd $SRC_DIR \
@@ -396,24 +351,20 @@ RUN cd $SRC_DIR \
         --with-jpeg=$JPEGLIB \
         --with-zlib=$ZLIBLIB \
         --with-szlib=$SZIPINC,$SZIPLIB \
-       --enable-install-include \
-       --disable-shared \
-       --enable-static \
-       CC="/usr/local/bin/h4cc -Df2cFortran" \
+        --enable-install-include \
+        --disable-shared \
+        --enable-static \
+        CC="/usr/local/bin/h4cc -Df2cFortran" \
     && make \
     && make install \
     && cd $SRC_DIR \
     && rm -rf hdfeos HDF-EOS2.19v1.00.tar.Z
 
 
-# ----------------------------------------------------------------------------
-# Python virtual environment setup
+# Python environment setup
 # GDAL is installed into python through the below installation, because Numpy
 # must be installed into python before building GDAL
-# --------------------------------------
-RUN source /python-env/bin/activate \
-    && pip install --upgrade pip \
-    && pip install \
+RUN pip install \
         --global-option=build_ext \
         --global-option="-L/usr/local/lib" \
         --global-option="-I/usr/local/include" \
@@ -425,19 +376,17 @@ RUN source /python-env/bin/activate \
         matplotlib==1.5.1
 
 
-# --------------------------------------
 # Install GDAL
 COPY external_tools/gdal-1.11.4.tar.gz $SRC_DIR
-RUN source /python-env/bin/activate \
-    && cd $SRC_DIR \
+RUN cd $SRC_DIR \
     && tar -xvf gdal-1.11.4.tar.gz \
     && cd gdal-1.11.4 \
     && ./configure --prefix=$GDAL_PREFIX \
-       --with-liblzma \
-       --with-python=yes \
-       --with-static-proj4=$PROJ4_LIB \
-       --enable-shared \
-       --enable-static \
+        --with-liblzma \
+        --with-python=yes \
+        --with-static-proj4=$PROJ4_LIB \
+        --enable-shared \
+        --enable-static \
     && make \
     && make install \
     && cd $SRC_DIR \
