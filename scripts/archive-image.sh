@@ -1,2 +1,1 @@
-
-docker save $1 | gzip -c > $1.tar.gz
+docker save $1 > $1.tar.gz
