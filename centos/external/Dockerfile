@@ -15,6 +15,7 @@ RUN yum group install -y "Development Tools" \
         freetype-devel \
         glibc-static \
         libcurl-devel \
+        libidn-devel \
         libgfortran-static \
         libquadmath-static \
         perl-ExtUtils-MakeMaker \
@@ -53,8 +54,8 @@ ENV PREFIX=/usr/local \
     FREETYPE2_PREFIX=/usr/local \
     XML2_PREFIX=/usr/local \
     XSLT_PREFIX=/usr/local \
-    IDN_PREFIX=/usr/local \
-    CURL_PREFIX=/usr/local \
+    IDN_PREFIX=/usr/local/idn \
+    CURL_PREFIX=/usr/local/curl \
     JPEG_PREFIX=/usr/local \
     JBIG_PREFIX=/usr/local \
     TIFF_PREFIX=/usr/local \
@@ -287,6 +288,34 @@ RUN cd $SRC_DIR \
     && rm -rf libgeotiff-1.4.1 libgeotiff-1.4.1.tar.gz
 
 
+# Install curl
+COPY external_tools/curl-7.48.0.tar.gz $SRC_DIR
+RUN cd $SRC_DIR \
+    && tar -xvf curl-7.48.0.tar.gz \
+    && cd curl-7.48.0 \
+    && ./configure --prefix=$CURL_PREFIX \
+        --enable-shared \
+        --enable-static \
+    && make \
+    && make install \
+    && cd $SRC_DIR \
+    && rm -rf curl-7.48.0 curl-7.48.0.tar.gz
+
+
+# Install idn
+COPY external_tools/libidn-1.32.tar.gz $SRC_DIR
+RUN cd $SRC_DIR \
+    && tar -xvf libidn-1.32.tar.gz \
+    && cd libidn-1.32 \
+    && ./configure --prefix=$IDN_PREFIX \
+        --enable-shared \
+        --enable-static \
+    && make \
+    && make install \
+    && cd $SRC_DIR \
+    && rm -rf libidn-1.32 libidn-1.32.tar.gz
+
+
 # Install HDF4
 COPY external_tools/hdf-4.2.11.tar.gz $SRC_DIR
 RUN cd $SRC_DIR \
@@ -331,12 +360,12 @@ COPY external_tools/netcdf-4.4.0.tar.gz $SRC_DIR
 RUN cd $SRC_DIR \
     && tar -xvf netcdf-4.4.0.tar.gz \
     && cd netcdf-4.4.0 \
-    && ./configure --prefix=$NETCDF4_PREFIX \
+    && env CPPFLAGS="-I/usr/local/curl/include" LDFLAGS="-L/usr/local/curl/lib" \
+        ./configure --prefix=$NETCDF4_PREFIX \
         --enable-netcdf-4 \
-        --enable-hdf4 \
         --enable-shared \
         --enable-static \
-    && make \
+    && make -j5 \
     && make install \
     && cd $SRC_DIR \
     && rm -rf netcdf-4.4.0 netcdf-4.4.0.tar.gz
