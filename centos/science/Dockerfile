@@ -111,7 +111,7 @@ RUN REPO_NAME=espa-elevation \
 
 
 RUN REPO_NAME=espa-processing \
-    && REPO_TAG=dev_v2.12.0 \
+    && REPO_TAG=espa-2.11.3-release \
     && cd $SRC_DIR \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
