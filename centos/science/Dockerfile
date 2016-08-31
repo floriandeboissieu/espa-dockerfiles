@@ -1,4 +1,4 @@
-FROM espa.centos.external:0.3.0
+FROM espa.centos.external:2.12.0
 
 
 MAINTAINER USGS LSRD http://eros.usgs.gov
@@ -19,7 +19,7 @@ ENV PREFIX=/usr/local \
 
 # ----------------------------------------------------------------------------
 # Install the espa-python-library
-RUN pip install --upgrade \
+RUN pip install \
        git+https://github.com/USGS-EROS/espa-python-library.git@v1.0.1#espa
 
 
