@@ -1,4 +1,4 @@
-FROM espa.centos.base:0.3.0
+FROM espa.centos.base:2.12.0
 
 
 MAINTAINER USGS LSRD http://eros.usgs.gov
@@ -393,7 +393,8 @@ RUN cd $SRC_DIR \
 # Python environment setup
 # GDAL is installed into python through the below installation, because Numpy
 # must be installed into python before building GDAL
-RUN pip install \
+RUN pip install --upgrade pip \
+    && pip install \
         --global-option=build_ext \
         --global-option="-L/usr/local/lib" \
         --global-option="-I/usr/local/include" \
