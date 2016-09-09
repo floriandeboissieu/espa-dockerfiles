@@ -71,9 +71,9 @@ retrieve_tool $tool http://tukaani.org/xz
 validate_tool $tool
 
 #-----------------------------------------------------------------------------
-tool=zlib-1.2.8.tar.gz
-retrieve_tool $tool http://zlib.net
-validate_tool $tool
+#tool=zlib-1.2.8.tar.gz
+#retrieve_tool $tool http://zlib.net
+#validate_tool $tool
 
 #-----------------------------------------------------------------------------
 version=4.2.11
@@ -98,16 +98,16 @@ retrieve_tool $tool ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos/latest_release
 validate_tool $tool
 
 #-----------------------------------------------------------------------------
-version=2.6.3
-tool=freetype-$version\.tar.gz
-retrieve_tool $tool https://sourceforge.net/projects/freetype/files/freetype2/$version
-validate_tool $tool
+#version=2.6.3
+#tool=freetype-$version\.tar.gz
+#retrieve_tool $tool https://sourceforge.net/projects/freetype/files/freetype2/$version
+#validate_tool $tool
 
 #-----------------------------------------------------------------------------
-version=1.6.21
-tool=libpng-$version\.tar.gz
-retrieve_tool $tool https://sourceforge.net/projects/libpng/files/libpng16/older-releases/$version
-validate_tool $tool
+#version=1.6.21
+#tool=libpng-$version\.tar.gz
+#retrieve_tool $tool https://sourceforge.net/projects/libpng/files/libpng16/older-releases/$version
+#validate_tool $tool
 
 #-----------------------------------------------------------------------------
 tool=proj-4.9.1.tar.gz
@@ -126,14 +126,14 @@ validate_tool $tool
 #validate_tool $tool
 
 #-----------------------------------------------------------------------------
-tool=Python-2.7.11.tgz
-retrieve_tool $tool https://www.python.org/ftp/python/2.7.11
-validate_tool $tool
+#tool=Python-2.7.11.tgz
+#retrieve_tool $tool https://www.python.org/ftp/python/2.7.11
+#validate_tool $tool
 
 #-----------------------------------------------------------------------------
-tool=gosu-amd64
-retrieve_tool $tool https://github.com/tianon/gosu/releases/download/1.8
-validate_tool $tool
+#tool=gosu-amd64
+#retrieve_tool $tool https://github.com/tianon/gosu/releases/download/1.8
+#validate_tool $tool
 
 #-----------------------------------------------------------------------------
 #tool=package_name
