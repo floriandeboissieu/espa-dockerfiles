@@ -1,10 +1,10 @@
 FROM espa.centos.external:2.12.0
 
 
-MAINTAINER USGS LSRD http://eros.usgs.gov
+MAINTAINER USGS EROS LSRD http://eros.usgs.gov
 
 
-LABEL description="Science processing software we use within ESPA-Product-Fulfillment."
+LABEL description="Adds the science processing applications and setup we use for ESPA-Product-Fulfillment."
 
 
 # ----------------------------------------------------------------------------
@@ -28,7 +28,7 @@ RUN pip install \
 # ----------------------------------------------------------------------------
 
 RUN REPO_NAME=espa-product-formatter \
-    && REPO_TAG=product_formatter_v1.8.0 \
+    && REPO_TAG=dev_v1.9.0 \
     && cd $SRC_DIR \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
@@ -76,7 +76,7 @@ RUN REPO_NAME=espa-surface-water-extent \
 
 
 RUN REPO_NAME=espa-surface-reflectance \
-    && REPO_TAG=surface_reflectance_aug2016 \
+    && REPO_TAG=dev_oct \
     && cd $SRC_DIR \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
@@ -100,7 +100,7 @@ RUN REPO_NAME=espa-land-surface-temperature \
 
 
 RUN REPO_NAME=espa-elevation \
-    && REPO_TAG=v2.0.1 \
+    && REPO_TAG=dev_v2.1.0 \
     && cd $SRC_DIR \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
@@ -111,7 +111,7 @@ RUN REPO_NAME=espa-elevation \
 
 
 RUN REPO_NAME=espa-processing \
-    && REPO_TAG=espa-2.11.3-release \
+    && REPO_TAG=dev_v2.12.0 \
     && cd $SRC_DIR \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
@@ -122,9 +122,8 @@ RUN REPO_NAME=espa-processing \
 
 
 # ----------------------------------------------------------------------------
-# Add an entrypoint so that we execute the specified application as the
-# specified user (THE_USER specified below)
-ENV THE_USER=espa
+# Add an entrypoint so that we can do some internal setup and then execute the
+# specified application
 COPY centos/science/science-entrypoint.sh /entrypoint.sh
 RUN chmod 755 /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
