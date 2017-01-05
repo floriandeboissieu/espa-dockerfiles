@@ -123,7 +123,7 @@ RUN REPO_NAME=espa-elevation \
 
 RUN echo "Release Candidate frog-leggs"
 RUN REPO_NAME=espa-processing \
-    && REPO_TAG=dev_espa_2.13.0 \
+    && REPO_TAG=dev_espa_2.14.0 \
     && cd $SRC_DIR \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
