@@ -38,7 +38,7 @@ RUN cd /usr/local/src \
     && cd git.git \
     && make configure \
     && ./configure --without-tcltk \
-    && make \
+    && make -j4 \
     && make install \
     && cd .. \
     && rm -rf git.git
@@ -123,7 +123,7 @@ ENV ZLIBINC=$ZLIB_PREFIX/include \
 
 # Needed for python to find installed shared libraries
 # May also solve some hdfeos issues
-ENV LD_LIBRARY_PATH=/usr/local/lib
+ENV LD_LIBRARY_PATH=/usr/lib64:/usr/local/lib
 
 
 # Additional tools provided by the OS required for ESPA
@@ -139,9 +139,8 @@ RUN cd $SRC_DIR \
     && tar -xvf xz-5.2.2.tar.gz \
     && cd xz-5.2.2 \
     && ./configure --prefix=$XZ_PREFIX \
-        --enable-shared \
         --enable-static \
-    && make \
+    && make -j4 \
     && make install \
     && cd $SRC_DIR \
     && rm -rf xz-5.2.2 xz-5.2.2.tar.gz
@@ -155,7 +154,7 @@ RUN cd $SRC_DIR \
     && ./configure --prefix=$SZIP_PREFIX \
         --enable-shared \
         --enable-static \
-    && make \
+    && make -j4 \
     && make install \
     && cd $SRC_DIR \
     && rm -rf szip-2.1 szip-2.1.tar.gz
@@ -172,7 +171,7 @@ RUN cd $SRC_DIR \
         --with-python \
         --enable-shared \
         --enable-static \
-    && make \
+    && make -j4 \
     && make install \
     && cd $SRC_DIR \
     && rm -rf libxml2-2.9.3 libxml2-2.9.3.tar.gz
@@ -188,7 +187,7 @@ RUN cd $SRC_DIR \
         --with-python \
         --enable-shared \
         --enable-static \
-    && make \
+    && make -j4 \
     && make install \
     && cd $SRC_DIR \
     && rm -rf libxslt-1.1.28 libxslt-1.1.28.tar.gz
@@ -206,7 +205,7 @@ RUN cd $SRC_DIR \
     && ./configure --prefix=$JPEG_PREFIX \
         --enable-shared \
         --enable-static \
-    && make \
+    && make -j4 \
     && make install \
     && cd $SRC_DIR \
     && rm -rf jpeg-9b jpegsrc.v9b.tar.gz
@@ -219,7 +218,7 @@ RUN cd $SRC_DIR \
     && tar -xvf jbigkit-2.1.tar.gz \
     && cp jbigkit-2.1-Makefile jbigkit-2.1/Makefile \
     && cd jbigkit-2.1 \
-    && make \
+    && make -j4 \
     && /usr/bin/install libjbig/libjbig.a $JBIGLIB/libjbig.a \
     && /usr/bin/install libjbig/libjbig85.a $JBIGLIB/libjbig85.a \
     && /usr/bin/install libjbig/*.h $JBIGINC \
@@ -235,7 +234,7 @@ RUN cd $SRC_DIR \
     && ./configure --prefix=$PROJ4_PREFIX \
         --enable-shared \
         --enable-static \
-    && make \
+    && make -j4 \
     && make install \
     && cd $SRC_DIR \
     && rm -rf proj-4.9.1 proj-4.9.1.tar.gz
@@ -257,7 +256,7 @@ RUN cd $SRC_DIR \
         --with-lzma-lib-dir=$LZMALIB \
         --enable-shared \
         --enable-static \
-    && make \
+    && make -j4 \
     && make install \
     && cd $SRC_DIR \
     && rm -rf tiff-4.0.6 tiff-4.0.6.tar.gz
@@ -275,7 +274,7 @@ RUN cd $SRC_DIR \
         --with-zlib-lib-dir=$ZLIBLIB \
         --enable-shared \
         --enable-static \
-    && make \
+    && make -j4 \
     && make install \
     && cd $SRC_DIR \
     && rm -rf libgeotiff-1.4.1 libgeotiff-1.4.1.tar.gz
@@ -289,7 +288,7 @@ RUN cd $SRC_DIR \
     && ./configure --prefix=$CURL_PREFIX \
         --enable-shared \
         --enable-static \
-    && make \
+    && make -j4 \
     && make install \
     && cd $SRC_DIR \
     && rm -rf curl-7.48.0 curl-7.48.0.tar.gz
@@ -303,7 +302,7 @@ RUN cd $SRC_DIR \
     && ./configure --prefix=$IDN_PREFIX \
         --enable-shared \
         --enable-static \
-    && make \
+    && make -j4 \
     && make install \
     && cd $SRC_DIR \
     && rm -rf libidn-1.32 libidn-1.32.tar.gz
@@ -322,7 +321,7 @@ RUN cd $SRC_DIR \
         --enable-shared \
         --enable-static \
         --enable-static-exec \
-    && make \
+    && make -j4 \
     && make install \
     && cd $SRC_DIR \
     && rm -rf hdf-4.2.11 hdf-4.2.11.tar.gz
@@ -342,7 +341,7 @@ RUN cd $SRC_DIR \
         --with-pthread=/usr/lib64 \
         --enable-shared \
         --enable-static \
-    && make \
+    && make -j4 \
     && make install \
     && cd $SRC_DIR \
     && rm -rf hdf5-1.8.16 hdf5-1.8.16.tar.gz
@@ -377,7 +376,7 @@ RUN cd $SRC_DIR \
         --disable-shared \
         --enable-static \
         CC="/usr/local/bin/h4cc -Df2cFortran" \
-    && make \
+    && make -j4 \
     && make install \
     && cd $SRC_DIR \
     && rm -rf hdfeos HDF-EOS2.19v1.00.tar.Z
@@ -410,7 +409,7 @@ RUN cd $SRC_DIR \
         --with-static-proj4=$PROJ4_LIB \
         --enable-shared \
         --enable-static \
-    && make \
+    && make -j4 \
     && make install \
     && cd $SRC_DIR \
     && rm -rf gdal-1.11.4 gdal-1.11.4.tar.gz
