@@ -1,4 +1,4 @@
-FROM espa/external:2.15.0
+FROM espa/external:2.16.0
 
 
 MAINTAINER USGS EROS LSRD http://eros.usgs.gov
@@ -28,7 +28,7 @@ RUN pip install \
 # ----------------------------------------------------------------------------
 
 RUN REPO_NAME=espa-product-formatter \
-    && REPO_TAG=dev_v1.11.0 \
+    && REPO_TAG=product_formatter_v1.11.0 \
     && cd $SRC_DIR \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
@@ -40,7 +40,7 @@ RUN REPO_NAME=espa-product-formatter \
 
 
 RUN REPO_NAME=espa-l2qa-tools \
-    && REPO_TAG=dev_v1.2.0 \
+    && REPO_TAG=l2qa_tools_v1.2.0 \
     && cd $SRC_DIR \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
@@ -64,7 +64,7 @@ RUN REPO_NAME=espa-spectral-indices \
 
 
 RUN REPO_NAME=espa-cloud-masking \
-    && REPO_TAG=rb-2.0.2 \
+    && REPO_TAG=cfmask-v2.0.2 \
     && cd $SRC_DIR \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
@@ -76,7 +76,7 @@ RUN REPO_NAME=espa-cloud-masking \
 
 
 RUN REPO_NAME=espa-surface-water-extent \
-    && REPO_TAG=dev_espa_v2.15.0 \
+    && REPO_TAG=espa-v2.15.0 \
     && cd $SRC_DIR \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
@@ -88,7 +88,7 @@ RUN REPO_NAME=espa-surface-water-extent \
 
 
 RUN REPO_NAME=espa-surface-reflectance \
-    && REPO_TAG=dev_qa2017 \
+    && REPO_TAG=dev_lasrc3.5.2 \
     && cd $SRC_DIR \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
@@ -100,7 +100,7 @@ RUN REPO_NAME=espa-surface-reflectance \
 
 
 RUN REPO_NAME=espa-land-surface-temperature \
-    && REPO_TAG=lst-rit-v0.1.1 \
+    && REPO_TAG=dev_0.1.2 \
     && cd $SRC_DIR \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
@@ -121,9 +121,9 @@ RUN REPO_NAME=espa-elevation \
     && cd $SRC_DIR \
     && rm -rf ${REPO_NAME}
 
-RUN echo "Release Candidate peanut-butter"
+RUN echo "Release Candidate twisted-tulips"
 RUN REPO_NAME=espa-processing \
-    && REPO_TAG=rb-2.15.0 \
+    && REPO_TAG=rb-2.16.0 \
     && cd $SRC_DIR \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
