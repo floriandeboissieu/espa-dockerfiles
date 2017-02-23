@@ -1,4 +1,4 @@
-FROM espa/base:2.15.0
+FROM espa/base:2.16.0
 
 
 MAINTAINER USGS EROS LSRD http://eros.usgs.gov
