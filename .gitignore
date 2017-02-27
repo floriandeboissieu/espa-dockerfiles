@@ -4,3 +4,5 @@ external_tools/wgrib.tar.v1.8.1.2c
 external_tools/Python-2.7.11.tgz
 external_tools/gosu-amd64
 external_tools/modtran-*
+centos/external/Dockerfile
+centos/science/Dockerfile
