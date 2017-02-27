@@ -1,6 +1,6 @@
 
 TAG_PREFIX = espa
-TAG_VERSION = 2.16.0
+ESPA_VERSION = 2.16.0
 
 .PHONY: all clean clean.containers clean.images build.base build.external build.science centos.base centos.external centos.science base external science
 
@@ -23,22 +23,18 @@ clean.images:
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 build.base:
-	@docker build -t $(TAG_PREFIX)/base \
-         -f $(SYSTEM)/base/Dockerfile .
-	@docker tag $(TAG_PREFIX)/base \
-        $(TAG_PREFIX)/base:$(TAG_VERSION)
+	@docker build -t $(TAG_PREFIX)/base -f $(SYSTEM)/base/Dockerfile .
+	@docker tag $(TAG_PREFIX)/base $(TAG_PREFIX)/base:$(ESPA_VERSION)
 
 build.external:
-	@docker build -t $(TAG_PREFIX)/external \
-         -f $(SYSTEM)/external/Dockerfile .
-	@docker tag $(TAG_PREFIX)/external \
-        $(TAG_PREFIX)/external:$(TAG_VERSION)
+	@./fix-espa-versions.sh ${ESPA_VERSION} centos/external/Dockerfile.template centos/external/Dockerfile
+	@docker build -t $(TAG_PREFIX)/external -f $(SYSTEM)/external/Dockerfile .
+	@docker tag $(TAG_PREFIX)/external $(TAG_PREFIX)/external:$(ESPA_VERSION)
 
 build.science:
-	@docker build -t $(TAG_PREFIX)/science \
-         -f $(SYSTEM)/science/Dockerfile .
-	@docker tag $(TAG_PREFIX)/science \
-        $(TAG_PREFIX)/science:$(TAG_VERSION)
+	@./fix-espa-versions.sh ${ESPA_VERSION} centos/science/Dockerfile.template centos/science/Dockerfile
+	@docker build -t $(TAG_PREFIX)/science -f $(SYSTEM)/science/Dockerfile .
+	@docker tag $(TAG_PREFIX)/science $(TAG_PREFIX)/science:$(ESPA_VERSION)
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # CentOS
