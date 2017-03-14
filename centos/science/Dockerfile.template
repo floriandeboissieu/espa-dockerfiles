@@ -121,7 +121,7 @@ RUN REPO_NAME=espa-elevation \
     && cd $SRC_DIR \
     && rm -rf ${REPO_NAME}
 
-RUN echo "Release Candidate twisted-tulips"
+RUN echo "Release Candidate red-green"
 RUN REPO_NAME=espa-processing \
     && REPO_TAG=ESPA_PROCESSING \
     && cd $SRC_DIR \
