@@ -318,6 +318,7 @@ RUN cd $SRC_DIR \
         --with-zlib=$ZLIBLIB \
         --with-szlib=$SZIPLIB \
         --disable-fortran \
+        --disable-netcdf \
         --enable-shared \
         --enable-static \
         --enable-static-exec \
