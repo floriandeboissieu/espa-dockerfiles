@@ -63,18 +63,6 @@ RUN REPO_NAME=espa-spectral-indices \
     && rm -rf ${REPO_NAME}
 
 
-RUN REPO_NAME=espa-cloud-masking \
-    && REPO_TAG=ESPA_CLOUD_MASKING \
-    && cd $SRC_DIR \
-    && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
-    && cd ${REPO_NAME} \
-    && git checkout ${REPO_TAG} \
-    && make BUILD_STATIC=yes ENABLE_THREADING=yes \
-    && make install \
-    && cd $SRC_DIR \
-    && rm -rf ${REPO_NAME}
-
-
 RUN REPO_NAME=espa-surface-water-extent \
     && REPO_TAG=ESPA_SURFACE_WATER_EXTENT \
     && cd $SRC_DIR \
