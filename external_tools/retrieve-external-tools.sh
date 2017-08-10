@@ -83,8 +83,9 @@ validate_tool $tool
 
 #-----------------------------------------------------------------------------
 version=hdf5-1.8.16
+release=$(echo $version | cut -c 1-8)
 tool=$version.tar.gz
-retrieve_tool $tool http://www.hdfgroup.org/ftp/HDF5/releases/$version/src
+retrieve_tool $tool http://www.hdfgroup.org/ftp/HDF5/releases/$release/$version/src
 validate_tool $tool
 
 #-----------------------------------------------------------------------------
