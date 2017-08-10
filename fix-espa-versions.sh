@@ -9,5 +9,6 @@ cat ${2} | sed \
     -e "s/ESPA_SPECTRAL_INDICES/spectral_indices_v2.6.0/" \
     -e "s/ESPA_SURFACE_WATER_EXTENT/espa-v2.17.0/" \
     -e "s/ESPA_ELEVATION/v2.3.0/" \
+    -e "s/ESPA_REPROJECTION/v1.0.1/" \
     -e "s/ESPA_PYTHON_LIBRARY/v1.1.0/" \
     -e "s/ESPA_PROCESSING/rb-2.20.0/" > ${3}
