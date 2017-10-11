@@ -11,4 +11,4 @@ cat ${2} | sed \
     -e "s/ESPA_ELEVATION/v2.3.0/" \
     -e "s/ESPA_REPROJECTION/v1.0.1/" \
     -e "s/ESPA_PYTHON_LIBRARY/v1.1.0/" \
-    -e "s/ESPA_PROCESSING/v2.23.0/" > ${3}
+    -e "s/ESPA_PROCESSING/v2.23.0.1/" > ${3}
