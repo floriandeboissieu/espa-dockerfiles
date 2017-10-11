@@ -119,7 +119,7 @@ RUN REPO_NAME=espa-reprojection \
     && cd $SRC_DIR \
     && rm -rf ${REPO_NAME}
 
-RUN echo "Release Candidate rugged-terrain"
+RUN echo "Release Candidate false-origin"
 RUN REPO_NAME=espa-processing \
     && REPO_TAG=ESPA_PROCESSING \
     && cd $SRC_DIR \
