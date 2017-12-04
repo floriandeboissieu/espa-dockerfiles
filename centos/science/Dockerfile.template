@@ -119,6 +119,16 @@ RUN REPO_NAME=espa-reprojection \
     && cd $SRC_DIR \
     && rm -rf ${REPO_NAME}
 
+RUN REPO_NAME=espa-plotting \
+    && REPO_TAG=ESPA_PLOTTING \
+    && cd $SRC_DIR \
+    && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
+    && cd ${REPO_NAME} \
+    && git checkout ${REPO_TAG} \
+    && make install \
+    && cd $SRC_DIR \
+    && rm -rf ${REPO_NAME}
+
 RUN echo "Release Candidate rugged-terrain"
 RUN REPO_NAME=espa-processing \
     && REPO_TAG=ESPA_PROCESSING \
