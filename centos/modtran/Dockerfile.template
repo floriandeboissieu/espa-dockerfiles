@@ -1,7 +1,7 @@
-FROM usgs.espa.centos.science
+FROM espa/science:ESPA_VERSION
 
 
-MAINTAINER USGS LSRD http://eros.usgs.gov
+MAINTAINER USGS EROS LSRD http://eros.usgs.gov
 
 
 LABEL description="This build adds in MODTRAN which we are not allowed to distribute."
