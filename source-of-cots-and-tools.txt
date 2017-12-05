@@ -40,11 +40,11 @@ libgeotiff:    (1.2.5)      (1.4.1)  http://download.osgeo.org/geotiff/libgeotif
     Tool    Current         New  Internet Source I Found And Used
 --------  ---------  ----------  ---------------------------------------------
   wgrib: (1.8.1.2c)  (1.8.1.2c)  http://www.cpc.ncep.noaa.gov/products/wesley/wgrib.html
-                                 Only Required for Land Surface Temperature processing
+                                 Only Required for Surface Temperature processing
     git:    (2.5.0)     (2.7.0)  git clone https://github.com/git/git.git git.git
                                  Installed into the base image and used for retrieving science source code.
 MODTRAN:      (5.3)       (5.3)  Our own internal source.  For others  (http://www.spectral.com/MODTRAN.shtml)
-                                 Only Required for Land Surface Temperature processing
+                                 Only Required for Surface Temperature processing
 
 IAS SOURCE CODE:  Required for ESPA processing node software
 IAS COTS: <internal svn server>/path/to/l8/tags/oli_ias/IAS_COTS_3_6_1

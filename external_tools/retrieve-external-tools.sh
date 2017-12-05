@@ -52,7 +52,7 @@ validate_tool $tool
 
 #-----------------------------------------------------------------------------
 tool=szip-2.1.tar.gz
-retrieve_tool $tool http://www.hdfgroup.org/ftp/lib-external/szip/2.1/src
+retrieve_tool $tool http://www.hdfgroup.org/ftp/lib-external/szip/previous/2.1/src
 validate_tool $tool
 
 #-----------------------------------------------------------------------------

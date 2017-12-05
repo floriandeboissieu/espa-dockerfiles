@@ -87,8 +87,8 @@ RUN REPO_NAME=espa-surface-reflectance \
     && rm -rf ${REPO_NAME}
 
 
-RUN REPO_NAME=espa-land-surface-temperature \
-    && REPO_TAG=ESPA_LAND_SURFACE_TEMPERATURE \
+RUN REPO_NAME=espa-surface-temperature \
+    && REPO_TAG=ESPA_SURFACE_TEMPERATURE \
     && cd $SRC_DIR \
     && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
@@ -119,7 +119,17 @@ RUN REPO_NAME=espa-reprojection \
     && cd $SRC_DIR \
     && rm -rf ${REPO_NAME}
 
-RUN echo "Release Candidate false-origin"
+RUN REPO_NAME=espa-plotting \
+    && REPO_TAG=ESPA_PLOTTING \
+    && cd $SRC_DIR \
+    && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
+    && cd ${REPO_NAME} \
+    && git checkout ${REPO_TAG} \
+    && make install \
+    && cd $SRC_DIR \
+    && rm -rf ${REPO_NAME}
+
+RUN echo "Release Candidate rugged-terrain"
 RUN REPO_NAME=espa-processing \
     && REPO_TAG=ESPA_PROCESSING \
     && cd $SRC_DIR \
