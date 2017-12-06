@@ -2,7 +2,7 @@
 TAG_PREFIX = espa
 ESPA_VERSION = 2.25.0.0.b
 
-.PHONY: all clean clean.containers clean.images build.base build.external build.science centos.base centos.external centos.science base external science
+.PHONY: all clean clean.containers clean.images build.base build.external build.science build.modtran centos.base centos.external centos.science centos.modtran base external science modtran
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # General targets
