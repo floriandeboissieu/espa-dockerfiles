@@ -1,4 +1,4 @@
-FROM espa/science:ESPA_VERSION
+FROM espa/external:ESPA_VERSION as modtran
 
 
 MAINTAINER USGS EROS LSRD http://eros.usgs.gov
@@ -8,16 +8,36 @@ LABEL description="This build adds in MODTRAN which we are not allowed to distri
 
 # ----------------------------------------------------------------------------
 # Build MODTRAN into the docker image
-# If ever a new MODTRAN is built, the DATA directory needs to be copied
-# to the auxiliaries location
-COPY external_tools/modtran-5.3.2 /usr/local/src/modtran
+# If ever a new version of MODTRAN is built, the DATA directory needs to be
+# copied to the auxiliaries location
+
+#&& make databases \
+#&& cp -r DATA /usr/local/share/MODTRAN_DATA \
+
+COPY external_tools/modtran-5.3.2.tar.gz $SRC_DIR
 RUN cd $SRC_DIR \
-    && cd modtran \
+    && tar -xvf modtran-5.3.2.tar.gz \
+    && cd modtran-5.3.2 \
     && ./bootstrap \
     && ./configure \
     && make install \
-    && make databases \
-    && cp -r DATA /usr/local/share/MODTRAN_DATA \
     && ln -sf /usr/local/bin/mod53 /usr/local/bin/modtran \
     && cd $SRC_DIR \
     && rm -rf modtran
+
+
+
+
+# ----------------------------------------------------------------------------
+# Actual image generation
+FROM espa/science:ESPA_VERSION
+
+
+MAINTAINER USGS EROS LSRD http://eros.usgs.gov
+
+
+LABEL description="This build adds in MODTRAN which we are not allowed to distribute."
+
+
+# Copy the built executable from the intermediate image
+COPY --from=modtran /usr/local/bin/mod53 /usr/local/bin/modtran
