@@ -36,6 +36,11 @@ build.science:
 	@docker build -t $(TAG_PREFIX)/science -f $(SYSTEM)/science/Dockerfile .
 	@docker tag $(TAG_PREFIX)/science $(TAG_PREFIX)/science:$(ESPA_VERSION)
 
+build.modtran:
+	@./fix-espa-versions.sh ${ESPA_VERSION} centos/modtran/Dockerfile.template centos/modtran/Dockerfile
+	@docker build -t $(TAG_PREFIX)/modtran -f $(SYSTEM)/modtran/Dockerfile .
+	@docker tag $(TAG_PREFIX)/modtran $(TAG_PREFIX)/modtran:$(ESPA_VERSION)
+
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # CentOS
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -49,6 +54,9 @@ centos.external:
 centos.science:
 	@SYSTEM=centos make build.science
 
+centos.modtran:
+	@SYSTEM=centos make build.modtran
+
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Shortcuts
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -56,3 +64,4 @@ centos.science:
 base: centos.base
 external: centos.external
 science: centos.science
+modtran: centos.modtran
