@@ -1,4 +1,4 @@
-FROM espa/base:ESPA_VERSION
+FROM @IMAGE_BASE_NAME@:@VERSION@
 
 
 MAINTAINER USGS EROS LSRD http://eros.usgs.gov
