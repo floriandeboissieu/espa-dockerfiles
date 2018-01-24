@@ -1,8 +1,9 @@
-external_tools/*.tar.gz
-external_tools/HDF-EOS2.19v1.00.tar.Z
-external_tools/wgrib.tar.v1.8.1.2c
-external_tools/Python-2.7.11.tgz
-external_tools/gosu-amd64
-external_tools/modtran-*
+centos/external/external_tools/*.tar.gz
+centos/external/external_tools/HDF-EOS2.19v1.00.tar.Z
+centos/external/external_tools/wgrib.tar.v1.8.1.2c
+centos/external/external_tools/Python-2.7.11.tgz
+centos/external/external_tools/gosu-amd64
+centos/modtran/modtran-*
 centos/external/Dockerfile
 centos/science/Dockerfile
+centos/modtran/Dockerfile
