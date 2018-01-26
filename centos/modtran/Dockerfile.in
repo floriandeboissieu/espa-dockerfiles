@@ -23,7 +23,7 @@ RUN cd $SRC_DIR \
     && make install \
     && ln -sf /usr/local/bin/mod53 /usr/local/bin/modtran \
     && cd $SRC_DIR \
-    && rm -rf modtran
+    && rm -rf modtran*
 
 
 
