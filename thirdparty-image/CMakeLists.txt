@@ -11,7 +11,7 @@ configure_file ( ${CMAKE_CURRENT_SOURCE_DIR}/Dockerfile.in
 
 
 add_custom_target (
-    external ALL
+    thirdparty-image ALL
     COMMAND docker build --tag ${IMAGE_NAME}:${VERSION} --file Dockerfile .
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
