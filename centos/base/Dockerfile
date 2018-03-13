@@ -1,4 +1,4 @@
-FROM centos:7.3.1611
+FROM centos:6.9
 
 
 MAINTAINER USGS EROS LSRD http://eros.usgs.gov
@@ -17,10 +17,3 @@ RUN yum install -y \
         epel-release \
     && yum clean metadata
 
-
-# Initial Python Configuration
-RUN yum install -y \
-        python-pip \
-        python-devel \
-    && pip install --upgrade pip \
-    && yum clean metadata
