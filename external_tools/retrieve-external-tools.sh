@@ -12,13 +12,23 @@ validate_tool () {
 #-----------------------------------------------------------------------------
 retrieve_tool () {
     if [ ! -f $1 ]; then
-        wget $2/$1
+        wget -L $2/$1
         if [ $? != 0 ]; then
             echo "Failed to retrieve [$1]"
             exit 1
         fi
     fi
 }
+
+#-----------------------------------------------------------------------------
+tool=Python-2.7.8.tgz
+retrieve_tool $tool https://www.python.org/ftp/python/2.7.8
+validate_tool $tool
+
+#-----------------------------------------------------------------------------
+tool=get-pip.py
+retrieve_tool $tool https://bootstrap.pypa.io
+validate_tool $tool
 
 #-----------------------------------------------------------------------------
 tool=curl-7.48.0.tar.gz
