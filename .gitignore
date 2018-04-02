@@ -5,5 +5,6 @@ thirdparty-image/external_tools/Python-2.7.11.tgz
 thirdparty-image/external_tools/gosu-amd64
 thirdparty-image/Dockerfile
 science-image/Dockerfile
+modtran-build-image/Dockerfile
 modtran-image/Dockerfile
 modtran-image/modtran-*
