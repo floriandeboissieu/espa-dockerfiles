@@ -1,0 +1,26 @@
+FROM @IMAGE_BASE_NAME@:@VERSION@ as modtran
+
+
+MAINTAINER USGS EROS LSRD http://eros.usgs.gov
+
+
+LABEL description="This build adds in MODTRAN which we are not allowed to distribute."
+
+# ----------------------------------------------------------------------------
+# Build MODTRAN into the docker image
+# If ever a new version of MODTRAN is built, the DATA directory needs to be
+# copied to the auxiliaries location
+
+#&& make databases \
+#&& cp -r DATA /usr/local/share/MODTRAN_DATA \
+
+COPY modtran-5.3.2.tar.gz $SRC_DIR
+RUN cd $SRC_DIR \
+    && tar -xvf modtran-5.3.2.tar.gz \
+    && cd modtran-5.3.2 \
+    && ./bootstrap \
+    && ./configure \
+    && make install \
+    && ln -sf /usr/local/bin/mod53 /usr/local/bin/modtran \
+    && cd $SRC_DIR \
+    && rm -rf modtran*

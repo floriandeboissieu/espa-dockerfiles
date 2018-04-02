@@ -1,9 +1,8 @@
 cmake_minimum_required ( VERSION 3.6 )
 
 
-set ( IMAGE_BASE_NAME ${PROJECT_NAME}/modtran_build )
-set ( IMAGE_SCIENCE_NAME ${PROJECT_NAME}/science )
-set ( IMAGE_NAME ${PROJECT_NAME}/modtran )
+set ( IMAGE_BASE_NAME ${PROJECT_NAME}/science )
+set ( IMAGE_NAME ${PROJECT_NAME}/modtran_build )
 
 
 configure_file ( ${CMAKE_CURRENT_SOURCE_DIR}/Dockerfile.in
@@ -12,7 +11,7 @@ configure_file ( ${CMAKE_CURRENT_SOURCE_DIR}/Dockerfile.in
 
 
 add_custom_target (
-    modtran-image ALL
+    modtran-build-image ALL
     COMMAND docker build --tag ${IMAGE_NAME}:${VERSION} --file Dockerfile .
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
