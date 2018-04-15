@@ -41,28 +41,6 @@ ENV GIT_VERSION=v2.9.5 \
 	TIFF_SHA256=4d57a50907b510e3049a4bba0d7888930fdfc16ce49f1bf693e5b6247370d68c
 
 
-# ` Compilers and all the rquired libraries
-RUN yum group install -y "Development Tools" \
-    && yum install -y \
-        e2fsprogs \
-        expat-devel \
-        freetype-devel \
-        glibc-static \
-        libcurl-devel \
-        libidn-devel \
-        libgfortran-static \
-        libquadmath-static \
-        perl-ExtUtils-MakeMaker \
-        texinfo \
-        bzip2-devel \
-        zlib-devel \
-        zlib-static \
-        libpng-devel \
-        libpng-static \
-        rpm-build \
-    && yum clean metadata
-
-
 # ` Source and installation locations
 ENV PREFIX=/usr/local \
     SRC_DIR=/usr/local/src \
@@ -138,6 +116,33 @@ ENV ZLIBINC=$ZLIB_PREFIX/include \
 # ` May also solve some hdfeos issues
 ENV LD_LIBRARY_PATH=/usr/lib64:/usr/local/lib
 
+# =======================================================
+#   Build Layer
+# =======================================================
+FROM environvars as builders
+WORKDIR ${SRC_DIR}}
+
+# ` Compilers and all the rquired libraries
+RUN yum group install -y "Development Tools" \
+    && yum install -y \
+        e2fsprogs \
+        expat-devel \
+        freetype-devel \
+        glibc-static \
+        libcurl-devel \
+        libidn-devel \
+        libgfortran-static \
+        libquadmath-static \
+        perl-ExtUtils-MakeMaker \
+        texinfo \
+        bzip2-devel \
+        zlib-devel \
+        zlib-static \
+        libpng-devel \
+        libpng-static \
+        rpm-build \
+    && yum clean metadata
+
 
 # ` Update the OS packages to the latest versions
 RUN yum update -y \
@@ -164,11 +169,6 @@ RUN yum install -y \
         wgrib \
     && yum clean metadata
 
-# =======================================================
-#   Build Layer
-# =======================================================
-FROM environvars as builders
-WORKDIR ${SRC_DIR}}
 
 # ` Update git to a version that isn't broken
 RUN wget -nv https://mirrors.edge.kernel.org/pub/software/scm/git/git-${GIT_VERSION}.tar.gz \
