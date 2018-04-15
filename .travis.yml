@@ -1,13 +1,8 @@
 language: c
 services: docker
 sudo: required
-env:
-  - LAYER=geolibs VERSION=v1.0
-before_script:
-  - env | sort
-  - cp Makefile "${LAYER}/${VERSION}"
-  - cd "${LAYER}/${VERSION}"
-  - IMAGE_TAG="${LAYER}-${VERSION}"
+env: []
+before_script: []
 script:
   - "travis_wait 30 sleep 1800 &"
   - make build
