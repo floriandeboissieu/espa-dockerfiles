@@ -39,7 +39,8 @@ ENV GIT_VERSION=2.9.5 \
 	SZIP_VERSION=2.1 \
 	SZIP_SHA256=a816d95d5662e8279625abdbea7d0e62157d7d1f028020b1075500bf483ed5ef  \
 	TIFF_VERSION=4.0.6 \
-	TIFF_SHA256=4d57a50907b510e3049a4bba0d7888930fdfc16ce49f1bf693e5b6247370d68c
+	TIFF_SHA256=4d57a50907b510e3049a4bba0d7888930fdfc16ce49f1bf693e5b6247370d68c \
+    PYTHON_NUMPY_VERSION=1.11.0
 
 
 # ` Source and installation locations
@@ -408,7 +409,7 @@ RUN wget -nv http://www.hdfgroup.org/ftp/HDF5/releases/hdf5-${HDF5_VERSION:0:3}/
     && rm -rf .*
 
 
-# Install netcdf-4
+# ` Install netcdf-4
 RUN wget -nv ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-${NETCDF4_VERSION}.tar.gz \
     && sha256sum netcdf-${NETCDF4_VERSION}.tar.gz | grep -E "^${NETCDF4__SHA256}" \
     && cd ${SRC_DIR} \
@@ -425,7 +426,7 @@ RUN wget -nv ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-${NETCDF4_VERSION}.tar
     && rm -rf .*
 
 
-# Install HDFEOS2
+#  Install HDFEOS2
 RUN wget -nv ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos/latest_release/HDF-EOS${HDFEOS_VERSION}.tar.Z \
     && sha256sum HDF-EOS${HDFEOS_VERSION}.tar.Z | grep -E "^${HDFEOS_SHA256}" \
     && cd ${SRC_DIR} \
@@ -445,9 +446,9 @@ RUN wget -nv ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos/latest_release/HDF-EOS${HDFEO
     && rm -rf .*
 
 
-# Python environment setup
-# GDAL is installed into python through the below installation, because Numpy
-# must be installed into python before building GDAL
+# ` Python environment setup
+#   GDAL is installed into python through the below installation, because Numpy
+#   must be installed into python before building GDAL
 RUN pip install --no-cache-dir --upgrade pip \
     && pip install \
         --no-cache-dir \
@@ -458,16 +459,10 @@ RUN pip install --no-cache-dir --upgrade pip \
         python-dateutil==2.5.3 \
         requests==2.10.0 \
         lxml==3.6.0 \
-        numpy==1.11.0 \
-        matplotlib==1.5.1 \
-    && pip install \
-        --no-cache-dir \
-        scipy==0.11.0
-# Force matplotlib to build the font cache
-RUN python -c 'import matplotlib.pyplot'
+        numpy==${PYTHON_NUMPY_VERSION}
 
 
-# Install GDAL
+# ` Install GDAL
 RUN wget -nv http://download.osgeo.org/gdal/${GDAL_VERSION}/gdal-${GDAL_VERSION}.tar.gz \
     && sha256sum gdal-${GDAL_VERSION}.tar.gz | grep -E "^${GDAL_SHA256}" \
     && cd ${SRC_DIR} \
