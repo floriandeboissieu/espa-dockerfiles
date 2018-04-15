@@ -1,7 +1,7 @@
 # =======================================================
 #   Environments Layer
 # =======================================================
-FROM centos:7.3.1611 as envars
+FROM centos:7.3.1611 as environvars
 MAINTAINER USGS EROS LSRD http://eros.usgs.gov
 
 # ` Compilers and all the rquired libraries
@@ -154,7 +154,7 @@ RUN yum install -y \
 # =======================================================
 #   Build Layer
 # =======================================================
-FROM envvars as builders
+FROM environvars as builders
 WORKDIR ${SRC_DIR}}
 
 # ` Update git to a version that isn't broken
