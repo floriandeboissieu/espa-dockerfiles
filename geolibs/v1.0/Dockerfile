@@ -447,8 +447,9 @@ RUN wget -nv ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos/latest_release/HDF-EOS${HDFEO
 # Python environment setup
 # GDAL is installed into python through the below installation, because Numpy
 # must be installed into python before building GDAL
-RUN pip install --upgrade pip \
+RUN pip install --no-cache-dir --upgrade pip \
     && pip install \
+        --no-cache-dir \
         --global-option=build_ext \
         --global-option="-L/usr/local/lib" \
         --global-option="-I/usr/local/include" \
@@ -459,6 +460,7 @@ RUN pip install --upgrade pip \
         numpy==1.11.0 \
         matplotlib==1.5.1 \
     && pip install \
+        --no-cache-dir \
         scipy==0.11.0
 # Force matplotlib to build the font cache
 RUN python -c 'import matplotlib.pyplot'
