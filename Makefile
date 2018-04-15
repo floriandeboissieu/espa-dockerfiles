@@ -1,58 +1,27 @@
+.DEFAULT_GOAL := build
+REPO       := $(or $(DOCKER_USER),$(shell whoami))"/$(shell basename $(shell pwd))"
+BRANCH     := $(or $(TRAVIS_BRANCH),$(shell git rev-parse --abbrev-ref HEAD | tr / -))
+COMMIT     := $(or $(TRAVIS_COMMIT),$(shell git rev-parse HEAD))
+COMMIT_TAG := $(REPO):$(COMMIT)
+BRANCH_TAG := $(REPO):$(IMAGE_TAG)
 
-TAG_PREFIX = espa
-ESPA_VERSION = 2.23.0.0
+build:
+	@docker build --target builder -f Dockerfile -t $(COMMIT_TAG) --rm=true --compress $(PWD)
 
-.PHONY: all clean clean.containers clean.images build.base build.external build.science centos.base centos.external centos.science base external science
+tag:
+	@docker tag $(COMMIT_TAG) $(BRANCH_TAG)
 
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# General targets
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+login:
+	@$(if $(and $(DOCKER_USER), $(DOCKER_PASS)), docker login -u $(DOCKER_USER) -p $(DOCKER_PASS), docker login)
 
-all: clean
+push: login
+	docker push $(REPO)
 
-clean: clean.containers clean.images
+debug:
+	@echo "VERSION:    $(VERSION)"
+	@echo "REPO:       $(REPO)"
+	@echo "BRANCH:     $(BRANCH)"
+	@echo "COMMIT_TAG: $(COMMIT_TAG)"
+	@echo "BRANCH_TAG: $(BRANCH_TAG)"
 
-clean.containers:
-	@-./scripts/remove-all-stopped-containers.sh
-
-clean.images:
-	@-./scripts/remove-dangling-images.sh
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Common
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-build.base:
-	@docker build -t $(TAG_PREFIX)/base -f $(SYSTEM)/base/Dockerfile .
-	@docker tag $(TAG_PREFIX)/base $(TAG_PREFIX)/base:$(ESPA_VERSION)
-
-build.external:
-	@./fix-espa-versions.sh ${ESPA_VERSION} centos/external/Dockerfile.template centos/external/Dockerfile
-	@docker build -t $(TAG_PREFIX)/external -f $(SYSTEM)/external/Dockerfile .
-	@docker tag $(TAG_PREFIX)/external $(TAG_PREFIX)/external:$(ESPA_VERSION)
-
-build.science:
-	@./fix-espa-versions.sh ${ESPA_VERSION} centos/science/Dockerfile.template centos/science/Dockerfile
-	@docker build -t $(TAG_PREFIX)/science -f $(SYSTEM)/science/Dockerfile .
-	@docker tag $(TAG_PREFIX)/science $(TAG_PREFIX)/science:$(ESPA_VERSION)
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# CentOS
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-centos.base:
-	@SYSTEM=centos make build.base
-
-centos.external:
-	@SYSTEM=centos make build.external
-
-centos.science:
-	@SYSTEM=centos make build.science
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Shortcuts
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-base: centos.base
-external: centos.external
-science: centos.science
+docker-deploy: debug build tag push
