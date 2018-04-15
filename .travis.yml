@@ -4,7 +4,6 @@ sudo: required
 env: []
 before_script: []
 script:
-  - "travis_wait 30 sleep 1800 &"
   - make build
 after_script:
   - docker images
