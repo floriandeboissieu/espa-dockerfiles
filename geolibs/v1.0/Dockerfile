@@ -5,7 +5,7 @@ FROM centos:7.3.1611 as environvars
 MAINTAINER USGS EROS LSRD http://eros.usgs.gov
 
 # ` Compilers and all the rquired libraries
-ENV GIT_VERSION=v2.9.5 \
+ENV GIT_VERSION=2.9.5 \
 	GIT_SHA256=36658cb768a54c1d4dec43c3116c27ed893e88b02ecfcb44f2166f9c0b7f2a0d \
 	XZ_VERSION=5.2.2 \
 	XZ_SHA256=73df4d5d34f0468bd57d09f2d8af363e95ed6cc3a4a86129d2f2c366259902a2 \
