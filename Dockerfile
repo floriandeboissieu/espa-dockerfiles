@@ -459,3 +459,4 @@ RUN wget -nv http://download.osgeo.org/gdal/${GDAL_VERSION}/gdal-${GDAL_VERSION}
     && rm -rf *
 
 ####### TODO: NOW, JUST GET THE BINARIES BACK OUT AGAIN!
+ENTRYPOINT [ "/bin/true" ]
