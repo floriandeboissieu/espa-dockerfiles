@@ -9,6 +9,7 @@ before_script:
   - cd "${LAYER}/${VERSION}"
   - IMAGE_TAG="${LAYER}-${VERSION}"
 script:
+  - "travis_wait 30 sleep 1800 &"
   - make build
 after_script:
   - docker images
