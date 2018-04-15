@@ -121,7 +121,7 @@ ENV LD_LIBRARY_PATH=/usr/lib64:/usr/local/lib
 # =======================================================
 #   Build Layer
 # =======================================================
-FROM environvars as builders
+FROM environvars as builder
 WORKDIR ${SRC_DIR}
 
 
