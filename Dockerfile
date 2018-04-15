@@ -174,7 +174,7 @@ RUN wget -nv https://mirrors.edge.kernel.org/pub/software/scm/git/git-${GIT_VERS
     && tar -xf git-${GIT_VERSION}.tar.gz \
     && cd git-${GIT_VERSION} \
     && make configure >> /dev/null \
-    && ./configure --without-tcltk >> /dev/null \
+    && ./configure --without-tcltk \
     && make -j4 >> /dev/null \
     && make install \
     && cd ${SRC_DIR} \
@@ -187,7 +187,7 @@ RUN wget -nv http://tukaani.org/xz/xz-${XZ_VERSION}.tar.gz \
     && tar -xf xz-${XZ_VERSION}.tar.gz \
     && cd xz-${XZ_VERSION} \
     && ./configure --prefix=$XZ_PREFIX \
-        --enable-static >> /dev/null \
+        --enable-static \
     && make -j4 >> /dev/null \
     && make install \
     && cd ${SRC_DIR} \
@@ -201,7 +201,7 @@ RUN wget -nv http://www.hdfgroup.org/ftp/lib-external/szip/previous/${SZIP_VERSI
     && cd szip-${SZIP_VERSION} \
     && ./configure --prefix=$SZIP_PREFIX \
         --enable-shared \
-        --enable-static >> /dev/null \
+        --enable-static \
     && make -j4 >> /dev/null \
     && make install \
     && cd ${SRC_DIR} \
@@ -218,7 +218,7 @@ RUN wget -nv ftp://xmlsoft.org/libxml2/libxml2-${LIBXML2_VERSION}.tar.gz \
         --with-lzma=${XZ_PREFIX} \
         --with-python \
         --enable-shared \
-        --enable-static >> /dev/null \
+        --enable-static \
     && make -j4 >> /dev/null \
     && make install \
     && cd ${SRC_DIR} \
@@ -234,7 +234,7 @@ RUN wget -nv ftp://xmlsoft.org/libxslt/libxslt-${LIBXSLT_VERSION}.tar.gz \
         --with-libxml-libs-prefix=${XML2LIB} \
         --with-python \
         --enable-shared \
-        --enable-static >> /dev/null \
+        --enable-static \
     && make -j4 >> /dev/null \
     && make install \
     && cd ${SRC_DIR} \
@@ -248,7 +248,7 @@ RUN wget -nv http://www.ijg.org/files/jpegsrc.${JPEG_VERSION}.tar.gz \
     && cd jpeg-${JPEG_VERSION} \
     && ./configure --prefix=${JPEG_PREFIX} \
         --enable-shared \
-        --enable-static >> /dev/null \
+        --enable-static \
     && make -j4 >> /dev/null \
     && make install \
     && cd ${SRC_DIR} \
@@ -275,7 +275,7 @@ RUN wget -nv http://download.osgeo.org/proj/proj-${PROJ4_VERSION}.tar.gz \
     && cd proj-${PROJ4_VERSION} \
     && ./configure --prefix=${PROJ4_PREFIX} \
         --enable-shared \
-        --enable-static >> /dev/null \
+        --enable-static \
     && make -j4 >> /dev/null \
     && make install \
     && cd ${SRC_DIR} \
@@ -297,7 +297,7 @@ RUN wget -nv http://download.osgeo.org/libtiff/tiff-${TIFF_VERSION}.tar.gz \
         --with-lzma-include-dir=${LZMAINC} \
         --with-lzma-lib-dir=${LZMALIB} \
         --enable-shared \
-        --enable-static >> /dev/null \
+        --enable-static \
     && make -j4 >> /dev/null \
     && make install \
     && cd ${SRC_DIR} \
@@ -315,7 +315,7 @@ RUN wget -nv http://download.osgeo.org/geotiff/libgeotiff/libgeotiff-${LIBGEOTIF
         --with-zlib-include-dir=${ZLIBINC} \
         --with-zlib-lib-dir=${ZLIBLIB} \
         --enable-shared \
-        --enable-static >> /dev/null \
+        --enable-static \
     && make -j4 >> /dev/null \
     && make install \
     && cd ${SRC_DIR} \
@@ -329,7 +329,7 @@ RUN wget -nv https://curl.haxx.se/download/curl-${CURL_VERSION}.tar.gz \
     && cd curl-${CURL_VERSION} \
     && ./configure --prefix=${CURL_PREFIX} \
         --enable-shared \
-        --enable-static >> /dev/null \
+        --enable-static \
     && make -j4 >> /dev/null \
     && make install \
     && cd ${SRC_DIR} \
@@ -343,7 +343,7 @@ RUN wget -nv ftp://ftp.gnu.org/gnu/libidn/libidn-${LIBIDN_VERSION}.tar.gz \
     && cd libidn-${LIBIDN_VERSION} \
     && ./configure --prefix=${IDN_PREFIX} \
         --enable-shared \
-        --enable-static >> /dev/null \
+        --enable-static \
     && make -j4 >> /dev/null \
     && make install \
     && cd ${SRC_DIR} \
@@ -363,7 +363,7 @@ RUN wget -nv https://www.hdfgroup.org/ftp/HDF/releases/HDF${HDF4_VERSION}/src/hd
         --disable-netcdf \
         --enable-shared \
         --enable-static \
-        --enable-static-exec >> /dev/null \
+        --enable-static-exec \
     && make -j4 >> /dev/null \
     && make install \
     && cd ${SRC_DIR} >> /dev/null \
@@ -383,7 +383,7 @@ RUN wget -nv http://www.hdfgroup.org/ftp/HDF5/releases/hdf5-${HDF5_VERSION:0:3}/
         --enable-unsupported \
         --with-pthread=/usr/lib64 \
         --enable-shared \
-        --enable-static >> /dev/null \
+        --enable-static \
     && make -j4 >> /dev/null \
     && make install \
     && cd ${SRC_DIR} \
@@ -399,7 +399,7 @@ RUN wget -nv ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-${NETCDF4_VERSION}.tar
         ./configure --prefix=${NETCDF4_PREFIX} \
         --enable-netcdf-4 \
         --enable-shared \
-        --enable-static >> /dev/null \
+        --enable-static \
     && make -j5 >> /dev/null \
     && make install \
     && cd ${SRC_DIR} \
@@ -418,7 +418,7 @@ RUN wget -nv ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos/latest_release/HDF-EOS${HDFEO
         --with-szlib=${SZIPINC},${SZIPLIB} \
         --enable-install-include \
         --disable-shared \
-        --enable-static >> /dev/null \
+        --enable-static \
     && make -j4 >> /dev/null \
     && make install \
     && cd ${SRC_DIR} \
@@ -450,7 +450,7 @@ RUN wget -nv http://download.osgeo.org/gdal/${GDAL_VERSION}/gdal-${GDAL_VERSION}
         --with-python=yes \
         --with-static-proj4=${PROJ4_LIB} \
         --enable-shared \
-        --enable-static >> /dev/null \
+        --enable-static \
     && make -j4 >> /dev/null \
     && make install \
     && cd ${SRC_DIR} \
