@@ -435,7 +435,7 @@ RUN pip install \
         --global-option=build_ext \
         --global-option="-L/usr/local/lib" \
         --global-option="-I/usr/local/include" \
-        --global-option="-I/usr/local/include/libxml2" \
+        --global-option="-I${XML2INC}" \
         python-dateutil==2.5.3 \
         requests==2.10.0 \
         lxml==3.6.0 \
