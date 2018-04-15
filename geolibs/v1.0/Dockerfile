@@ -139,6 +139,25 @@ ENV ZLIBINC=$ZLIB_PREFIX/include \
 ENV LD_LIBRARY_PATH=/usr/lib64:/usr/local/lib
 
 
+# ` Update the OS packages to the latest versions
+RUN yum update -y \
+    && yum clean metadata
+
+
+# ` Required for additional tools installed later
+RUN yum install -y \
+        epel-release \
+    && yum clean metadata
+
+
+# ` Initial Python Configuration
+RUN yum install -y \
+        python-pip \
+        python-devel \
+    && pip install --upgrade pip \
+    && yum clean metadata
+
+
 # ` Additional tools provided by the OS required for ESPA
 RUN yum install -y \
         wget \
