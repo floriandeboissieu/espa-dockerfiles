@@ -22,7 +22,7 @@ ENV GIT_VERSION=2.9.5 \
     HDF5_SHA256=ed17178abd9928a7237f30370189ba767b9e39e0db45917c2ac4665eb9cb4771  \
 	JBIGKIT_VERSION=2.1 \
     JBIGKIT_SHA256=de7106b6bfaf495d6865c7dd7ac6ca1381bd12e0d81405ea81e7f2167263d932  \
-	JPEG_VERSION=v9b \
+	JPEG_VERSION=9b \
 	JPEG_SHA256=240fd398da741669bf3c90366f58452ea59041cacc741a489b99f2f6a0bad052  \
 	LIBGEOTIFF_VERSION=1.4.1 \
 	LIBGEOTIFF_SHA256=acfc76ee19b3d41bb9c7e8b780ca55d413893a96c09f3b27bdb9b2573b41fd23  \
@@ -173,12 +173,13 @@ RUN wget -nv https://mirrors.edge.kernel.org/pub/software/scm/git/git-${GIT_VERS
     && sha256sum git-${GIT_VERSION}.tar.gz | grep -E "^${GIT_SHA256}" \
     && tar -xf git-${GIT_VERSION}.tar.gz \
     && cd git-${GIT_VERSION} \
-    && make configure >> /dev/null \
+    && make configure \
     && ./configure --without-tcltk \
-    && make -j4 >> /dev/null \
+    && make -j4 \
     && make install \
     && cd ${SRC_DIR} \
-    && rm -rf *
+    && rm -rf * \
+     2>&1 >> /dev/null
 
 
 # ` Install xz to get the lzma library
@@ -188,10 +189,11 @@ RUN wget -nv http://tukaani.org/xz/xz-${XZ_VERSION}.tar.gz \
     && cd xz-${XZ_VERSION} \
     && ./configure --prefix=$XZ_PREFIX \
         --enable-static \
-    && make -j4 >> /dev/null \
+    && make -j4 \
     && make install \
     && cd ${SRC_DIR} \
-    && rm -rf *
+    && rm -rf * \
+     2>&1 >> /dev/null
 
 
 # ` Install szip
@@ -202,10 +204,11 @@ RUN wget -nv http://www.hdfgroup.org/ftp/lib-external/szip/previous/${SZIP_VERSI
     && ./configure --prefix=$SZIP_PREFIX \
         --enable-shared \
         --enable-static \
-    && make -j4 >> /dev/null \
+    && make -j4  \
     && make install \
     && cd ${SRC_DIR} \
-    && rm -rf *
+    && rm -rf * \
+     2>&1 >> /dev/null
 
 
 # ` Install libxml2
@@ -219,10 +222,11 @@ RUN wget -nv ftp://xmlsoft.org/libxml2/libxml2-${LIBXML2_VERSION}.tar.gz \
         --with-python \
         --enable-shared \
         --enable-static \
-    && make -j4 >> /dev/null \
+    && make -j4  \
     && make install \
     && cd ${SRC_DIR} \
-    && rm -rf *
+    && rm -rf * \
+     2>&1 >> /dev/null
 
 
 # ` Install libxslt
@@ -235,24 +239,26 @@ RUN wget -nv ftp://xmlsoft.org/libxslt/libxslt-${LIBXSLT_VERSION}.tar.gz \
         --with-python \
         --enable-shared \
         --enable-static \
-    && make -j4 >> /dev/null \
+    && make -j4 \
     && make install \
     && cd ${SRC_DIR} \
-    && rm -rf *
+    && rm -rf * \
+     2>&1 >> /dev/null
 
 
 # ` Install jpeg
-RUN wget -nv http://www.ijg.org/files/jpegsrc.${JPEG_VERSION}.tar.gz \
-    && sha256sum jpegsrc.${JPEG_VERSION}.tar.gz | grep -E "^${JPEG_SHA256}" \
-    && tar -xf jpegsrc.${JPEG_VERSION}.tar.gz \
+RUN wget -nv http://www.ijg.org/files/jpegsrc.v${JPEG_VERSION}.tar.gz \
+    && sha256sum jpegsrc.v${JPEG_VERSION}.tar.gz | grep -E "^${JPEG_SHA256}" \
+    && tar -xf jpegsrc.v${JPEG_VERSION}.tar.gz \
     && cd jpeg-${JPEG_VERSION} \
     && ./configure --prefix=${JPEG_PREFIX} \
         --enable-shared \
         --enable-static \
-    && make -j4 >> /dev/null \
+    && make -j4 \
     && make install \
     && cd ${SRC_DIR} \
-    && rm -rf *
+    && rm -rf * \
+     2>&1 >> /dev/null
 
 
 # ` Install jbigkit
@@ -260,12 +266,13 @@ RUN wget -nv https://www.cl.cam.ac.uk/~mgk25/jbigkit/download/jbigkit-${JBIGKIT_
     && sha256sum jbigkit-${JBIGKIT_VERSION}.tar.gz | grep -E "^${JBIGKIT_SHA256}" \
     && tar -xf jbigkit-${JBIGKIT_VERSION}.tar.gz \
     && cd jbigkit-${JBIGKIT_VERSION} \
-    && make -j4 >> /dev/null \
+    && make -j4 \
     && /usr/bin/install libjbig/libjbig.a ${JBIGLIB}/libjbig.a \
     && /usr/bin/install libjbig/libjbig85.a ${JBIGLIB}/libjbig85.a \
     && /usr/bin/install libjbig/*.h ${JBIGINC} \
     && cd ${SRC_DIR} \
-    && rm -rf *
+    && rm -rf * \
+     2>&1 >> /dev/null
 
 
 # ` Install proj4
@@ -276,10 +283,11 @@ RUN wget -nv http://download.osgeo.org/proj/proj-${PROJ4_VERSION}.tar.gz \
     && ./configure --prefix=${PROJ4_PREFIX} \
         --enable-shared \
         --enable-static \
-    && make -j4 >> /dev/null \
+    && make -j4 \
     && make install \
     && cd ${SRC_DIR} \
-    && rm -rf *
+    && rm -rf * \
+     2>&1 >> /dev/null
 
 
 # ` Install tiff
@@ -298,10 +306,11 @@ RUN wget -nv http://download.osgeo.org/libtiff/tiff-${TIFF_VERSION}.tar.gz \
         --with-lzma-lib-dir=${LZMALIB} \
         --enable-shared \
         --enable-static \
-    && make -j4 >> /dev/null \
+    && make -j4 \
     && make install \
     && cd ${SRC_DIR} \
-    && rm -rf *
+    && rm -rf * \
+     2>&1 >> /dev/null
 
 
 # ` Install libgeotiff
@@ -316,10 +325,11 @@ RUN wget -nv http://download.osgeo.org/geotiff/libgeotiff/libgeotiff-${LIBGEOTIF
         --with-zlib-lib-dir=${ZLIBLIB} \
         --enable-shared \
         --enable-static \
-    && make -j4 >> /dev/null \
+    && make -j4 \
     && make install \
     && cd ${SRC_DIR} \
-    && rm -rf *
+    && rm -rf * \
+     2>&1 >> /dev/null
 
 
 # ` Install curl
@@ -330,10 +340,11 @@ RUN wget -nv https://curl.haxx.se/download/curl-${CURL_VERSION}.tar.gz \
     && ./configure --prefix=${CURL_PREFIX} \
         --enable-shared \
         --enable-static \
-    && make -j4 >> /dev/null \
+    && make -j4 \
     && make install \
     && cd ${SRC_DIR} \
-    && rm -rf *
+    && rm -rf * \
+     2>&1 >> /dev/null
 
 
 # ` Install idn
@@ -344,10 +355,11 @@ RUN wget -nv ftp://ftp.gnu.org/gnu/libidn/libidn-${LIBIDN_VERSION}.tar.gz \
     && ./configure --prefix=${IDN_PREFIX} \
         --enable-shared \
         --enable-static \
-    && make -j4 >> /dev/null \
+    && make -j4 \
     && make install \
     && cd ${SRC_DIR} \
-    && rm -rf *
+    && rm -rf * \
+     2>&1 >> /dev/null
 
 
 # ` Install HDF4
@@ -364,10 +376,11 @@ RUN wget -nv https://www.hdfgroup.org/ftp/HDF/releases/HDF${HDF4_VERSION}/src/hd
         --enable-shared \
         --enable-static \
         --enable-static-exec \
-    && make -j4 >> /dev/null \
+    && make -j4 \
     && make install \
-    && cd ${SRC_DIR} >> /dev/null \
-    && rm -rf *
+    && cd ${SRC_DIR} \
+    && rm -rf * \
+     2>&1 >> /dev/null
 
 
 # ` Install HDF5
@@ -384,10 +397,11 @@ RUN wget -nv http://www.hdfgroup.org/ftp/HDF5/releases/hdf5-${HDF5_VERSION:0:3}/
         --with-pthread=/usr/lib64 \
         --enable-shared \
         --enable-static \
-    && make -j4 >> /dev/null \
+    && make -j4 \
     && make install \
     && cd ${SRC_DIR} \
-    && rm -rf *
+    && rm -rf * \
+     2>&1 >> /dev/null
 
 
 # ` Install netcdf-4
@@ -400,10 +414,11 @@ RUN wget -nv ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-${NETCDF4_VERSION}.tar
         --enable-netcdf-4 \
         --enable-shared \
         --enable-static \
-    && make -j5 >> /dev/null \
+    && make -j4 \
     && make install \
     && cd ${SRC_DIR} \
-    && rm -rf *
+    && rm -rf * \
+     2>&1 >> /dev/null
 
 
 #  Install HDFEOS2
@@ -419,10 +434,11 @@ RUN wget -nv ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos/latest_release/HDF-EOS${HDFEO
         --enable-install-include \
         --disable-shared \
         --enable-static \
-    && make -j4 >> /dev/null \
+    && make -j4 \
     && make install \
     && cd ${SRC_DIR} \
-    && rm -rf *
+    && rm -rf * \
+     2>&1 >> /dev/null
 
 
 # ` Python environment setup
@@ -451,9 +467,10 @@ RUN wget -nv http://download.osgeo.org/gdal/${GDAL_VERSION}/gdal-${GDAL_VERSION}
         --with-static-proj4=${PROJ4_LIB} \
         --enable-shared \
         --enable-static \
-    && make -j4 >> /dev/null \
+    && make -j4 \
     && make install \
     && cd ${SRC_DIR} \
-    && rm -rf *
+    && rm -rf * \
+     2>&1 >> /dev/null
 
 ####### TODO: NOW, JUST GET THE BINARIES BACK OUT AGAIN!
