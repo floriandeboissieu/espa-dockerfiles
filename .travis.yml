@@ -2,7 +2,8 @@ language: c
 services: docker
 sudo: required
 script:
-  - travis_wait 45 make build
+  - "travis_wait 45 sleep 2700 &"
+  - make build
 after_script:
   - docker images
 deploy:
