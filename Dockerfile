@@ -178,8 +178,7 @@ RUN wget -nv https://mirrors.edge.kernel.org/pub/software/scm/git/git-${GIT_VERS
     && make -j4 \
     && make install \
     && cd ${SRC_DIR} \
-    && rm -rf * \
-     2>&1 >> /dev/null
+    && rm -rf *
 
 
 # ` Install xz to get the lzma library
@@ -192,8 +191,7 @@ RUN wget -nv http://tukaani.org/xz/xz-${XZ_VERSION}.tar.gz \
     && make -j4 \
     && make install \
     && cd ${SRC_DIR} \
-    && rm -rf * \
-     2>&1 >> /dev/null
+    && rm -rf *
 
 
 # ` Install szip
@@ -207,8 +205,7 @@ RUN wget -nv http://www.hdfgroup.org/ftp/lib-external/szip/previous/${SZIP_VERSI
     && make -j4  \
     && make install \
     && cd ${SRC_DIR} \
-    && rm -rf * \
-     2>&1 >> /dev/null
+    && rm -rf *
 
 
 # ` Install libxml2
@@ -225,8 +222,7 @@ RUN wget -nv ftp://xmlsoft.org/libxml2/libxml2-${LIBXML2_VERSION}.tar.gz \
     && make -j4  \
     && make install \
     && cd ${SRC_DIR} \
-    && rm -rf * \
-     2>&1 >> /dev/null
+    && rm -rf *
 
 
 # ` Install libxslt
@@ -242,8 +238,7 @@ RUN wget -nv ftp://xmlsoft.org/libxslt/libxslt-${LIBXSLT_VERSION}.tar.gz \
     && make -j4 \
     && make install \
     && cd ${SRC_DIR} \
-    && rm -rf * \
-     2>&1 >> /dev/null
+    && rm -rf *
 
 
 # ` Install jpeg
@@ -257,8 +252,7 @@ RUN wget -nv http://www.ijg.org/files/jpegsrc.v${JPEG_VERSION}.tar.gz \
     && make -j4 \
     && make install \
     && cd ${SRC_DIR} \
-    && rm -rf * \
-     2>&1 >> /dev/null
+    && rm -rf *
 
 
 # ` Install jbigkit
@@ -271,8 +265,7 @@ RUN wget -nv https://www.cl.cam.ac.uk/~mgk25/jbigkit/download/jbigkit-${JBIGKIT_
     && /usr/bin/install libjbig/libjbig85.a ${JBIGLIB}/libjbig85.a \
     && /usr/bin/install libjbig/*.h ${JBIGINC} \
     && cd ${SRC_DIR} \
-    && rm -rf * \
-     2>&1 >> /dev/null
+    && rm -rf *
 
 
 # ` Install proj4
@@ -286,8 +279,7 @@ RUN wget -nv http://download.osgeo.org/proj/proj-${PROJ4_VERSION}.tar.gz \
     && make -j4 \
     && make install \
     && cd ${SRC_DIR} \
-    && rm -rf * \
-     2>&1 >> /dev/null
+    && rm -rf *
 
 
 # ` Install tiff
@@ -309,8 +301,7 @@ RUN wget -nv http://download.osgeo.org/libtiff/tiff-${TIFF_VERSION}.tar.gz \
     && make -j4 \
     && make install \
     && cd ${SRC_DIR} \
-    && rm -rf * \
-     2>&1 >> /dev/null
+    && rm -rf *
 
 
 # ` Install libgeotiff
@@ -328,8 +319,7 @@ RUN wget -nv http://download.osgeo.org/geotiff/libgeotiff/libgeotiff-${LIBGEOTIF
     && make -j4 \
     && make install \
     && cd ${SRC_DIR} \
-    && rm -rf * \
-     2>&1 >> /dev/null
+    && rm -rf *
 
 
 # ` Install curl
@@ -343,8 +333,7 @@ RUN wget -nv https://curl.haxx.se/download/curl-${CURL_VERSION}.tar.gz \
     && make -j4 \
     && make install \
     && cd ${SRC_DIR} \
-    && rm -rf * \
-     2>&1 >> /dev/null
+    && rm -rf *
 
 
 # ` Install idn
@@ -358,8 +347,7 @@ RUN wget -nv ftp://ftp.gnu.org/gnu/libidn/libidn-${LIBIDN_VERSION}.tar.gz \
     && make -j4 \
     && make install \
     && cd ${SRC_DIR} \
-    && rm -rf * \
-     2>&1 >> /dev/null
+    && rm -rf *
 
 
 # ` Install HDF4
@@ -379,8 +367,7 @@ RUN wget -nv https://www.hdfgroup.org/ftp/HDF/releases/HDF${HDF4_VERSION}/src/hd
     && make -j4 \
     && make install \
     && cd ${SRC_DIR} \
-    && rm -rf * \
-     2>&1 >> /dev/null
+    && rm -rf *
 
 
 # ` Install HDF5
@@ -400,8 +387,7 @@ RUN wget -nv http://www.hdfgroup.org/ftp/HDF5/releases/hdf5-${HDF5_VERSION:0:3}/
     && make -j4 \
     && make install \
     && cd ${SRC_DIR} \
-    && rm -rf * \
-     2>&1 >> /dev/null
+    && rm -rf *
 
 
 # ` Install netcdf-4
@@ -417,8 +403,7 @@ RUN wget -nv ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-${NETCDF4_VERSION}.tar
     && make -j4 \
     && make install \
     && cd ${SRC_DIR} \
-    && rm -rf * \
-     2>&1 >> /dev/null
+    && rm -rf *
 
 
 #  Install HDFEOS2
@@ -437,8 +422,7 @@ RUN wget -nv ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos/latest_release/HDF-EOS${HDFEO
     && make -j4 \
     && make install \
     && cd ${SRC_DIR} \
-    && rm -rf * \
-     2>&1 >> /dev/null
+    && rm -rf *
 
 
 # ` Python environment setup
@@ -470,7 +454,6 @@ RUN wget -nv http://download.osgeo.org/gdal/${GDAL_VERSION}/gdal-${GDAL_VERSION}
     && make -j4 \
     && make install \
     && cd ${SRC_DIR} \
-    && rm -rf * \
-     2>&1 >> /dev/null
+    && rm -rf *
 
 ####### TODO: NOW, JUST GET THE BINARIES BACK OUT AGAIN!
