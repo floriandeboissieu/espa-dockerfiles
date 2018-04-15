@@ -121,7 +121,7 @@ ENV LD_LIBRARY_PATH=/usr/lib64:/usr/local/lib
 #   Build Layer
 # =======================================================
 FROM environvars as builders
-WORKDIR ${SRC_DIR}}
+WORKDIR ${SRC_DIR}
 
 
 # ` Update the OS packages to the latest versions
