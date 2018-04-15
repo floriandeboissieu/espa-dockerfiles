@@ -1,8 +1,6 @@
 language: c
 services: docker
 sudo: required
-env: []
-before_script: []
 script:
   - make build
 after_script:
