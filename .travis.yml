@@ -1,0 +1,25 @@
+language: c
+services: docker
+sudo: required
+env:
+  - LAYER=geolibs VERSION=v1.0
+before_script:
+  - env | sort
+  - cp Makefile "${LAYER}/${VERSION}"
+  - cd "${LAYER}/${VERSION}"
+  - IMAGE_TAG="${LAYER}-${VERSION}"
+script:
+  - make build
+after_script:
+  - docker images
+deploy:
+  - provider: script
+    script: make docker-deploy
+    on:
+      branch:
+        - master
+        - devel
+notifications:
+  email:
+    on_success: never
+    on_failure: change
