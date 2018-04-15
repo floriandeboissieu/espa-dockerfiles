@@ -140,14 +140,7 @@ RUN yum install -y \
 RUN yum install -y \
         python-pip \
         python-devel \
-    && pip install --upgrade pip \
-    && yum clean metadata
-
-
-# ` Additional tools provided by the OS required for ESPA
-RUN yum install -y \
-        wget \
-        wgrib \
+    && pip install --no-cache-dir --upgrade pip \
     && yum clean metadata
 
 
@@ -170,14 +163,15 @@ RUN yum group install -y "Development Tools" \
         libpng-devel \
         libpng-static \
         rpm-build \
+        wget \
+        wgrib \
     && yum clean metadata
 
 
 # ` Update git to a version that isn't broken
 RUN wget -nv https://mirrors.edge.kernel.org/pub/software/scm/git/git-${GIT_VERSION}.tar.gz \
     && sha256sum git-${GIT_VERSION}.tar.gz | grep -E "^${GIT_SHA256}" \
-    && cd ${SRC_DIR} \
-    && tar -xvf git-${GIT_VERSION}.tar.gz \
+    && tar -xf git-${GIT_VERSION}.tar.gz \
     && cd git-${GIT_VERSION} \
     && make configure >> /dev/null \
     && ./configure --without-tcltk >> /dev/null \
@@ -190,8 +184,7 @@ RUN wget -nv https://mirrors.edge.kernel.org/pub/software/scm/git/git-${GIT_VERS
 # ` Install xz to get the lzma library
 RUN wget -nv http://tukaani.org/xz/xz-${XZ_VERSION}.tar.gz \
     && sha256sum xz-${XZ_VERSION}.tar.gz | grep -E "^${XZ_SHA256}" \
-    && cd ${SRC_DIR} \
-    && tar -xvf xz-${XZ_VERSION}.tar.gz \
+    && tar -xf xz-${XZ_VERSION}.tar.gz \
     && cd xz-${XZ_VERSION} \
     && ./configure --prefix=$XZ_PREFIX \
         --enable-static >> /dev/null \
@@ -204,8 +197,7 @@ RUN wget -nv http://tukaani.org/xz/xz-${XZ_VERSION}.tar.gz \
 # ` Install szip
 RUN wget -nv http://www.hdfgroup.org/ftp/lib-external/szip/previous/${SZIP_VERSION}/src/szip-${SZIP_VERSION}.tar.gz \
     && sha256sum szip-${SZIP_VERSION}.tar.gz | grep -E "^${SZIP_SHA256}" \
-    && cd ${SRC_DIR} \
-    && tar -xvf szip-${SZIP_VERSION}.tar.gz \
+    && tar -xf szip-${SZIP_VERSION}.tar.gz \
     && cd szip-${SZIP_VERSION} \
     && ./configure --prefix=$SZIP_PREFIX \
         --enable-shared \
@@ -219,8 +211,7 @@ RUN wget -nv http://www.hdfgroup.org/ftp/lib-external/szip/previous/${SZIP_VERSI
 # ` Install libxml2
 RUN wget -nv ftp://xmlsoft.org/libxml2/libxml2-${LIBXML2_VERSION}.tar.gz \
     && sha256sum libxml2-${LIBXML2_VERSION}.tar.gz | grep -E "^${LIBXML2_SHA256}" \
-    && cd ${SRC_DIR} \
-    && tar -xvf libxml2-${LIBXML2_VERSION}.tar.gz \
+    && tar -xf libxml2-${LIBXML2_VERSION}.tar.gz \
     && cd libxml2-${LIBXML2_VERSION} \
     && ./configure --prefix=${XML2_PREFIX} \
         --with-zlib=${ZLIB_PREFIX} \
@@ -237,8 +228,7 @@ RUN wget -nv ftp://xmlsoft.org/libxml2/libxml2-${LIBXML2_VERSION}.tar.gz \
 # ` Install libxslt
 RUN wget -nv ftp://xmlsoft.org/libxslt/libxslt-${LIBXSLT_VERSION}.tar.gz \
     && sha256sum libxslt-${LIBXSLT_VERSION}.tar.gz | grep -E "^${LIBXSLT_SHA256}" \
-    && cd ${SRC_DIR} \
-    && tar -xvf libxslt-${LIBXSLT_VERSION}.tar.gz \
+    && tar -xf libxslt-${LIBXSLT_VERSION}.tar.gz \
     && cd libxslt-${LIBXSLT_VERSION} \
     && ./configure --prefix=${XSLT_PREFIX} \
         --with-libxml-libs-prefix=${XML2LIB} \
@@ -254,8 +244,7 @@ RUN wget -nv ftp://xmlsoft.org/libxslt/libxslt-${LIBXSLT_VERSION}.tar.gz \
 # ` Install jpeg
 RUN wget -nv http://www.ijg.org/files/jpegsrc.${JPEG_VERSION}.tar.gz \
     && sha256sum jpegsrc.${JPEG_VERSION}.tar.gz | grep -E "^${JPEG_SHA256}" \
-    && cd ${SRC_DIR} \
-    && tar -xvf jpegsrc.${JPEG_VERSION}.tar.gz \
+    && tar -xf jpegsrc.${JPEG_VERSION}.tar.gz \
     && cd jpeg-${JPEG_VERSION} \
     && ./configure --prefix=${JPEG_PREFIX} \
         --enable-shared \
@@ -269,8 +258,7 @@ RUN wget -nv http://www.ijg.org/files/jpegsrc.${JPEG_VERSION}.tar.gz \
 # ` Install jbigkit
 RUN wget -nv https://www.cl.cam.ac.uk/~mgk25/jbigkit/download/jbigkit-${JBIGKIT_VERSION}.tar.gz \
     && sha256sum jbigkit-${JBIGKIT_VERSION}.tar.gz | grep -E "^${JBIGKIT_SHA256}" \
-    && cd ${SRC_DIR} \
-    && tar -xvf jbigkit-${JBIGKIT_VERSION}.tar.gz \
+    && tar -xf jbigkit-${JBIGKIT_VERSION}.tar.gz \
     && cd jbigkit-${JBIGKIT_VERSION} \
     && make -j4 >> /dev/null \
     && /usr/bin/install libjbig/libjbig.a ${JBIGLIB}/libjbig.a \
@@ -283,8 +271,7 @@ RUN wget -nv https://www.cl.cam.ac.uk/~mgk25/jbigkit/download/jbigkit-${JBIGKIT_
 # ` Install proj4
 RUN wget -nv http://download.osgeo.org/proj/proj-${PROJ4_VERSION}.tar.gz \
     && sha256sum proj-${PROJ4_VERSION}.tar.gz | grep -E "^${PROJ4_SHA256}" \
-    && cd ${SRC_DIR} \
-    && tar -xvf proj-${PROJ4_VERSION}.tar.gz \
+    && tar -xf proj-${PROJ4_VERSION}.tar.gz \
     && cd proj-${PROJ4_VERSION} \
     && ./configure --prefix=${PROJ4_PREFIX} \
         --enable-shared \
@@ -298,8 +285,7 @@ RUN wget -nv http://download.osgeo.org/proj/proj-${PROJ4_VERSION}.tar.gz \
 # ` Install tiff
 RUN wget -nv http://download.osgeo.org/libtiff/tiff-${TIFF_VERSION}.tar.gz \
     && sha256sum tiff-${TIFF_VERSION}.tar.gz | grep -E "^${TIFF_SHA256}" \
-    && cd ${SRC_DIR} \
-    && tar -xvf tiff-${TIFF_VERSION}.tar.gz \
+    && tar -xf tiff-${TIFF_VERSION}.tar.gz \
     && cd tiff-${TIFF_VERSION} \
     && ./configure --prefix=${TIFF_PREFIX} \
         --with-jpeg-include-dir=${JPEGINC} \
@@ -321,8 +307,7 @@ RUN wget -nv http://download.osgeo.org/libtiff/tiff-${TIFF_VERSION}.tar.gz \
 # ` Install libgeotiff
 RUN wget -nv http://download.osgeo.org/geotiff/libgeotiff/libgeotiff-${LIBGEOTIFF_VERSION}.tar.gz \
     && sha256sum libgeotiff-${LIBGEOTIFF_VERSION}.tar.gz | grep -E "^${LIBGEOTIFF_SHA256}" \
-    && cd ${SRC_DIR} \
-    && tar -xvf libgeotiff-${LIBGEOTIFF_VERSION}.tar.gz \
+    && tar -xf libgeotiff-${LIBGEOTIFF_VERSION}.tar.gz \
     && cd libgeotiff-${LIBGEOTIFF_VERSION} \
     && ./configure --prefix=${GEOTIFF_PREFIX} \
         --with-jpeg-include-dir=${JPEGINC} \
@@ -340,8 +325,7 @@ RUN wget -nv http://download.osgeo.org/geotiff/libgeotiff/libgeotiff-${LIBGEOTIF
 # ` Install curl
 RUN wget -nv https://curl.haxx.se/download/curl-${CURL_VERSION}.tar.gz \
     && sha256sum curl-${CURL_VERSION}.tar.gz | grep -E "^${CURL_SHA256}" \
-    && cd ${SRC_DIR} \
-    && tar -xvf curl-${CURL_VERSION}.tar.gz \
+    && tar -xf curl-${CURL_VERSION}.tar.gz \
     && cd curl-${CURL_VERSION} \
     && ./configure --prefix=${CURL_PREFIX} \
         --enable-shared \
@@ -355,8 +339,7 @@ RUN wget -nv https://curl.haxx.se/download/curl-${CURL_VERSION}.tar.gz \
 # ` Install idn
 RUN wget -nv ftp://ftp.gnu.org/gnu/libidn/libidn-${LIBIDN_VERSION}.tar.gz \
     && sha256sum libidn-${LIBIDN_VERSION}.tar.gz | grep -E "^${LIBIDN_SHA256}" \
-    && cd ${SRC_DIR} \
-    && tar -xvf libidn-${LIBIDN_VERSION}.tar.gz \
+    && tar -xf libidn-${LIBIDN_VERSION}.tar.gz \
     && cd libidn-${LIBIDN_VERSION} \
     && ./configure --prefix=${IDN_PREFIX} \
         --enable-shared \
@@ -370,8 +353,7 @@ RUN wget -nv ftp://ftp.gnu.org/gnu/libidn/libidn-${LIBIDN_VERSION}.tar.gz \
 # ` Install HDF4
 RUN wget -nv https://www.hdfgroup.org/ftp/HDF/releases/HDF${HDF4_VERSION}/src/hdf-${HDF4_VERSION}.tar.gz \
     && sha256sum hdf-${HDF4_VERSION}.tar.gz | grep -E "^${HDF4_SHA256}" \
-    && cd ${SRC_DIR} \
-    && tar -xvf hdf-${HDF4_VERSION}.tar.gz \
+    && tar -xf hdf-${HDF4_VERSION}.tar.gz \
     && cd hdf-${HDF4_VERSION} \
     && ./configure --prefix=${HDF4_PREFIX} \
         --with-jpeg=${JPEGLIB} \
@@ -391,8 +373,7 @@ RUN wget -nv https://www.hdfgroup.org/ftp/HDF/releases/HDF${HDF4_VERSION}/src/hd
 # ` Install HDF5
 RUN wget -nv http://www.hdfgroup.org/ftp/HDF5/releases/hdf5-${HDF5_VERSION:0:3}/hdf5-${HDF5_VERSION}/src/hdf5-${HDF5_VERSION}.tar.gz \
     && sha256sum hdf5-${HDF5_VERSION}.tar.gz | grep -E "^${HDF5_SHA256}" \
-    && cd ${SRC_DIR} \
-    && tar -xvf hdf5-${HDF5_VERSION}.tar.gz  \
+    && tar -xf hdf5-${HDF5_VERSION}.tar.gz  \
     && cd hdf5-${HDF5_VERSION} \
     && ./configure --prefix=${HDF5_PREFIX} \
         --with-jpeg=${JPEGINC},${JPEGLIB} \
@@ -412,8 +393,7 @@ RUN wget -nv http://www.hdfgroup.org/ftp/HDF5/releases/hdf5-${HDF5_VERSION:0:3}/
 # ` Install netcdf-4
 RUN wget -nv ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-${NETCDF4_VERSION}.tar.gz \
     && sha256sum netcdf-${NETCDF4_VERSION}.tar.gz | grep -E "^${NETCDF4__SHA256}" \
-    && cd ${SRC_DIR} \
-    && tar -xvf netcdf-${NETCDF4_VERSION}.tar.gz \
+    && tar -xf netcdf-${NETCDF4_VERSION}.tar.gz \
     && cd netcdf-${NETCDF4_VERSION} \
     && env CPPFLAGS="-I/usr/local/curl/include" LDFLAGS="-L/usr/local/curl/lib" \
         ./configure --prefix=${NETCDF4_PREFIX} \
@@ -429,8 +409,7 @@ RUN wget -nv ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-${NETCDF4_VERSION}.tar
 #  Install HDFEOS2
 RUN wget -nv ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos/latest_release/HDF-EOS${HDFEOS_VERSION}.tar.Z \
     && sha256sum HDF-EOS${HDFEOS_VERSION}.tar.Z | grep -E "^${HDFEOS_SHA256}" \
-    && cd ${SRC_DIR} \
-    && tar -xvf HDF-EOS${HDFEOS_VERSION}.tar.Z \
+    && tar -xf HDF-EOS${HDFEOS_VERSION}.tar.Z \
     && cd hdfeos \
     && ./configure --prefix=${HDFEOS_PREFIX} \
         CC="/usr/local/bin/h4cc -Df2cFortran" \
@@ -449,8 +428,7 @@ RUN wget -nv ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos/latest_release/HDF-EOS${HDFEO
 # ` Python environment setup
 #   GDAL is installed into python through the below installation, because Numpy
 #   must be installed into python before building GDAL
-RUN pip install --no-cache-dir --upgrade pip \
-    && pip install \
+RUN pip install \
         --no-cache-dir \
         --global-option=build_ext \
         --global-option="-L/usr/local/lib" \
@@ -465,8 +443,7 @@ RUN pip install --no-cache-dir --upgrade pip \
 # ` Install GDAL
 RUN wget -nv http://download.osgeo.org/gdal/${GDAL_VERSION}/gdal-${GDAL_VERSION}.tar.gz \
     && sha256sum gdal-${GDAL_VERSION}.tar.gz | grep -E "^${GDAL_SHA256}" \
-    && cd ${SRC_DIR} \
-    && tar -xvf gdal-${GDAL_VERSION}.tar.gz \
+    && tar -xf gdal-${GDAL_VERSION}.tar.gz \
     && cd gdal-${GDAL_VERSION} \
     && ./configure --prefix=${GDAL_PREFIX} \
         --with-liblzma \
