@@ -122,27 +122,6 @@ ENV LD_LIBRARY_PATH=/usr/lib64:/usr/local/lib
 FROM environvars as builders
 WORKDIR ${SRC_DIR}}
 
-# ` Compilers and all the rquired libraries
-RUN yum group install -y "Development Tools" \
-    && yum install -y \
-        e2fsprogs \
-        expat-devel \
-        freetype-devel \
-        glibc-static \
-        libcurl-devel \
-        libidn-devel \
-        libgfortran-static \
-        libquadmath-static \
-        perl-ExtUtils-MakeMaker \
-        texinfo \
-        bzip2-devel \
-        zlib-devel \
-        zlib-static \
-        libpng-devel \
-        libpng-static \
-        rpm-build \
-    && yum clean metadata
-
 
 # ` Update the OS packages to the latest versions
 RUN yum update -y \
@@ -167,6 +146,28 @@ RUN yum install -y \
 RUN yum install -y \
         wget \
         wgrib \
+    && yum clean metadata
+
+
+# ` Compilers and all the rquired libraries
+RUN yum group install -y "Development Tools" \
+    && yum install -y \
+        e2fsprogs \
+        expat-devel \
+        freetype-devel \
+        glibc-static \
+        libcurl-devel \
+        libidn-devel \
+        libgfortran-static \
+        libquadmath-static \
+        perl-ExtUtils-MakeMaker \
+        texinfo \
+        bzip2-devel \
+        zlib-devel \
+        zlib-static \
+        libpng-devel \
+        libpng-static \
+        rpm-build \
     && yum clean metadata
 
 
