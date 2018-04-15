@@ -256,10 +256,12 @@ RUN wget -nv http://www.ijg.org/files/jpegsrc.v${JPEG_VERSION}.tar.gz \
 
 
 # ` Install jbigkit
+COPY external_tools/jbigkit-2.1-Makefile ${SRC_DIR}
 RUN wget -nv https://www.cl.cam.ac.uk/~mgk25/jbigkit/download/jbigkit-${JBIGKIT_VERSION}.tar.gz \
     && sha256sum jbigkit-${JBIGKIT_VERSION}.tar.gz | grep -E "^${JBIGKIT_SHA256}" \
     && tar -xf jbigkit-${JBIGKIT_VERSION}.tar.gz \
     && cd jbigkit-${JBIGKIT_VERSION} \
+    && cp ${SRC_DIR}/jbigkit-2.1-Makefile Makefile \
     && make -j4 \
     && /usr/bin/install libjbig/libjbig.a ${JBIGLIB}/libjbig.a \
     && /usr/bin/install libjbig/libjbig85.a ${JBIGLIB}/libjbig85.a \
