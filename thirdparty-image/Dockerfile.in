@@ -33,7 +33,7 @@ RUN yum group install -y "Development Tools" \
 RUN cd /usr/local/src \
     && git clone \
         --depth 1 \
-        --branch v2.9.2 \
+        --branch v2.17.0 \
         https://github.com/git/git.git git.git \
     && cd git.git \
     && make configure \
