@@ -2,7 +2,7 @@
 
 #-----------------------------------------------------------------------------
 validate_tool () {
-    sha256sum -c external_sha256_sums/$1.sha | grep OK
+    shasum -a 256 -c external_sha256_sums/$1.sha | grep OK
     if [ $? != 0 ]; then
         echo "Failed to validate [$1]"
         exit 1
