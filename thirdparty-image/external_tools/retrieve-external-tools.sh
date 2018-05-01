@@ -95,7 +95,7 @@ validate_tool $tool
 
 #-----------------------------------------------------------------------------
 tool=HDF-EOS2.19v1.00.tar.Z
-retrieve_tool $tool ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos/latest_release
+retrieve_tool $tool ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos/previous_releases
 validate_tool $tool
 
 #-----------------------------------------------------------------------------
