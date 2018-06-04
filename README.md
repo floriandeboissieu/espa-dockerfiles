@@ -2,7 +2,7 @@
 
  [![Build Status][tb]][tt] [![Docker Pulls][db]][dh] [![GitHub release][gb]][gr]
 
-[tb]: https://img.shields.io/travis/USGS-EROS/espa-dockerfiles/devel.svg?style=flat-square
+[tb]: https://img.shields.io/travis/USGS-EROS/espa-dockerfiles/topic/espa-evolution.svg?style=flat-square
 [tt]: https://travis-ci.org/USGS-EROS/espa-dockerfiles
 [db]: https://img.shields.io/docker/automated/usgseros/espa-dockerfiles.svg?style=flat-square
 [dh]: https://hub.docker.com/r/usgseros/espa-dockerfiles/tags/
