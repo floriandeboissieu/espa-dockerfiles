@@ -6,9 +6,10 @@ script:
   - make build
 after_script:
   - docker images
-deploy:
-  - provider: script
-    script: make docker-deploy
+  - make docker-deploy
+# deploy:
+#   - provider: script
+#     script: make docker-deploy
 #     on:
 #       branch:
 #         - master
