@@ -52,7 +52,7 @@ validate_tool $tool
 
 #-----------------------------------------------------------------------------
 tool=szip-2.1.tar.gz
-retrieve_tool $tool http://www.hdfgroup.org/ftp/lib-external/szip/2.1/src
+retrieve_tool $tool http://www.hdfgroup.org/ftp/lib-external/szip/previous/2.1/src
 validate_tool $tool
 
 #-----------------------------------------------------------------------------
@@ -95,7 +95,7 @@ validate_tool $tool
 
 #-----------------------------------------------------------------------------
 tool=HDF-EOS2.19v1.00.tar.Z
-retrieve_tool $tool ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos/latest_release
+retrieve_tool $tool ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos/previous_releases
 validate_tool $tool
 
 #-----------------------------------------------------------------------------
