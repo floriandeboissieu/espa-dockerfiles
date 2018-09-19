@@ -42,6 +42,7 @@ These libraries and applications are built and installed into the system from so
 | hdf5       | 1.8.16   | https://www.hdfgroup.org/downloads/index.html                   | Yes      | |
 | netcdf-4   | 4.4.0    | http://www.unidata.ucar.edu/software/netcdf/                    | Yes      | |
 | hdfeos2    | 2.19     | ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos/latest_release/           | Yes      | |
+| hdfeos5    | 1.16     | ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos/latest_release/           | Yes      | |
 | freetype2  | 2.6.3    | http://sourceforge.net/projects/freetype/files/freetype2/       | Yes      | Required for python matplotlib module |
 | proj4      | 4.9.1    | https://trac.osgeo.org/proj/                                    | Yes      | GDAL needs this |
 | gdal       | 1.11.4   | http://download.osgeo.org/gdal ftp://ftp.remotesensing.org/gdal | Yes      | |
