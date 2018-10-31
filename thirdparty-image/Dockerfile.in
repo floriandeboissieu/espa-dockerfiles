@@ -134,7 +134,7 @@ RUN yum install -y \
 
 
 # Install xz to get the lzma library
-COPY external_tools/xz-5.2.2.tar.gz $SRC_DIR
+COPY xz-5.2.2.tar.gz $SRC_DIR
 RUN cd $SRC_DIR \
     && tar -xvf xz-5.2.2.tar.gz \
     && cd xz-5.2.2 \
@@ -147,7 +147,7 @@ RUN cd $SRC_DIR \
 
 
 # Install szip
-COPY external_tools/szip-2.1.tar.gz $SRC_DIR
+COPY szip-2.1.tar.gz $SRC_DIR
 RUN cd $SRC_DIR \
     && tar -xvf szip-2.1.tar.gz \
     && cd szip-2.1 \
@@ -161,7 +161,7 @@ RUN cd $SRC_DIR \
 
 
 # Install libxml2
-COPY external_tools/libxml2-2.9.3.tar.gz $SRC_DIR
+COPY libxml2-2.9.3.tar.gz $SRC_DIR
 RUN cd $SRC_DIR \
     && tar -xvf libxml2-2.9.3.tar.gz \
     && cd libxml2-2.9.3 \
@@ -178,7 +178,7 @@ RUN cd $SRC_DIR \
 
 
 # Install libxslt
-COPY external_tools/libxslt-1.1.28.tar.gz $SRC_DIR
+COPY libxslt-1.1.28.tar.gz $SRC_DIR
 RUN cd $SRC_DIR \
     && tar -xvf libxslt-1.1.28.tar.gz \
     && cd libxslt-1.1.28 \
@@ -198,7 +198,7 @@ RUN cd $SRC_DIR \
 #    && make install-lib \
 #    && make install-headers \
 #
-COPY external_tools/jpegsrc.v9b.tar.gz $SRC_DIR
+COPY jpegsrc.v9b.tar.gz $SRC_DIR
 RUN cd $SRC_DIR \
     && tar -xvf jpegsrc.v9b.tar.gz \
     && cd jpeg-9b \
@@ -212,11 +212,11 @@ RUN cd $SRC_DIR \
 
 
 # Install jbigkit
-COPY external_tools/jbigkit-2.1.tar.gz $SRC_DIR
+COPY jbigkit-2.1.tar.gz $SRC_DIR
 RUN cd $SRC_DIR \
     && tar -xvf jbigkit-2.1.tar.gz \
     && cd jbigkit-2.1 \
-    && sed -i 's/^CFLAGS = .*$/CFLAGS = -fPIC -DPIC -O2 -Wall/' Makefile
+    && sed -i 's/^CFLAGS = .*$/CFLAGS = -fPIC -DPIC -O2 -Wall/' Makefile \
     && make -j4 \
     && /usr/bin/install libjbig/libjbig.a $JBIGLIB/libjbig.a \
     && /usr/bin/install libjbig/libjbig85.a $JBIGLIB/libjbig85.a \
@@ -226,7 +226,7 @@ RUN cd $SRC_DIR \
 
 
 # Install proj4
-COPY external_tools/proj-4.9.1.tar.gz $SRC_DIR
+COPY proj-4.9.1.tar.gz $SRC_DIR
 RUN cd $SRC_DIR \
     && tar -xvf proj-4.9.1.tar.gz \
     && cd proj-4.9.1 \
@@ -240,7 +240,7 @@ RUN cd $SRC_DIR \
 
 
 # Install tiff
-COPY external_tools/tiff-4.0.6.tar.gz $SRC_DIR
+COPY tiff-4.0.6.tar.gz $SRC_DIR
 RUN cd $SRC_DIR \
     && tar -xvf tiff-4.0.6.tar.gz \
     && cd tiff-4.0.6 \
@@ -262,7 +262,7 @@ RUN cd $SRC_DIR \
 
 
 # Install libgeotiff
-COPY external_tools/libgeotiff-1.4.1.tar.gz $SRC_DIR
+COPY libgeotiff-1.4.1.tar.gz $SRC_DIR
 RUN cd $SRC_DIR \
     && tar -xvf libgeotiff-1.4.1.tar.gz \
     && cd libgeotiff-1.4.1 \
@@ -280,7 +280,7 @@ RUN cd $SRC_DIR \
 
 
 # Install curl
-COPY external_tools/curl-7.48.0.tar.gz $SRC_DIR
+COPY curl-7.48.0.tar.gz $SRC_DIR
 RUN cd $SRC_DIR \
     && tar -xvf curl-7.48.0.tar.gz \
     && cd curl-7.48.0 \
@@ -294,7 +294,7 @@ RUN cd $SRC_DIR \
 
 
 # Install idn
-COPY external_tools/libidn-1.32.tar.gz $SRC_DIR
+COPY libidn-1.32.tar.gz $SRC_DIR
 RUN cd $SRC_DIR \
     && tar -xvf libidn-1.32.tar.gz \
     && cd libidn-1.32 \
@@ -308,7 +308,7 @@ RUN cd $SRC_DIR \
 
 
 # Install HDF4
-COPY external_tools/hdf-4.2.11.tar.gz $SRC_DIR
+COPY hdf-4.2.11.tar.gz $SRC_DIR
 RUN cd $SRC_DIR \
     && tar -xvf hdf-4.2.11.tar.gz \
     && cd hdf-4.2.11 \
@@ -328,7 +328,7 @@ RUN cd $SRC_DIR \
 
 
 # Install HDF5
-COPY external_tools/hdf5-1.8.16.tar.gz $SRC_DIR
+COPY hdf5-1.8.16.tar.gz $SRC_DIR
 RUN cd $SRC_DIR \
     && tar -xvf hdf5-1.8.16.tar.gz \
     && cd hdf5-1.8.16 \
@@ -348,7 +348,7 @@ RUN cd $SRC_DIR \
 
 
 # Install netcdf-4
-COPY external_tools/netcdf-4.4.0.tar.gz $SRC_DIR
+COPY netcdf-4.4.0.tar.gz $SRC_DIR
 RUN cd $SRC_DIR \
     && tar -xvf netcdf-4.4.0.tar.gz \
     && cd netcdf-4.4.0 \
@@ -364,7 +364,7 @@ RUN cd $SRC_DIR \
 
 
 # Install HDFEOS2
-COPY external_tools/HDF-EOS2.19v1.00.tar.Z $SRC_DIR
+COPY HDF-EOS2.19v1.00.tar.Z $SRC_DIR
 RUN cd $SRC_DIR \
     && tar -xvf HDF-EOS2.19v1.00.tar.Z \
     && cd hdfeos \
@@ -403,7 +403,7 @@ RUN python -c 'import matplotlib.pyplot'
 
 
 # Install GDAL
-COPY external_tools/gdal-1.11.4.tar.gz $SRC_DIR
+COPY gdal-1.11.4.tar.gz $SRC_DIR
 RUN cd $SRC_DIR \
     && tar -xvf gdal-1.11.4.tar.gz \
     && cd gdal-1.11.4 \

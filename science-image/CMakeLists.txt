@@ -6,12 +6,14 @@ set ( IMAGE_NAME ${PROJECT_NAME}/science )
 
 
 configure_file ( ${CMAKE_CURRENT_SOURCE_DIR}/Dockerfile.in
-                 ${CMAKE_CURRENT_SOURCE_DIR}/Dockerfile
+                 Dockerfile
                  @ONLY )
 
 
 add_custom_target (
-    science-image ALL
+    science-image
+    COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/science-entrypoint.sh .
     COMMAND docker build --tag ${IMAGE_NAME}:${VERSION} --file Dockerfile .
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
+
+add_dependencies(science-image thirdparty-image)

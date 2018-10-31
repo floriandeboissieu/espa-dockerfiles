@@ -30,6 +30,10 @@ set ( ESPA_REPROJECTION v1.0.2 )
 set ( ESPA_PLOTTING v0.1.0 )
 set ( ESPA_PROCESSING v2.25.0 )
 
+# Set a flag denoting whether the build is in-source.
+if ("${PROJECT_SOURCE_DIR}" STREQUAL "${PROJECT_BINARY_DIR}")
+    set (IN_SOURCE_BUILD TRUE)
+endif()
 
 add_subdirectory ( base-image )
 add_subdirectory ( thirdparty-image )

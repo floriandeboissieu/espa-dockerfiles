@@ -7,12 +7,13 @@ set ( IMAGE_NAME ${PROJECT_NAME}/modtran )
 
 
 configure_file ( ${CMAKE_CURRENT_SOURCE_DIR}/Dockerfile.in
-                 ${CMAKE_CURRENT_SOURCE_DIR}/Dockerfile
+                 Dockerfile
                  @ONLY )
 
 
 add_custom_target (
     modtran-image ALL
     COMMAND docker build --tag ${IMAGE_NAME}:${VERSION} --file Dockerfile .
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
+
+add_dependencies(modtran-image modtran-build-image)
