@@ -99,6 +99,12 @@ retrieve_tool $tool ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos/previous_releases
 validate_tool $tool
 
 #-----------------------------------------------------------------------------
+tool=HDF-EOS5.1.16.tar.Z
+retrieve_tool $tool ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos5/latest_release ||
+retrieve_tool $tool ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos5/previous_releases
+validate_tool $tool
+
+#-----------------------------------------------------------------------------
 #version=2.6.3
 #tool=freetype-$version\.tar.gz
 #retrieve_tool $tool https://sourceforge.net/projects/freetype/files/freetype2/$version

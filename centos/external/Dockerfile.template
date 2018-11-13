@@ -64,6 +64,7 @@ ENV PREFIX=/usr/local \
     HDF5_PREFIX=/usr/local \
     NETCDF4_PREFIX=/usr/local \
     HDFEOS_PREFIX=/usr/local \
+    HDFEOS5_PREFIX=/usr/local \
     PROJ4_PREFIX=/usr/local \
     GDAL_PREFIX=/usr/local
 
@@ -113,6 +114,8 @@ ENV ZLIBINC=$ZLIB_PREFIX/include \
     HDFEOSLIB=$HDFEOS_PREFIX/lib \
     HDFEOS_INC=$HDFEOS_PREFIX/include \
     HDFEOS_LIB=$HDFEOS_PREFIX/lib \
+    HDFEOS5_INC=$HDFEOS5_PREFIX/include \
+    HDFEOS5_LIB=$HDFEOS5_PREFIX/lib \
     HDFEOS_GCTPINC=$HDFEOS_PREFIX/include \
     HDFEOS_GCTPLIB=$HDFEOS_PREFIX/lib \
     PROJ4_INC=$PROJ4_PREFIX/include \
@@ -381,6 +384,25 @@ RUN cd $SRC_DIR \
     && make install \
     && cd $SRC_DIR \
     && rm -rf hdfeos HDF-EOS2.19v1.00.tar.Z
+
+
+# Install HDFEOS5
+COPY external_tools/HDF-EOS5.1.16.tar.Z $SRC_DIR
+RUN cd $SRC_DIR \
+    && tar -xvf HDF-EOS5.1.16.tar.Z \
+    && cd hdfeos5 \
+    && ./configure --prefix=$HDFEOS5_PREFIX \
+        --with-jpeg=$JPEGLIB \
+        --with-zlib=$ZLIBLIB \
+        --with-szlib=$SZIPINC,$SZIPLIB \
+        --enable-install-include \
+        --disable-shared \
+        --enable-static \
+        CC="/usr/local/bin/h5cc -Df2cFortran" \
+    && make -j4 \
+    && make install \
+    && cd $SRC_DIR \
+    && rm -rf hdfeos5 HDF-EOS5.1.16.tar.Z
 
 
 # Python environment setup
