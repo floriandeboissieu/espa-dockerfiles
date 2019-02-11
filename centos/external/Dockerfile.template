@@ -26,7 +26,30 @@ RUN yum group install -y "Development Tools" \
         libpng-devel \
         libpng-static \
         rpm-build \
+        rpmdevtools \
     && yum clean metadata
+
+
+# Generate RPM build directory structure
+# XXX: Why do we need to set HOME to /root explicitly?
+ENV HOME=/root
+RUN rpmdev-setuptree
+
+
+# Create a group for users that can build rpms and add yourself
+RUN groupadd rpmbuild \
+    && usermod -aG rpmbuild root
+
+
+# Create build directory structure
+RUN chgrp -R rpmbuild ~/rpmbuild \
+    && chmod g+rws ~/rpmbuild
+
+
+# Define RPM query-all format in ~/.rpmmacros
+RUN sed -i \
+    '1s/.*/%_query_all_fmt %%{name}-%%{version}-%%{release}.%%{arch}\n\n&/' \
+    ~/.rpmmacros
 
 
 # Update git to a version that isn't broken
