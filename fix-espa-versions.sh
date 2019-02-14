@@ -6,6 +6,7 @@ cat ${2} | sed \
     -e "s/ESPA_L2QA_TOOLS/l2qa_tools_v1.6.0/" \
     -e "s/ESPA_SURFACE_REFLECTANCE/surface_reflectance_sept2017/" \
     -e "s/ESPA_LAND_SURFACE_TEMPERATURE/lst-rit-v0.3.1/" \
+    -e "s/ESPA_SURFACE_TEMPERATURE/dev_1.4/" \
     -e "s/ESPA_SPECTRAL_INDICES/spectral_indices_v2.6.0/" \
     -e "s/ESPA_SURFACE_WATER_EXTENT/espa-v2.22.0/" \
     -e "s/ESPA_ELEVATION/v2.3.0/" \
