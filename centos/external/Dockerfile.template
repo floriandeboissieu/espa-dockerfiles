@@ -156,6 +156,7 @@ ENV LD_LIBRARY_PATH=/usr/lib64:/usr/local/lib
 RUN yum install -y \
         wget \
         wgrib \
+        pigz \
     && yum clean metadata
 
 
