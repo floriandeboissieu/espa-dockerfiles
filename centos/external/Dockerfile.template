@@ -432,7 +432,7 @@ RUN cd $SRC_DIR \
 # Python environment setup
 # GDAL is installed into python through the below installation, because Numpy
 # must be installed into python before building GDAL
-RUN pip install --upgrade pip \
+RUN pip install --upgrade pip setuptools \
     && pip install \
         --global-option=build_ext \
         --global-option="-L/usr/local/lib" \
