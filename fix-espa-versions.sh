@@ -1,10 +1,9 @@
-#!/usr/bin/bash
 
 cat ${2} | sed \
     -e "s/ESPA_VERSION/${1}/" \
     -e "s/ESPA_PRODUCT_FORMATTER/product_formatter_v1.16.1/" \
     -e "s/ESPA_L2QA_TOOLS/l2qa_tools_v1.7.1/" \
-    -e "s/ESPA_SURFACE_REFLECTANCE/ledaps_dev_v3.3.1/" \
+    -e "s/ESPA_SURFACE_REFLECTANCE/surface_reflectance_aug2019/" \
     -e "s/ESPA_LAND_SURFACE_TEMPERATURE/st-rit-v1.3.0/" \
     -e "s/ESPA_SURFACE_TEMPERATURE/dev_1.4/" \
     -e "s/ESPA_SPECTRAL_INDICES/spectral_indices_v2.7.0/" \
