@@ -26,7 +26,30 @@ RUN yum group install -y "Development Tools" \
         libpng-devel \
         libpng-static \
         rpm-build \
+        rpmdevtools \
     && yum clean metadata
+
+
+# Generate RPM build directory structure
+# XXX: Why do we need to set HOME to /root explicitly?
+ENV HOME=/root
+RUN rpmdev-setuptree
+
+
+# Create a group for users that can build rpms and add yourself
+RUN groupadd rpmbuild \
+    && usermod -aG rpmbuild root
+
+
+# Create build directory structure
+RUN chgrp -R rpmbuild ~/rpmbuild \
+    && chmod g+rws ~/rpmbuild
+
+
+# Define RPM query-all format in ~/.rpmmacros
+RUN sed -i \
+    '1s/.*/%_query_all_fmt %%{name}-%%{version}-%%{release}.%%{arch}\n\n&/' \
+    ~/.rpmmacros
 
 
 # Update git to a version that isn't broken
@@ -133,6 +156,7 @@ ENV LD_LIBRARY_PATH=/usr/lib64:/usr/local/lib
 RUN yum install -y \
         wget \
         wgrib \
+        pigz \
     && yum clean metadata
 
 
@@ -408,8 +432,9 @@ RUN cd $SRC_DIR \
 # Python environment setup
 # GDAL is installed into python through the below installation, because Numpy
 # must be installed into python before building GDAL
-RUN pip install --upgrade pip \
-    && pip install \
+RUN pip install --upgrade pip setuptools
+RUN pip install numpy==1.11.0
+RUN pip install \
         --global-option=build_ext \
         --global-option="-L/usr/local/lib" \
         --global-option="-I/usr/local/include" \
@@ -417,8 +442,8 @@ RUN pip install --upgrade pip \
         python-dateutil==2.5.3 \
         requests==2.10.0 \
         lxml==3.6.0 \
-        numpy==1.11.0 \
-        matplotlib==1.5.1
+        matplotlib==1.5.1 \
+        netCDF4==1.4.2
 
 
 # Install GDAL
@@ -436,3 +461,20 @@ RUN cd $SRC_DIR \
     && make install \
     && cd $SRC_DIR \
     && rm -rf gdal-1.11.4 gdal-1.11.4.tar.gz
+
+# Compile and install OpenJPEG
+RUN yum install -y cmake
+RUN REPO_NAME=openjpeg \
+    && REPO_TAG=v2.3.1 \
+		&& cd $SRC_DIR \
+    && git clone https://github.com/uclouvain/${REPO_NAME}.git ${REPO_NAME} \
+    && cd ${REPO_NAME} \
+    && git checkout ${REPO_TAG} \
+		&& mkdir build \
+		&& cd build \
+    && cmake .. -DCMAKE_BUILD_TYPE=Release \
+    && make \
+		&& make install \
+		&& make clean \
+    && cd $SRC_DIR \
+    && rm -rf ${REPO_NAME}

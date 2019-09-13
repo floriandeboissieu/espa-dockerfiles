@@ -39,40 +39,40 @@ RUN REPO_NAME=espa-product-formatter \
     && rm -rf ${REPO_NAME}
 
 
-RUN REPO_NAME=espa-l2qa-tools \
-    && REPO_TAG=ESPA_L2QA_TOOLS \
-    && cd $SRC_DIR \
-    && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
-    && cd ${REPO_NAME} \
-    && git checkout ${REPO_TAG} \
-    && make BUILD_STATIC=yes ENABLE_THREADING=yes \
-    && make install \
-    && cd $SRC_DIR \
-    && rm -rf ${REPO_NAME}
+# RUN REPO_NAME=espa-l2qa-tools \
+    # && REPO_TAG=ESPA_L2QA_TOOLS \
+    # && cd $SRC_DIR \
+    # && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
+    # && cd ${REPO_NAME} \
+    # && git checkout ${REPO_TAG} \
+    # && make BUILD_STATIC=yes ENABLE_THREADING=yes \
+    # && make install \
+    # && cd $SRC_DIR \
+    # && rm -rf ${REPO_NAME}
 
 
-RUN REPO_NAME=espa-spectral-indices \
-    && REPO_TAG=ESPA_SPECTRAL_INDICES \
-    && cd $SRC_DIR \
-    && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
-    && cd ${REPO_NAME} \
-    && git checkout ${REPO_TAG} \
-    && make BUILD_STATIC=yes ENABLE_THREADING=yes \
-    && make install \
-    && cd $SRC_DIR \
-    && rm -rf ${REPO_NAME}
+# RUN REPO_NAME=espa-spectral-indices \
+    # && REPO_TAG=ESPA_SPECTRAL_INDICES \
+    # && cd $SRC_DIR \
+    # && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
+    # && cd ${REPO_NAME} \
+    # && git checkout ${REPO_TAG} \
+    # && make BUILD_STATIC=yes ENABLE_THREADING=yes \
+    # && make install \
+    # && cd $SRC_DIR \
+    # && rm -rf ${REPO_NAME}
 
 
-RUN REPO_NAME=espa-surface-water-extent \
-    && REPO_TAG=ESPA_SURFACE_WATER_EXTENT \
-    && cd $SRC_DIR \
-    && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
-    && cd ${REPO_NAME} \
-    && git checkout ${REPO_TAG} \
-    && make BUILD_STATIC=yes ENABLE_THREADING=yes \
-    && make install \
-    && cd $SRC_DIR \
-    && rm -rf ${REPO_NAME}
+# RUN REPO_NAME=espa-surface-water-extent \
+    # && REPO_TAG=ESPA_SURFACE_WATER_EXTENT \
+    # && cd $SRC_DIR \
+    # && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
+    # && cd ${REPO_NAME} \
+    # && git checkout ${REPO_TAG} \
+    # && make BUILD_STATIC=yes ENABLE_THREADING=yes \
+    # && make install \
+    # && cd $SRC_DIR \
+    # && rm -rf ${REPO_NAME}
 
 
 RUN REPO_NAME=espa-surface-reflectance \
@@ -87,48 +87,60 @@ RUN REPO_NAME=espa-surface-reflectance \
     && rm -rf ${REPO_NAME}
 
 
-RUN REPO_NAME=espa-land-surface-temperature \
-    && REPO_TAG=ESPA_LAND_SURFACE_TEMPERATURE \
-    && cd $SRC_DIR \
-    && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
-    && cd ${REPO_NAME} \
-    && git checkout ${REPO_TAG} \
-    && make BUILD_STATIC=yes ENABLE_THREADING=yes \
-    && make install \
-    && cd $SRC_DIR \
-    && rm -rf ${REPO_NAME}
+# RUN REPO_NAME=espa-land-surface-temperature \
+    # && REPO_TAG=ESPA_LAND_SURFACE_TEMPERATURE \
+    # && cd $SRC_DIR \
+    # && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
+    # && cd ${REPO_NAME} \
+    # && git checkout ${REPO_TAG} \
+    # && make BUILD_STATIC=yes ENABLE_THREADING=yes \
+    # && make install \
+    # && cd $SRC_DIR \
+    # && rm -rf ${REPO_NAME}
 
 
-RUN REPO_NAME=espa-elevation \
-    && REPO_TAG=ESPA_ELEVATION \
-    && cd $SRC_DIR \
-    && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
-    && cd ${REPO_NAME} \
-    && git checkout ${REPO_TAG} \
-    && make install \
-    && cd $SRC_DIR \
-    && rm -rf ${REPO_NAME}
+# RUN REPO_NAME=espa-surface-temperature \
+    # && REPO_TAG=ESPA_SURFACE_TEMPERATURE \
+    # && cd $SRC_DIR \
+    # && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
+    # && cd ${REPO_NAME} \
+    # && git checkout ${REPO_TAG} \
+    # && make BUILD_STATIC=yes ENABLE_THREADING=yes \
+    # && make install \
+    # && cd $SRC_DIR \
+    # && rm -rf ${REPO_NAME}
 
-RUN REPO_NAME=espa-reprojection \
-    && REPO_TAG=ESPA_REPROJECTION \
-    && cd $SRC_DIR \
-    && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
-    && cd ${REPO_NAME} \
-    && git checkout ${REPO_TAG} \
-    && make install \
-    && cd $SRC_DIR \
-    && rm -rf ${REPO_NAME}
 
-RUN echo "Release Candidate rugged-terrain"
-RUN REPO_NAME=espa-processing \
-    && REPO_TAG=ESPA_PROCESSING \
-    && cd $SRC_DIR \
-    && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
-    && cd ${REPO_NAME} \
-    && git checkout ${REPO_TAG} \
-    && make install \
-    && cd $SRC_DIR \
-    && rm -rf ${REPO_NAME}
+# RUN REPO_NAME=espa-elevation \
+    # && REPO_TAG=ESPA_ELEVATION \
+    # && cd $SRC_DIR \
+    # && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
+    # && cd ${REPO_NAME} \
+    # && git checkout ${REPO_TAG} \
+    # && make install \
+    # && cd $SRC_DIR \
+    # && rm -rf ${REPO_NAME}
+
+# RUN REPO_NAME=espa-reprojection \
+    # && REPO_TAG=ESPA_REPROJECTION \
+    # && cd $SRC_DIR \
+    # && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
+    # && cd ${REPO_NAME} \
+    # && git checkout ${REPO_TAG} \
+    # && make install \
+    # && cd $SRC_DIR \
+    # && rm -rf ${REPO_NAME}
+
+# RUN echo "Release Candidate rugged-terrain"
+# RUN REPO_NAME=espa-processing \
+    # && REPO_TAG=ESPA_PROCESSING \
+    # && cd $SRC_DIR \
+    # && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
+    # && cd ${REPO_NAME} \
+    # && git checkout ${REPO_TAG} \
+    # && make install \
+    # && cd $SRC_DIR \
+    # && rm -rf ${REPO_NAME}
 
 
 # ----------------------------------------------------------------------------

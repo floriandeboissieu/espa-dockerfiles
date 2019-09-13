@@ -95,13 +95,13 @@ validate_tool $tool
 
 #-----------------------------------------------------------------------------
 tool=HDF-EOS2.19v1.00.tar.Z
-retrieve_tool $tool https://observer.gsfc.nasa.gov/ftp/edhs/hdfeos/previous_releases/
+retrieve_tool $tool https://observer.gsfc.nasa.gov/ftp/edhs/hdfeos/previous_releases
 validate_tool $tool
 
 #-----------------------------------------------------------------------------
 tool=HDF-EOS5.1.16.tar.Z
-retrieve_tool $tool https://observer.gsfc.nasa.gov/ftp/edhs/hdfeos5/latest_release/ ||
-retrieve_tool $tool https://observer.gsfc.nasa.gov/ftp/edhs/hdfeos5/latest_releases/
+retrieve_tool $tool https://observer.gsfc.nasa.gov/ftp/edhs/hdfeos5/latest_release ||
+retrieve_tool $tool https://observer.gsfc.nasa.gov/ftp/edhs/hdfeos5/previous_releases
 validate_tool $tool
 
 #-----------------------------------------------------------------------------
