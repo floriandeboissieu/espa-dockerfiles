@@ -122,7 +122,7 @@ retrieve_tool $tool http://download.osgeo.org/proj
 validate_tool $tool
 
 #-----------------------------------------------------------------------------
-version=1.11.4
+version=2.4.0
 tool=gdal-$version\.tar.gz
 retrieve_tool $tool http://download.osgeo.org/gdal/$version
 validate_tool $tool

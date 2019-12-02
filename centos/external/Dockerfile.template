@@ -89,7 +89,8 @@ ENV PREFIX=/usr/local \
     HDFEOS_PREFIX=/usr/local \
     HDFEOS5_PREFIX=/usr/local \
     PROJ4_PREFIX=/usr/local \
-    GDAL_PREFIX=/usr/local
+    GDAL_PREFIX=/usr/local \
+    PKGCONFIG_PREFIX=/usr/local
 
 
 # Include and library paths
@@ -446,22 +447,6 @@ RUN pip install \
         netCDF4==1.4.2
 
 
-# Install GDAL
-COPY external_tools/gdal-1.11.4.tar.gz $SRC_DIR
-RUN cd $SRC_DIR \
-    && tar -xvf gdal-1.11.4.tar.gz \
-    && cd gdal-1.11.4 \
-    && ./configure --prefix=$GDAL_PREFIX \
-        --with-liblzma \
-        --with-python=yes \
-        --with-static-proj4=$PROJ4_LIB \
-        --enable-shared \
-        --enable-static \
-    && make -j4 \
-    && make install \
-    && cd $SRC_DIR \
-    && rm -rf gdal-1.11.4 gdal-1.11.4.tar.gz
-
 # Compile and install OpenJPEG
 RUN yum install -y cmake
 RUN REPO_NAME=openjpeg \
@@ -478,3 +463,36 @@ RUN REPO_NAME=openjpeg \
 		&& make clean \
     && cd $SRC_DIR \
     && rm -rf ${REPO_NAME}
+
+
+# Install pkgconfig
+COPY external_tools/pkg-config-0.29.2.tar.gz $SRC_DIR
+RUN cd $SRC_DIR \
+    && tar -xvf pkg-config-0.29.2.tar.gz \
+    && cd pkg-config-0.29.2 \
+    && ./configure --prefix=$PKGCONFIG_PREFIX \
+        --with-internal-glib \
+    && make -j4 \
+    && make install \
+    && make clean \
+    && cd $SRC_DIR \
+    && rm -rf pkg-config-0.29.2 pkg-config-0.29.2.tar.gz
+
+ENV PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig/
+
+# Install GDAL
+COPY external_tools/gdal-2.4.0.tar.gz $SRC_DIR
+RUN cd $SRC_DIR \
+    && tar -xvf gdal-2.4.0.tar.gz \
+    && cd gdal-2.4.0 \
+    && ./configure --prefix=$GDAL_PREFIX \
+        --with-liblzma \
+        --with-python=yes \
+        --with-static-proj4=$PROJ4_LIB \
+        --with-openjpeg \
+        --enable-shared \
+        --enable-static \
+    && make -j4 \
+    && make install \
+    && cd $SRC_DIR \
+    && rm -rf gdal-2.4.0 gdal-2.4.0.tar.gz
