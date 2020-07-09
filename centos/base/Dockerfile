@@ -1,5 +1,4 @@
 FROM centos:7.3.1611
-ARG wat=1
 
 MAINTAINER USGS EROS LSRD http://eros.usgs.gov
 
