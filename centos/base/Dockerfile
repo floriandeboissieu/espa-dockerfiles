@@ -1,5 +1,5 @@
 FROM centos:7.3.1611
-
+ARG wat=1
 
 MAINTAINER USGS EROS LSRD http://eros.usgs.gov
 
@@ -21,6 +21,6 @@ RUN yum install -y \
 # Initial Python Configuration
 RUN yum install -y \
         python-pip \
-        python-devel \
+        python3-devel \
     && pip install --upgrade pip \
     && yum clean metadata

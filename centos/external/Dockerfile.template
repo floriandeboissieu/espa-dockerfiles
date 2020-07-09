@@ -196,7 +196,7 @@ RUN cd $SRC_DIR \
     && ./configure --prefix=$XML2_PREFIX \
         --with-zlib=$ZLIB_PREFIX \
         --with-lzma=$XZ_PREFIX \
-        --with-python \
+        --with-python=/usr/include/python3.6m \
         --enable-shared \
         --enable-static \
     && make -j4 \
@@ -433,34 +433,35 @@ RUN cd $SRC_DIR \
 # Python environment setup
 # GDAL is installed into python through the below installation, because Numpy
 # must be installed into python before building GDAL
-RUN pip install --upgrade pip setuptools
-RUN pip install numpy==1.11.0
-RUN pip install \
+RUN pip3 install --upgrade pip setuptools
+RUN pip3 install numpy==1.16.6
+RUN pip3 install \
         --global-option=build_ext \
         --global-option="-L/usr/local/lib" \
         --global-option="-I/usr/local/include" \
         --global-option="-I/usr/local/include/libxml2" \
-        python-dateutil==2.5.3 \
-        requests==2.10.0 \
+        python-dateutil==2.8.0 \
+        requests==2.24.0 \
         lxml==3.6.0 \
-        matplotlib==1.5.1 \
-        netCDF4==1.4.2
+        kiwisolver==1.1.0 \
+        matplotlib==3.2.2 \
+        netCDF4==1.5.3
 
 
 # Compile and install OpenJPEG
 RUN yum install -y cmake
 RUN REPO_NAME=openjpeg \
     && REPO_TAG=v2.3.1 \
-		&& cd $SRC_DIR \
+    && cd $SRC_DIR \
     && git clone https://github.com/uclouvain/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
     && git checkout ${REPO_TAG} \
-		&& mkdir build \
-		&& cd build \
+    && mkdir build \
+    && cd build \
     && cmake .. -DCMAKE_BUILD_TYPE=Release \
     && make \
-		&& make install \
-		&& make clean \
+    && make install \
+    && make clean \
     && cd $SRC_DIR \
     && rm -rf ${REPO_NAME}
 
@@ -487,7 +488,8 @@ RUN cd $SRC_DIR \
     && cd gdal-2.4.0 \
     && ./configure --prefix=$GDAL_PREFIX \
         --with-liblzma \
-        --with-python=yes \
+        # --with-python=yes \
+        --with-python=/usr/bin/python3 \
         --with-static-proj4=$PROJ4_LIB \
         --with-openjpeg \
         --enable-shared \
