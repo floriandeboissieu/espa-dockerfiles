@@ -23,13 +23,13 @@ clean.images:
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 build.base:
-	@docker build -t $(TAG_PREFIX)/base -f $(SYSTEM)/base/Dockerfile .
-	@docker tag $(TAG_PREFIX)/base $(TAG_PREFIX)/base:$(ESPA_VERSION)
+	@docker build -t $(TAG_PREFIX)/base-c2 -f $(SYSTEM)/base/Dockerfile .
+	@docker tag $(TAG_PREFIX)/base-c2 $(TAG_PREFIX)/base-c2:$(ESPA_VERSION)
 
 build.external:
 	@./fix-espa-versions.sh ${ESPA_VERSION} centos/external/Dockerfile.template centos/external/Dockerfile
-	@docker build -t $(TAG_PREFIX)/external -f $(SYSTEM)/external/Dockerfile .
-	@docker tag $(TAG_PREFIX)/external $(TAG_PREFIX)/external:$(ESPA_VERSION)
+	@docker build -t $(TAG_PREFIX)/external-c2 -f $(SYSTEM)/external/Dockerfile .
+	@docker tag $(TAG_PREFIX)/external-c2 $(TAG_PREFIX)/external-c2:$(ESPA_VERSION)
 
 build.science:
 	@./fix-espa-versions.sh ${ESPA_VERSION} centos/science/Dockerfile.template centos/science/Dockerfile
