@@ -2,7 +2,7 @@
 
 #-----------------------------------------------------------------------------
 validate_tool () {
-    sha256sum -c external_sha256_sums/$1.sha | grep OK
+    sha256sum -c external_sha256_sums/$1.sha | grep "OK\|Réussi"
     if [ $? != 0 ]; then
         echo "Failed to validate [$1]"
         exit 1
@@ -143,6 +143,12 @@ validate_tool $tool
 #validate_tool $tool
 
 #-----------------------------------------------------------------------------
+tool=pkg-config-0.29.2.tar.gz
+retrieve_tool $tool https://pkgconfig.freedesktop.org/releases
+validate_tool $tool
+
+#-----------------------------------------------------------------------------
 #tool=package_name
 #retrieve_tool $tool URL
 #validate_tool $tool
+
