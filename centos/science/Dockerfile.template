@@ -30,7 +30,7 @@ RUN pip install \
 RUN REPO_NAME=espa-product-formatter \
     && REPO_TAG=ESPA_PRODUCT_FORMATTER \
     && cd $SRC_DIR \
-    && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
+    && git clone https://github.com/NASA-IMPACT/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
     && git checkout ${REPO_TAG} \
     && make BUILD_STATIC=yes ENABLE_THREADING=yes \
@@ -78,7 +78,7 @@ RUN REPO_NAME=espa-product-formatter \
 RUN REPO_NAME=espa-surface-reflectance \
     && REPO_TAG=ESPA_SURFACE_REFLECTANCE \
     && cd $SRC_DIR \
-    && git clone https://github.com/USGS-EROS/${REPO_NAME}.git ${REPO_NAME} \
+    && git clone https://github.com/NASA-IMPACT/${REPO_NAME}.git ${REPO_NAME} \
     && cd ${REPO_NAME} \
     && git checkout ${REPO_TAG} \
     && make BUILD_STATIC=yes ENABLE_THREADING=yes \
